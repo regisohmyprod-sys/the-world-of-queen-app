@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Médias — THE WORLD OF QUEEN — L'Éternelle Légende</title>
+<meta name="description" content="Photos et vidéos de THE WORLD OF QUEEN — Les moments forts du show, concerts live et galerie photos." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --noir: #0A0A0A; --charcoal: #141414;
+    --gold: #D4AF37; --gold-pale: #F0D77A;
+    --cramoisi: #8B0000; --cream: #F5F1E8; --smoke: #8B8580;
+    --serif: 'Cinzel', serif; --sans: 'Inter', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--noir); color: var(--cream); font-family: var(--sans); min-height: 100vh; }
+  a { color: inherit; text-decoration: none; }
+
+  /* ============ HEADER ============ */
+  .site-header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10, 10, 10, 0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  }
+  .header-inner {
+    position: relative;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px;
+  }
+  .brand {
+    font-family: var(--serif);
+    color: var(--gold);
+    font-size: 16px;
+    letter-spacing: 3px;
+    font-weight: 600;
+    line-height: 1.1;
+    position: absolute;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .brand small {
+    display: block; font-family: var(--sans); color: var(--cream);
+    font-size: 9px; letter-spacing: 4px; font-weight: 400; margin-top: 2px; opacity: 0.8;
+  }
+  .menu-toggle {
+    display: none; background: transparent; color: var(--gold);
+    border: 1px solid var(--gold); border-radius: 6px;
+    padding: 6px 12px; font-size: 18px; cursor: pointer;
+  }
+  nav.main-nav { display: flex; gap: 22px; align-items: center; }
+  nav.main-nav a {
+    color: var(--cream); font-size: 12px; letter-spacing: 2px; font-weight: 600;
+    text-transform: uppercase; transition: color 0.2s;
+    padding: 6px 0; border-bottom: 2px solid transparent;
+  }
+  nav.main-nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+  nav.main-nav a.pro {
+    border: 1px solid var(--gold); border-radius: 999px; padding: 6px 14px; color: var(--gold);
+  }
+  nav.main-nav a.pro:hover { background: var(--gold); color: var(--noir); }
+  @media (max-width: 980px) {
+    .header-inner { justify-content: space-between; }
+    .brand { position: static; transform: none; }
+    .menu-toggle { display: block; }
+    nav.main-nav {
+      position: absolute; top: 100%; right: 0; background: rgba(10, 10, 10, 0.98);
+      flex-direction: column; gap: 0; padding: 14px 20px;
+      border-radius: 0 0 0 12px;
+      border-left: 1px solid rgba(212, 175, 55, 0.15);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+      max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
+    }
+    nav.main-nav.open { max-height: 90vh; }
+    nav.main-nav a {
+      padding: 12px 0; width: 100%;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.10);
+    }
+  }
+
+  /* ============ CIEL ÉTOILÉ FIXE ============ */
+  .medias-page {
+    position: relative; overflow: hidden;
+    background: #000; padding-bottom: 50px; padding-top: 110px; min-height: 100vh;
+  }
+  .medias-page::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 0%, rgba(212,175,55,0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 70% at 50% 40%, rgba(91,163,245,0.03) 0%, transparent 70%);
+    z-index: 0; pointer-events: none;
+  }
+  .twinkle-stars {
+    position: fixed; inset: 0; overflow: hidden; z-index: 0; pointer-events: none;
+  }
+  .twinkle-star {
+    position: absolute; background: #F0D77A; border-radius: 50%;
+    opacity: 0; animation: twinkle 4s infinite ease-in-out;
+    box-shadow: 0 0 4px #D4AF37, 0 0 8px rgba(240,215,122,0.5);
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.6); }
+    50%      { opacity: 1; transform: scale(1.3); }
+  }
+  .twinkle-star.big { width: 4px; height: 4px; box-shadow: 0 0 8px #D4AF37, 0 0 18px rgba(240,215,122,0.9); }
+  .twinkle-star.medium { width: 2.5px; height: 2.5px; box-shadow: 0 0 5px #D4AF37, 0 0 12px rgba(240,215,122,0.7); }
+  .twinkle-star.small { width: 1.5px; height: 1.5px; }
+
+  /* ============ CONTENU ============ */
+  .medias-content {
+    position: relative; z-index: 2; max-width: 1000px;
+    margin: 0 auto; padding: 30px 20px;
+  }
+  .section-eyebrow {
+    color: var(--gold); font-size: 11px; letter-spacing: 4px;
+    font-weight: 700; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: var(--serif); color: var(--cream);
+    font-size: clamp(32px, 5vw, 44px);
+    margin-bottom: 28px; letter-spacing: 1px; font-weight: 500;
+  }
+  .section-subtitle {
+    font-family: var(--serif); color: var(--cream);
+    font-size: clamp(22px, 3vw, 28px);
+    margin-bottom: 18px; letter-spacing: 0.5px; font-weight: 500;
+  }
+
+  /* ============ REELS HORIZONTAL ============ */
+  .reels-scroll {
+    display: flex; gap: 14px;
+    overflow-x: auto; overflow-y: hidden;
+    padding: 6px 0 20px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) #1a1a1a;
+  }
+  .reels-scroll::-webkit-scrollbar { height: 6px; }
+  .reels-scroll::-webkit-scrollbar-track { background: #1a1a1a; border-radius: 3px; }
+  .reels-scroll::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+  .reel-card {
+    flex: 0 0 auto;
+    width: 160px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .reel-card:hover { transform: translateY(-4px); }
+  .reel-thumb {
+    width: 100%; aspect-ratio: 9 / 16;
+    border-radius: 12px;
+    background-size: cover; background-position: center;
+    border: 1px solid rgba(212,175,55,0.25);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  }
+  .reel-thumb::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.7) 100%);
+  }
+  .reel-play {
+    position: absolute; top: 8px; right: 8px;
+    width: 30px; height: 30px;
+    background: rgba(0,0,0,0.6);
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    color: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+  }
+  .reel-caption {
+    color: var(--cream);
+    font-size: 12px;
+    margin-top: 8px;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+  /* ============ VIDÉO ROWS ============ */
+  .video-list {
+    display: flex; flex-direction: column; gap: 10px;
+    margin-bottom: 24px;
+  }
+  .video-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 14px;
+    align-items: center;
+    background: linear-gradient(180deg, rgba(20,20,20,0.85), rgba(10,10,10,0.95));
+    border: 1px solid rgba(212,175,55,0.18);
+    border-radius: 14px;
+    padding: 10px;
+    cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+  .video-row:hover {
+    border-color: var(--gold);
+    transform: translateX(4px);
+    box-shadow: 0 10px 30px rgba(212,175,55,0.12);
+  }
+  .video-thumb {
+    width: 100%; aspect-ratio: 16/9;
+    border-radius: 8px;
+    background-size: cover; background-position: center;
+    background-color: #1a1a1a;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(212,175,55,0.15);
+  }
+  .video-thumb-play {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 38px; height: 38px;
+    background: rgba(212,175,55,0.9);
+    color: var(--noir);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  }
+  .video-info { min-width: 0; }
+  .video-title {
+    color: var(--cream); font-size: 14px;
+    font-weight: 600; line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .video-source {
+    color: var(--smoke); font-size: 11px;
+    letter-spacing: 1px;
+  }
+  .video-source .src-name { color: var(--gold); font-weight: 600; }
+
+  .btn-secondary {
+    display: inline-block; margin: 6px auto 0;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    border-radius: 999px;
+    padding: 10px 24px;
+    font-size: 12px; letter-spacing: 2px; font-weight: 700;
+    background: transparent; cursor: pointer;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+    font-family: inherit;
+  }
+  .btn-secondary:hover {
+    background: var(--gold); color: var(--noir); transform: translateY(-2px);
+  }
+  .btn-wrap { text-align: center; margin: 20px 0 12px; }
+
+  /* ============ GALERIE PHOTOS ============ */
+  .photos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .photo-cell {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid rgba(212,175,55,0.12);
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  }
+  .photo-cell:hover {
+    transform: scale(1.03);
+    border-color: var(--gold);
+    z-index: 2;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+  .photo-cell img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .photos-helper {
+    color: var(--smoke);
+    font-size: 11px;
+    text-align: center;
+    font-style: italic;
+    margin-top: 8px;
+  }
+  @media (max-width: 600px) {
+    .photos-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  }
+
+  /* ============ SÉPARATEUR DORÉ ============ */
+  .gold-divider {
+    display: flex; align-items: center; justify-content: center;
+    gap: 16px; margin: 40px auto; max-width: 540px;
+  }
+  .gold-divider .line {
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .gold-divider .crown {
+    color: var(--gold); font-size: 22px;
+    width: 38px; height: 38px;
+    border: 1px solid rgba(212,175,55,0.45);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(10,10,10,0.6);
+  }
+
+  /* ============ LIGHTBOX VIDÉO ============ */
+  .video-lightbox {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    display: none;
+    align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .video-lightbox.open { display: flex; }
+  .vl-stage {
+    width: 100%; max-width: 900px;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 14px;
+  }
+  .vl-frame {
+    width: 100%; max-height: 80vh;
+    background: #000;
+    border-radius: 16px; overflow: hidden;
+    border: 1px solid rgba(212,175,55,0.4);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(212,175,55,0.15);
+  }
+  .vl-frame.vertical { aspect-ratio: 9/16; max-width: 480px; margin: 0 auto; }
+  .vl-frame.horizontal { aspect-ratio: 16/9; }
+  .vl-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .vl-caption {
+    color: var(--cream); font-family: var(--serif);
+    font-size: 18px; letter-spacing: 1px; text-align: center;
+    max-width: 760px;
+  }
+  .vl-counter {
+    color: var(--gold); font-size: 12px;
+    letter-spacing: 3px; font-weight: 700;
+  }
+  .vl-close, .vl-arrow {
+    position: absolute;
+    background: rgba(0,0,0,0.6);
+    border: 1px solid rgba(212,175,55,0.45);
+    color: var(--gold);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+    font-family: inherit; z-index: 10001;
+  }
+  .vl-close {
+    top: 20px; right: 20px;
+    width: 44px; height: 44px; font-size: 22px;
+  }
+  .vl-close:hover { background: var(--gold); color: var(--noir); transform: rotate(90deg); }
+  .vl-arrow {
+    top: 50%; transform: translateY(-50%);
+    width: 56px; height: 56px; font-size: 38px;
+    line-height: 0; padding-bottom: 6px;
+  }
+  .vl-prev { left: 24px; }
+  .vl-next { right: 24px; }
+  .vl-arrow:hover {
+    background: var(--gold); color: var(--noir); border-color: var(--gold);
+  }
+  .vl-prev:hover { transform: translateY(-50%) translateX(-4px); }
+  .vl-next:hover { transform: translateY(-50%) translateX(4px); }
+
+  /* ============ LIGHTBOX PHOTOS ============ */
+  .photo-lightbox {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(10px);
+    z-index: 9998;
+    display: none;
+    align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  .photo-lightbox.open { display: flex; }
+  .pl-stage {
+    width: 100%; max-width: 1100px;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 14px;
+  }
+  .pl-frame {
+    width: 100%; max-height: 82vh;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(212,175,55,0.4);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(212,175,55,0.15);
+  }
+  .pl-frame img {
+    width: 100%; max-height: 82vh;
+    object-fit: contain;
+    display: block;
+    background: #000;
+  }
+  .pl-counter { color: var(--gold); font-size: 12px; letter-spacing: 3px; font-weight: 700; }
+  .pl-autoplay-toggle {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    border-radius: 999px;
+    padding: 5px 16px;
+    font-size: 10px; letter-spacing: 2px; font-weight: 700;
+    cursor: pointer; font-family: inherit;
+    transition: background 0.2s, color 0.2s;
+  }
+  .pl-autoplay-toggle.active { background: var(--gold); color: var(--noir); }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: #050505;
+    border-top: 1px solid rgba(212, 175, 55, 0.15);
+    padding: 50px 20px 24px;
+    margin-top: 40px;
+    position: relative; z-index: 3;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px;
+  }
+  .footer-col h5 {
+    color: var(--gold); font-size: 12px; letter-spacing: 4px;
+    font-weight: 700; text-transform: uppercase; margin-bottom: 14px;
+  }
+  .footer-col p, .footer-col a {
+    color: var(--cream); font-size: 13px; line-height: 1.8;
+    opacity: 0.85; display: block;
+  }
+  .footer-col a:hover { color: var(--gold); opacity: 1; }
+  .footer-bottom {
+    border-top: 1px solid rgba(212,175,55,0.1);
+    margin-top: 36px; padding-top: 20px;
+    text-align: center; color: var(--smoke);
+    font-size: 11px; letter-spacing: 1px;
+  }
+  .gold-bottom { color: var(--gold); font-weight: 700; }
+  @media (max-width: 768px) {
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 26px; }
+  }
+  @media (max-width: 500px) {
+    .footer-inner { grid-template-columns: 1fr; gap: 22px; }
+    .vl-arrow { width: 44px; height: 44px; font-size: 30px; }
+    .vl-prev { left: 8px; } .vl-next { right: 8px; }
+  }
+
+  /* ============ NEWSLETTER BLOCK ============ */
+  .newsletter-block { position: relative; z-index: 3; background: linear-gradient(180deg, #0a0a0a 0%, #050505 100%); border-top: 1px solid rgba(212,175,55,0.15); border-bottom: 1px solid rgba(212,175,55,0.15); padding: 50px 20px; }
+  .newsletter-wrap { max-width: 600px; margin: 0 auto; text-align: center; }
+  .newsletter-eyebrow { color: var(--gold); font-size: 11px; letter-spacing: 5px; font-weight: 700; margin-bottom: 10px; }
+  .newsletter-title { font-family: var(--serif); color: var(--cream); font-size: clamp(24px, 4vw, 32px); font-weight: 500; letter-spacing: 1px; margin-bottom: 8px; }
+  .newsletter-text { color: var(--cream); font-size: 13px; line-height: 1.5; opacity: 0.85; margin-bottom: 22px; }
+  .newsletter-form { display: flex; gap: 10px; max-width: 480px; margin: 0 auto 12px; flex-wrap: wrap; justify-content: center; }
+  .newsletter-form input { flex: 1; min-width: 200px; background: rgba(0,0,0,0.5); border: 1px solid rgba(212,175,55,0.3); color: var(--cream); padding: 12px 18px; border-radius: 999px; font-family: inherit; font-size: 14px; outline: none; transition: border-color 0.2s; }
+  .newsletter-form input:focus { border-color: var(--gold); }
+  .newsletter-form input::placeholder { color: var(--smoke); }
+  .newsletter-form button { background: var(--gold); color: var(--noir); border: none; border-radius: 999px; padding: 12px 24px; font-family: inherit; font-size: 13px; letter-spacing: 1px; font-weight: 700; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+  .newsletter-form button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212,175,55,0.3); }
+  .newsletter-helper { color: var(--smoke); font-size: 11px; font-style: italic; }
+  .newsletter-success { color: #10b981; font-size: 13px; margin-top: 12px; display: none; }
+  .newsletter-success.show { display: block; }
+
+
+  /* ============ DROPDOWN ESPACE PRO ============ */
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-toggle {
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 6px 0;
+    border-bottom: 2px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    user-select: none;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: inherit;
+    transition: border-color 0.2s;
+  }
+  .nav-dropdown-toggle:hover { border-bottom-color: var(--gold); }
+  .nav-dropdown-toggle .chev { font-size: 9px; transition: transform 0.2s; }
+  .nav-dropdown.open .nav-dropdown-toggle .chev { transform: rotate(180deg); }
+  .nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 200px;
+    background: rgba(10,10,10,0.98);
+    border: 1px solid rgba(212,175,55,0.35);
+    border-radius: 12px;
+    padding: 6px;
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    box-shadow: 0 14px 36px rgba(0,0,0,0.7), 0 0 30px rgba(212,175,55,0.1);
+    z-index: 200;
+  }
+  .nav-dropdown.open .nav-dropdown-menu,
+  .nav-dropdown:hover .nav-dropdown-menu { display: flex; }
+  .nav-dropdown-menu a {
+    color: var(--cream) !important;
+    font-size: 11px !important;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 10px 14px !important;
+    border-radius: 8px;
+    border-bottom: none !important;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+  .nav-dropdown-menu a:hover {
+    background: rgba(212,175,55,0.15);
+    color: var(--gold) !important;
+  }
+  @media (max-width: 980px) {
+    .nav-dropdown { width: 100%; }
+    .nav-dropdown-toggle {
+      width: 100%;
+      justify-content: space-between;
+      padding: 12px 0 !important;
+      border-bottom: 1px solid rgba(212,175,55,0.10) !important;
+    }
+    .nav-dropdown-menu {
+      position: static;
+      background: rgba(0,0,0,0.4);
+      margin: 4px 0 8px;
+      width: 100%;
+      border: none;
+      border-left: 2px solid rgba(212,175,55,0.3);
+      border-radius: 0;
+      padding: 4px 0 4px 14px;
+      box-shadow: none;
+    }
+    .nav-dropdown-menu a {
+      padding: 8px 0 !important;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">
+      THE WORLD OF QUEEN
+      <small>L'ÉTERNELLE LÉGENDE</small>
+    </a>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html" onclick="closeMenu()">LE SHOW</a>
+      <a href="dates.html" onclick="closeMenu()">DATES</a>
+      <a href="artistes.html" onclick="closeMenu()">ARTISTES</a>
+      <a href="fanzone.html" onclick="closeMenu()">FAN ZONE</a>
+      <a href="medias.html" onclick="closeMenu()" style="color:var(--gold);border-bottom-color:var(--gold);">MÉDIAS</a>
+      <a href="moi.html" onclick="closeMenu()">MOI</a>
+      <a href="contact-prod.html" onclick="closeMenu()">CONTACT PROD</a>
+      <div class="nav-dropdown" id="navDropdown">
+        <button type="button" class="nav-dropdown-toggle" onclick="toggleDropdown(event)">ESPACE PRO <span class="chev">▾</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="espace-pro.html" onclick="closeMenu(); closeDropdown();">Espace Pro</a>
+          <a href="espace-presse.html" onclick="closeMenu(); closeDropdown();">Espace Presse</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ PAGE MÉDIAS ============ -->
+<section class="medias-page">
+  <div class="twinkle-stars" id="twinkleStars"></div>
+
+  <div class="medias-content">
+
+    <!-- HERO -->
+    <div class="section-eyebrow">PHOTOS &amp; VIDÉOS</div>
+    <h1 class="section-title">Médias.</h1>
+
+    <!-- ============ REELS ============ -->
+    <div class="section-eyebrow">REELS</div>
+    <h2 class="section-subtitle">Les moments forts.</h2>
+    <div class="reels-scroll" id="reelsScroll"></div>
+
+    <!-- SÉPARATEUR -->
+    <div class="gold-divider"><span class="line"></span><span class="crown">♕</span><span class="line"></span></div>
+
+    <!-- ============ VIDÉOS ============ -->
+    <div class="section-eyebrow">VIDÉOS</div>
+    <h2 class="section-subtitle">À voir et revoir.</h2>
+    <div class="video-list" id="videoList"></div>
+    <div class="btn-wrap"><button type="button" class="btn-secondary" id="btnMoreVideos">Voir toutes les vidéos →</button></div>
+
+    <!-- SÉPARATEUR -->
+    <div class="gold-divider"><span class="line"></span><span class="crown">♕</span><span class="line"></span></div>
+
+    <!-- ============ GALERIE PHOTOS ============ -->
+    <div class="section-eyebrow">GALERIE PHOTOS</div>
+    <h2 class="section-subtitle">Photos du show.</h2>
+    <div class="photos-grid" id="photosGrid"></div>
+    <div class="btn-wrap"><button type="button" class="btn-secondary" id="btnMorePhotos">✨ VOIR PLUS DE PHOTOS ↓</button></div>
+    <div class="photos-helper">Touche une photo pour la voir en grand · diaporama auto</div>
+
+  </div>
+</section>
+
+<!-- ============ LIGHTBOX VIDÉO ============ -->
+<div class="video-lightbox" id="videoLightbox" aria-hidden="true">
+  <button class="vl-close" id="vlClose" aria-label="Fermer">✕</button>
+  <button class="vl-arrow vl-prev" id="vlPrev" aria-label="Précédent">‹</button>
+  <button class="vl-arrow vl-next" id="vlNext" aria-label="Suivant">›</button>
+  <div class="vl-stage">
+    <div class="vl-frame" id="vlFrame">
+      <iframe id="vlIframe" allow="autoplay; encrypted-media; fullscreen" allowfullscreen frameborder="0"></iframe>
+    </div>
+    <div class="vl-caption" id="vlCaption"></div>
+    <div class="vl-counter" id="vlCounter"></div>
+  </div>
+</div>
+
+<!-- ============ LIGHTBOX PHOTOS ============ -->
+<div class="photo-lightbox" id="photoLightbox" aria-hidden="true">
+  <button class="vl-close" id="plClose" aria-label="Fermer">✕</button>
+  <button class="vl-arrow vl-prev" id="plPrev" aria-label="Précédent">‹</button>
+  <button class="vl-arrow vl-next" id="plNext" aria-label="Suivant">›</button>
+  <div class="pl-stage">
+    <div class="pl-frame"><img id="plImage" src="" alt="" /></div>
+    <button type="button" class="pl-autoplay-toggle" id="plAutoplayToggle">▶ DIAPORAMA</button>
+    <div class="pl-counter" id="plCounter"></div>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+
+<!-- ============ ABONNEZ-VOUS À LA NEWSLETTER ============ -->
+<section class="newsletter-block">
+  <div class="newsletter-wrap">
+    <div class="newsletter-eyebrow">RESTE INFORMÉ</div>
+    <h3 class="newsletter-title">Abonnez-vous à la newsletter</h3>
+    <p class="newsletter-text">Nouvelles dates, coulisses exclusives, concours &amp; promos — directement dans ta boîte mail.</p>
+    <form class="newsletter-form" onsubmit="event.preventDefault(); subscribeNewsletter(this);">
+      <input type="email" placeholder="ton.email@exemple.com" required />
+      <button type="submit">S'abonner →</button>
+    </form>
+    <div class="newsletter-helper">📧 Tu peux te désabonner à tout moment · Aucun spam, promis.</div>
+    <div class="newsletter-success" id="newsletterSuccess">✅ Merci ! Tu es bien inscrit·e à la newsletter TWOQ 🎤</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h5>THE WORLD OF QUEEN</h5>
+      <p>L'Éternelle Légende — Le show référence en hommage à Queen, produit par Oh My Prod.</p>
+    </div>
+        <div class="footer-col">
+      <h5>Navigation</h5>
+      <a href="index.html">Le Show</a>
+      <a href="dates.html">Dates Tour</a>
+      <a href="artistes.html">Artistes</a>
+      <a href="fanzone.html">Fan Zone</a>
+      <a href="medias.html">Médias</a>
+      <a href="moi.html">Mon Espace</a>
+    </div>
+        <div class="footer-col">
+      <h5>Professionnels</h5>
+      <a href="contact-prod.html">Contact Prod</a>
+      <a href="espace-pro.html">Espace Pro</a>
+      <a href="espace-presse.html">Espace Presse</a>
+      <a href="https://app.theworldofqueen.com" target="_blank">Appli TWOQ ↗</a>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <p>SAS OH MY PROD</p>
+      <p>Production live</p>
+      <p>contact@ohmyprod.com</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 <span class="gold-bottom">THE WORLD OF QUEEN</span> — Production <span class="gold-bottom">OH MY PROD</span>. Tous droits réservés.
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() { document.getElementById('mainNav').classList.toggle('open'); }
+  function closeMenu() { document.getElementById('mainNav').classList.remove('open'); }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  }
+
+  // ============ CIEL ÉTOILÉ ============
+  function generateTwinkleStars() {
+    const bg = document.getElementById('twinkleStars');
+    if (!bg) return;
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < 220; i++) {
+      const star = document.createElement('div');
+      const r = Math.random();
+      let size = 'small';
+      if (r < 0.12) size = 'big';
+      else if (r < 0.40) size = 'medium';
+      star.className = 'twinkle-star ' + size;
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDelay = (Math.random() * 4) + 's';
+      star.style.animationDuration = (2.5 + Math.random() * 3.5) + 's';
+      frag.appendChild(star);
+    }
+    bg.appendChild(frag);
+  }
+
+  // ============ REELS (les 12 vidéos verticales) ============
+  const REELS = [
+    { id: '4lmPj2BXx7c', caption: 'Et cette note ??' },
+    { id: 'iNp1AolF68c', caption: 'Short TWOQ' },
+    { id: 'yoFYxLacJlc', caption: "Quand la scène s'enflamme" },
+    { id: 'DfbSREMEgio', caption: 'Des balances au live' },
+    { id: 'GhSKNMFzlMs', caption: 'Quand tout devient crazy !!' },
+    { id: 'jZSqzuP7A5o', caption: "Notre plus belle vue c'est vous !" },
+    { id: 'tuAwkGunrM0', caption: "T'étais pas prêt pour cette note" },
+    { id: 'g1wHig3iBOM', caption: 'Quand le public te défie' },
+    { id: 'JhE2YZaTAs4', caption: "Don't Lose Your Head — Live" },
+    { id: 'wQEHlQAs_ME', caption: 'Quand tu commences le...' },
+    { id: 'FXyvUcRq1M8', caption: 'Short TWOQ' },
+    { id: 'cT4qz3AN4GY', caption: 'Short TWOQ' },
+  ];
+
+  // ============ VIDÉOS (À voir et revoir) ============
+  // ⚠️ POULETTE : remplace les "YOUTUBE_ID" par les vrais IDs YouTube de tes vidéos
+  const VIDEOS = [
+    { id: 'YOUTUBE_ID_1', title: 'JT M6 19:45 — Reportage TWOQ', source: 'M6', orientation: 'horizontal' },
+    { id: 'YOUTUBE_ID_2', title: "Don't Stop Me Now — Live", source: 'TWOQ', orientation: 'horizontal' },
+    { id: 'YOUTUBE_ID_3', title: 'Who Wants To Live Forever — Live', source: 'TWOQ', orientation: 'horizontal' },
+    { id: 'YOUTUBE_ID_4', title: 'I Was Born To Love You — Live', source: 'TWOQ', orientation: 'horizontal' },
+    { id: 'YOUTUBE_ID_5', title: 'A Kind Of Magic — Live', source: 'TWOQ', orientation: 'horizontal' },
+    { id: 'YOUTUBE_ID_6', title: 'Princes Of The Universe — Live', source: 'TWOQ', orientation: 'horizontal' },
+    { id: 'YOUTUBE_ID_7', title: 'Un moment inoubliable au Dôme de Paris', source: 'TWOQ', orientation: 'horizontal' },
+  ];
+  let _videosShown = 5;
+
+  function renderReels() {
+    const scroll = document.getElementById('reelsScroll');
+    if (!scroll) return;
+    scroll.innerHTML = REELS.map((r, i) => `
+      <div class="reel-card" data-type="reel" data-index="${i}">
+        <div class="reel-thumb" style="background-image:url('https://img.youtube.com/vi/${r.id}/hqdefault.jpg');">
+          <div class="reel-play">▶</div>
+        </div>
+        <div class="reel-caption">${escapeHtml(r.caption)}</div>
+      </div>
+    `).join('');
+    scroll.querySelectorAll('.reel-card').forEach(card => {
+      card.addEventListener('click', () => openVideoLightbox('reel', parseInt(card.dataset.index, 10)));
+    });
+  }
+
+  function renderVideos() {
+    const list = document.getElementById('videoList');
+    const btn  = document.getElementById('btnMoreVideos');
+    if (!list || !btn) return;
+    const shown = VIDEOS.slice(0, _videosShown);
+    list.innerHTML = shown.map((v, i) => {
+      const isPlaceholder = v.id.startsWith('YOUTUBE_ID');
+      const thumb = isPlaceholder
+        ? ''
+        : `background-image:url('https://img.youtube.com/vi/${v.id}/hqdefault.jpg');`;
+      return `
+        <div class="video-row" data-type="video" data-index="${i}">
+          <div class="video-thumb" style="${thumb}">
+            <div class="video-thumb-play">▶</div>
+          </div>
+          <div class="video-info">
+            <div class="video-title">${escapeHtml(v.title)}</div>
+            <div class="video-source"><span class="src-name">${escapeHtml(v.source)}</span> · YouTube</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+    list.querySelectorAll('.video-row').forEach(row => {
+      row.addEventListener('click', () => openVideoLightbox('video', parseInt(row.dataset.index, 10)));
+    });
+    btn.textContent = _videosShown < VIDEOS.length
+      ? `Voir toutes les vidéos (${VIDEOS.length - _videosShown} de plus) →`
+      : '← Réduire la liste';
+  }
+  document.getElementById('btnMoreVideos').addEventListener('click', () => {
+    _videosShown = _videosShown < VIDEOS.length ? VIDEOS.length : 5;
+    renderVideos();
+  });
+
+  // ============ LIGHTBOX VIDÉO (gère reels ET vidéos) ============
+  const videoLightbox = document.getElementById('videoLightbox');
+  const vlIframe   = document.getElementById('vlIframe');
+  const vlFrame    = document.getElementById('vlFrame');
+  const vlCaption  = document.getElementById('vlCaption');
+  const vlCounter  = document.getElementById('vlCounter');
+  const isFileProtocol = window.location.protocol === 'file:';
+
+  // Fallback en local pour erreur 153
+  let vlFallback = document.createElement('div');
+  vlFallback.id = 'vlFallback';
+  vlFallback.style.cssText = 'display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;width:100%;aspect-ratio:9/16;max-height:80vh;background:#000;border-radius:16px;border:1px solid rgba(212,175,55,0.4);padding:30px 20px;';
+  vlFrame.parentElement.insertBefore(vlFallback, vlFrame.nextSibling);
+
+  let _vlContext = 'reel'; // 'reel' | 'video'
+  let _vlIndex = 0;
+
+  function getCurrentVideoLib() {
+    return _vlContext === 'reel' ? REELS : VIDEOS;
+  }
+
+  function openVideoLightbox(context, index) {
+    _vlContext = context;
+    const lib = getCurrentVideoLib();
+    _vlIndex = (index + lib.length) % lib.length;
+    const v = lib[_vlIndex];
+    const isPlaceholder = v.id.startsWith && v.id.startsWith('YOUTUBE_ID');
+    const orientation = v.orientation || 'vertical';
+
+    // Adapter le cadre (vertical/horizontal)
+    vlFrame.className = 'vl-frame ' + orientation;
+
+    if (isFileProtocol || isPlaceholder) {
+      // Mode local OU placeholder : afficher fallback
+      vlFrame.style.display = 'none';
+      vlFallback.style.display = 'flex';
+      vlFallback.style.aspectRatio = orientation === 'horizontal' ? '16/9' : '9/16';
+      vlFallback.style.maxWidth = orientation === 'horizontal' ? '900px' : '480px';
+      const reason = isPlaceholder
+        ? 'ID YouTube non renseigné'
+        : 'LECTURE LOCALE IMPOSSIBLE';
+      const subText = isPlaceholder
+        ? 'POULETTE doit remplacer le placeholder dans le code'
+        : 'YouTube bloque les vidéos depuis un fichier local. Une fois le site en ligne, la lecture fonctionnera.';
+      vlFallback.innerHTML = `
+        <div style="font-size:60px;margin-bottom:20px;">⚠️</div>
+        <div style="color:var(--gold);font-family:var(--serif);font-size:18px;margin-bottom:14px;letter-spacing:2px;">${reason}</div>
+        <div style="color:var(--cream);font-size:13px;line-height:1.6;padding:0 20px;margin-bottom:24px;">${subText}</div>
+        ${!isPlaceholder ? `<a href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener" style="display:inline-block;background:var(--gold);color:var(--noir);padding:10px 22px;border-radius:999px;font-weight:700;letter-spacing:1px;font-size:13px;text-decoration:none;">▶ Voir sur YouTube</a>` : ''}
+      `;
+    } else {
+      vlFrame.style.display = 'block';
+      vlFallback.style.display = 'none';
+      vlIframe.src = `https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&playsinline=1&rel=0&modestbranding=1&fs=1`;
+    }
+    vlCaption.textContent = v.caption || v.title || '';
+    vlCounter.textContent = `${_vlIndex + 1} / ${lib.length}`;
+    videoLightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeVideoLightbox() {
+    videoLightbox.classList.remove('open');
+    vlIframe.src = '';
+    document.body.style.overflow = '';
+  }
+  function vlNavigate(d) { openVideoLightbox(_vlContext, _vlIndex + d); }
+
+  document.getElementById('vlClose').addEventListener('click', closeVideoLightbox);
+  document.getElementById('vlPrev').addEventListener('click', () => vlNavigate(-1));
+  document.getElementById('vlNext').addEventListener('click', () => vlNavigate(1));
+  videoLightbox.addEventListener('click', e => { if (e.target === videoLightbox) closeVideoLightbox(); });
+
+  // ============ GALERIE PHOTOS ============
+  // Tentative de chargement automatique : show-01.jpg → show-NN.jpg
+  // À l'utilisateur d'uploader des fichiers nommés ainsi dans twoq-pwa/assets/photos/
+  const PHOTOS_BASE = 'https://regisohmyprod-sys.github.io/twoq-pwa/assets/photos/';
+  const PHOTOS_MAX_PROBE = 30; // teste les 30 premières
+  let _photos = []; // liste des photos qui ont chargé OK
+  let _photosShown = 12;
+
+  async function probePhotos() {
+    const candidates = [];
+    for (let i = 1; i <= PHOTOS_MAX_PROBE; i++) {
+      candidates.push(PHOTOS_BASE + 'show-' + String(i).padStart(2, '0') + '.jpg');
+    }
+    const checks = candidates.map(url => new Promise(resolve => {
+      const img = new Image();
+      img.onload = () => resolve(url);
+      img.onerror = () => resolve(null);
+      img.src = url;
+    }));
+    const results = await Promise.all(checks);
+    _photos = results.filter(Boolean);
+    renderPhotos();
+  }
+
+  function renderPhotos() {
+    const grid = document.getElementById('photosGrid');
+    const btn = document.getElementById('btnMorePhotos');
+    if (!grid || !btn) return;
+    if (_photos.length === 0) {
+      grid.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: var(--smoke); font-style: italic;">
+          🖼️ Aucune photo trouvée. Upload tes photos dans <code style="color:var(--gold);">twoq-pwa/assets/photos/</code> nommées <code style="color:var(--gold);">show-01.jpg</code>, <code style="color:var(--gold);">show-02.jpg</code>, etc.
+        </div>
+      `;
+      btn.style.display = 'none';
+      return;
+    }
+    const shown = _photos.slice(0, _photosShown);
+    grid.innerHTML = shown.map((url, i) => `
+      <div class="photo-cell" data-index="${i}"><img src="${url}" alt="Photo du show ${i+1}" loading="lazy" /></div>
+    `).join('');
+    grid.querySelectorAll('.photo-cell').forEach(cell => {
+      cell.addEventListener('click', () => openPhotoLightbox(parseInt(cell.dataset.index, 10)));
+    });
+    if (_photosShown < _photos.length) {
+      btn.style.display = 'inline-block';
+      btn.textContent = `✨ VOIR PLUS DE PHOTOS (+${Math.min(12, _photos.length - _photosShown)} sur ${_photos.length - _photosShown} restantes) ↓`;
+    } else if (_photos.length > 12) {
+      btn.style.display = 'inline-block';
+      btn.textContent = '↑ Réduire la galerie';
+    } else {
+      btn.style.display = 'none';
+    }
+  }
+  document.getElementById('btnMorePhotos').addEventListener('click', () => {
+    _photosShown = _photosShown >= _photos.length ? 12 : _photosShown + 12;
+    if (_photosShown > _photos.length) _photosShown = _photos.length;
+    if (_photosShown === 12 && _photos.length <= 12) _photosShown = 12;
+    renderPhotos();
+  });
+
+  // ============ LIGHTBOX PHOTOS ============
+  const photoLightbox = document.getElementById('photoLightbox');
+  const plImage   = document.getElementById('plImage');
+  const plCounter = document.getElementById('plCounter');
+  const plToggle  = document.getElementById('plAutoplayToggle');
+  let _plIndex = 0;
+  let _plAutoplayTimer = null;
+
+  function openPhotoLightbox(idx) {
+    _plIndex = (idx + _photos.length) % _photos.length;
+    plImage.src = _photos[_plIndex];
+    plCounter.textContent = `${_plIndex + 1} / ${_photos.length}`;
+    photoLightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePhotoLightbox() {
+    photoLightbox.classList.remove('open');
+    document.body.style.overflow = '';
+    stopAutoplay();
+  }
+  function plNavigate(d) {
+    _plIndex = (_plIndex + d + _photos.length) % _photos.length;
+    plImage.src = _photos[_plIndex];
+    plCounter.textContent = `${_plIndex + 1} / ${_photos.length}`;
+  }
+  function startAutoplay() {
+    plToggle.classList.add('active');
+    plToggle.textContent = '⏸ PAUSE';
+    _plAutoplayTimer = setInterval(() => plNavigate(1), 3500);
+  }
+  function stopAutoplay() {
+    clearInterval(_plAutoplayTimer);
+    _plAutoplayTimer = null;
+    plToggle.classList.remove('active');
+    plToggle.textContent = '▶ DIAPORAMA';
+  }
+  plToggle.addEventListener('click', () => _plAutoplayTimer ? stopAutoplay() : startAutoplay());
+
+  document.getElementById('plClose').addEventListener('click', closePhotoLightbox);
+  document.getElementById('plPrev').addEventListener('click', () => plNavigate(-1));
+  document.getElementById('plNext').addEventListener('click', () => plNavigate(1));
+  photoLightbox.addEventListener('click', e => { if (e.target === photoLightbox) closePhotoLightbox(); });
+
+  // ============ NAVIGATION CLAVIER ============
+  document.addEventListener('keydown', (e) => {
+    if (videoLightbox.classList.contains('open')) {
+      if (e.key === 'Escape') closeVideoLightbox();
+      else if (e.key === 'ArrowLeft') vlNavigate(-1);
+      else if (e.key === 'ArrowRight') vlNavigate(1);
+    } else if (photoLightbox.classList.contains('open')) {
+      if (e.key === 'Escape') closePhotoLightbox();
+      else if (e.key === 'ArrowLeft') plNavigate(-1);
+      else if (e.key === 'ArrowRight') plNavigate(1);
+    }
+  });
+
+  // ============ INIT ============
+  generateTwinkleStars();
+  renderReels();
+  renderVideos();
+  probePhotos();
+
+  // ============ NEWSLETTER ============
+  function subscribeNewsletter(form) {
+    const email = form.querySelector('input').value;
+    console.log('[Newsletter] Inscription :', email);
+    form.style.display = 'none';
+    const success = document.getElementById('newsletterSuccess');
+    if (success) success.classList.add('show');
+    // TODO : connecter à Supabase table 'newsletter_subscribers' ou service email
+  }
+
+
+  // ============ DROPDOWN ESPACE PRO ============
+  function toggleDropdown(e) {
+    if (e) e.stopPropagation();
+    const dd = document.getElementById('navDropdown');
+    if (dd) dd.classList.toggle('open');
+  }
+  function closeDropdown() {
+    const dd = document.getElementById('navDropdown');
+    if (dd) dd.classList.remove('open');
+  }
+  document.addEventListener('click', function(e) {
+    const dd = document.getElementById('navDropdown');
+    if (dd && !dd.contains(e.target)) dd.classList.remove('open');
+  });
+
+</script>
+
+</body>
+</html>
