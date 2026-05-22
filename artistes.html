@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Artistes — THE WORLD OF QUEEN — L'Éternelle Légende</title>
+<meta name="description" content="L'équipe artistique de THE WORLD OF QUEEN — Fred Caramia, le lead chanteur, et le groupe sur scène." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --noir: #0A0A0A;
+    --charcoal: #141414;
+    --gold: #D4AF37;
+    --gold-pale: #F0D77A;
+    --cramoisi: #8B0000;
+    --cream: #F5F1E8;
+    --smoke: #8B8580;
+    --serif: 'Cinzel', serif;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--noir); color: var(--cream); font-family: var(--sans); min-height: 100vh; }
+  a { color: inherit; text-decoration: none; }
+
+  /* ============ HEADER ============ */
+  .site-header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10, 10, 10, 0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  }
+  .header-inner {
+    position: relative;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px;
+  }
+  .brand {
+    font-family: var(--serif);
+    color: var(--gold);
+    font-size: 16px;
+    letter-spacing: 3px;
+    font-weight: 600;
+    line-height: 1.1;
+    position: absolute;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .brand small {
+    display: block; font-family: var(--sans);
+    color: var(--cream); font-size: 9px;
+    letter-spacing: 4px; font-weight: 400;
+    margin-top: 2px; opacity: 0.8;
+  }
+  .menu-toggle {
+    display: none;
+    background: transparent; color: var(--gold);
+    border: 1px solid var(--gold); border-radius: 6px;
+    padding: 6px 12px; font-size: 18px; cursor: pointer;
+  }
+  nav.main-nav { display: flex; gap: 22px; align-items: center; }
+  nav.main-nav a {
+    color: var(--cream); font-size: 12px;
+    letter-spacing: 2px; font-weight: 600;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    padding: 6px 0;
+    border-bottom: 2px solid transparent;
+  }
+  nav.main-nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+  nav.main-nav a.pro {
+    border: 1px solid var(--gold);
+    border-radius: 999px;
+    padding: 6px 14px;
+    color: var(--gold);
+  }
+  nav.main-nav a.pro:hover { background: var(--gold); color: var(--noir); }
+  @media (max-width: 980px) {
+    .header-inner { justify-content: space-between; }
+    .brand { position: static; transform: none; }
+    .menu-toggle { display: block; }
+    nav.main-nav {
+      position: absolute; top: 100%; right: 0;
+      background: rgba(10, 10, 10, 0.98);
+      flex-direction: column; gap: 0;
+      padding: 14px 20px;
+      border-radius: 0 0 0 12px;
+      border-left: 1px solid rgba(212, 175, 55, 0.15);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    nav.main-nav.open { max-height: 90vh; }
+    nav.main-nav a {
+      padding: 12px 0; width: 100%;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.10);
+    }
+  }
+
+  /* ============ CIEL ÉTOILÉ GLOBAL ============ */
+  .artistes-page {
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    padding-bottom: 50px;
+    padding-top: 110px;
+    min-height: 100vh;
+  }
+  .artistes-page::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 0%, rgba(212,175,55,0.10) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 70% at 50% 40%, rgba(91,163,245,0.03) 0%, transparent 70%);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .twinkle-stars {
+    position: fixed; inset: 0;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .twinkle-star {
+    position: absolute;
+    background: #F0D77A;
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle 4s infinite ease-in-out;
+    box-shadow: 0 0 4px #D4AF37, 0 0 8px rgba(240,215,122,0.5);
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.6); }
+    50%      { opacity: 1; transform: scale(1.3); }
+  }
+  .twinkle-star.big {
+    width: 4px; height: 4px;
+    box-shadow: 0 0 8px #D4AF37, 0 0 18px rgba(240,215,122,0.9);
+  }
+  .twinkle-star.medium {
+    width: 2.5px; height: 2.5px;
+    box-shadow: 0 0 5px #D4AF37, 0 0 12px rgba(240,215,122,0.7);
+  }
+  .twinkle-star.small { width: 1.5px; height: 1.5px; }
+
+  /* ============ SECTIONS ============ */
+  .artistes-content {
+    position: relative;
+    z-index: 2;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 30px 20px;
+  }
+  .section-eyebrow {
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: var(--serif);
+    color: var(--cream);
+    font-size: clamp(32px, 5vw, 44px);
+    margin-bottom: 28px;
+    letter-spacing: 1px;
+    font-weight: 500;
+  }
+
+  /* ============ CARTE ARTISTE (format paysage) ============ */
+  .artist-card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #1a1a1a;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(212,175,55,0.25);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 60px rgba(212,175,55,0.15);
+    margin-bottom: 26px;
+  }
+  .artist-photo {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+  }
+  .artist-photo-fallback {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold);
+    font-family: var(--serif);
+    font-size: 22px;
+    letter-spacing: 2px;
+    background: linear-gradient(180deg, #2a2a2a 0%, #0a0a0a 100%);
+  }
+  .artist-overlay {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 22px 24px 20px;
+    background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.78) 50%, rgba(0,0,0,0.95) 100%);
+  }
+  .artist-role {
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 5px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .artist-name {
+    font-family: var(--serif);
+    color: var(--cream);
+    font-size: clamp(24px, 4vw, 32px);
+    font-weight: 500;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .artist-quote {
+    color: var(--gold-pale);
+    font-size: 13px;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.4;
+    max-width: 92%;
+  }
+
+  /* ============ BIO ============ */
+  .artist-bio {
+    padding: 0 4px;
+    margin-bottom: 40px;
+  }
+  .artist-bio p {
+    color: var(--cream);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+  .artist-bio p .gold-text {
+    color: var(--gold);
+    font-weight: 600;
+  }
+  .artist-bio p .gold-italic {
+    color: var(--gold);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  /* ============ SÉPARATEUR DORÉ ============ */
+  .gold-divider {
+    display: flex; align-items: center; justify-content: center;
+    gap: 16px;
+    margin: 40px auto;
+    max-width: 540px;
+  }
+  .gold-divider .line {
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .gold-divider .crown {
+    color: var(--gold);
+    font-size: 22px;
+    width: 38px; height: 38px;
+    border: 1px solid rgba(212,175,55,0.45);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(10,10,10,0.6);
+  }
+
+  /* ============ CARTES MUSICIENS (même format que carte Fred, empilées) ============ */
+  .group-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    margin-top: 10px;
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: #050505;
+    border-top: 1px solid rgba(212, 175, 55, 0.15);
+    padding: 50px 20px 24px;
+    margin-top: 60px;
+    position: relative;
+    z-index: 3;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+  }
+  .footer-col h5 {
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .footer-col p, .footer-col a {
+    color: var(--cream);
+    font-size: 13px;
+    line-height: 1.8;
+    opacity: 0.85;
+    display: block;
+  }
+  .footer-col a:hover { color: var(--gold); opacity: 1; }
+  .footer-bottom {
+    border-top: 1px solid rgba(212,175,55,0.1);
+    margin-top: 36px; padding-top: 20px;
+    text-align: center;
+    color: var(--smoke);
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+  .gold-bottom { color: var(--gold); font-weight: 700; }
+  @media (max-width: 768px) {
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 26px; }
+  }
+  @media (max-width: 500px) {
+    .footer-inner { grid-template-columns: 1fr; gap: 22px; }
+  }
+
+  /* ============ NEWSLETTER BLOCK ============ */
+  .newsletter-block { position: relative; z-index: 3; background: linear-gradient(180deg, #0a0a0a 0%, #050505 100%); border-top: 1px solid rgba(212,175,55,0.15); border-bottom: 1px solid rgba(212,175,55,0.15); padding: 50px 20px; }
+  .newsletter-wrap { max-width: 600px; margin: 0 auto; text-align: center; }
+  .newsletter-eyebrow { color: var(--gold); font-size: 11px; letter-spacing: 5px; font-weight: 700; margin-bottom: 10px; }
+  .newsletter-title { font-family: var(--serif); color: var(--cream); font-size: clamp(24px, 4vw, 32px); font-weight: 500; letter-spacing: 1px; margin-bottom: 8px; }
+  .newsletter-text { color: var(--cream); font-size: 13px; line-height: 1.5; opacity: 0.85; margin-bottom: 22px; }
+  .newsletter-form { display: flex; gap: 10px; max-width: 480px; margin: 0 auto 12px; flex-wrap: wrap; justify-content: center; }
+  .newsletter-form input { flex: 1; min-width: 200px; background: rgba(0,0,0,0.5); border: 1px solid rgba(212,175,55,0.3); color: var(--cream); padding: 12px 18px; border-radius: 999px; font-family: inherit; font-size: 14px; outline: none; transition: border-color 0.2s; }
+  .newsletter-form input:focus { border-color: var(--gold); }
+  .newsletter-form input::placeholder { color: var(--smoke); }
+  .newsletter-form button { background: var(--gold); color: var(--noir); border: none; border-radius: 999px; padding: 12px 24px; font-family: inherit; font-size: 13px; letter-spacing: 1px; font-weight: 700; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+  .newsletter-form button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212,175,55,0.3); }
+  .newsletter-helper { color: var(--smoke); font-size: 11px; font-style: italic; }
+  .newsletter-success { color: #10b981; font-size: 13px; margin-top: 12px; display: none; }
+  .newsletter-success.show { display: block; }
+
+
+  /* ============ DROPDOWN ESPACE PRO ============ */
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-toggle {
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 6px 0;
+    border-bottom: 2px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    user-select: none;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: inherit;
+    transition: border-color 0.2s;
+  }
+  .nav-dropdown-toggle:hover { border-bottom-color: var(--gold); }
+  .nav-dropdown-toggle .chev { font-size: 9px; transition: transform 0.2s; }
+  .nav-dropdown.open .nav-dropdown-toggle .chev { transform: rotate(180deg); }
+  .nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 200px;
+    background: rgba(10,10,10,0.98);
+    border: 1px solid rgba(212,175,55,0.35);
+    border-radius: 12px;
+    padding: 6px;
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    box-shadow: 0 14px 36px rgba(0,0,0,0.7), 0 0 30px rgba(212,175,55,0.1);
+    z-index: 200;
+  }
+  .nav-dropdown.open .nav-dropdown-menu,
+  .nav-dropdown:hover .nav-dropdown-menu { display: flex; }
+  .nav-dropdown-menu a {
+    color: var(--cream) !important;
+    font-size: 11px !important;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 10px 14px !important;
+    border-radius: 8px;
+    border-bottom: none !important;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+  .nav-dropdown-menu a:hover {
+    background: rgba(212,175,55,0.15);
+    color: var(--gold) !important;
+  }
+  @media (max-width: 980px) {
+    .nav-dropdown { width: 100%; }
+    .nav-dropdown-toggle {
+      width: 100%;
+      justify-content: space-between;
+      padding: 12px 0 !important;
+      border-bottom: 1px solid rgba(212,175,55,0.10) !important;
+    }
+    .nav-dropdown-menu {
+      position: static;
+      background: rgba(0,0,0,0.4);
+      margin: 4px 0 8px;
+      width: 100%;
+      border: none;
+      border-left: 2px solid rgba(212,175,55,0.3);
+      border-radius: 0;
+      padding: 4px 0 4px 14px;
+      box-shadow: none;
+    }
+    .nav-dropdown-menu a {
+      padding: 8px 0 !important;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">
+      THE WORLD OF QUEEN
+      <small>L'ÉTERNELLE LÉGENDE</small>
+    </a>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html" onclick="closeMenu()">LE SHOW</a>
+      <a href="dates.html" onclick="closeMenu()">DATES</a>
+      <a href="artistes.html" onclick="closeMenu()" style="color:var(--gold);border-bottom-color:var(--gold);">ARTISTES</a>
+      <a href="fanzone.html" onclick="closeMenu()">FAN ZONE</a>
+      <a href="medias.html" onclick="closeMenu()">MÉDIAS</a>
+      <a href="moi.html" onclick="closeMenu()">MOI</a>
+      <a href="contact-prod.html" onclick="closeMenu()">CONTACT PROD</a>
+      <div class="nav-dropdown" id="navDropdown">
+        <button type="button" class="nav-dropdown-toggle" onclick="toggleDropdown(event)">ESPACE PRO <span class="chev">▾</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="espace-pro.html" onclick="closeMenu(); closeDropdown();">Espace Pro</a>
+          <a href="espace-presse.html" onclick="closeMenu(); closeDropdown();">Espace Presse</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ PAGE ARTISTES ============ -->
+<section class="artistes-page">
+  <div class="twinkle-stars" id="twinkleStars"></div>
+
+  <div class="artistes-content">
+
+    <!-- BLOC FRED CARAMIA -->
+    <div class="section-eyebrow">L'ÉQUIPE</div>
+    <h1 class="section-title">Artistes.</h1>
+
+    <div class="artist-card">
+      <div class="artist-photo" id="fredPhoto" style="background-image: url('https://regisohmyprod-sys.github.io/twoq-pwa/assets/fred-caramia.jpg');"></div>
+      <div class="artist-photo-fallback" id="fredFallback" style="display:none;">FRED CARAMIA</div>
+      <div class="artist-overlay">
+        <div class="artist-role">LEAD / CHANTEUR</div>
+        <div class="artist-name">Fred Caramia</div>
+        <div class="artist-quote">« Sûrement le plus grand artiste à interpréter Freddie Mercury sur scène. »</div>
+      </div>
+    </div>
+
+    <div class="artist-bio">
+      <p>Un musicien et chanteur français, connu notamment pour son rôle central dans le spectacle <span class="gold-text">The World of Queen</span>.</p>
+      <p>Voix, piano, guitare... et <span class="gold-italic">âme</span> de The World of Queen. Une voix rare, capable d'une intensité folle et d'une délicatesse bouleversante. Un musicien complet, habité par chaque note.</p>
+      <p>Fred Caramia, c'est plus qu'un interprète : c'est un <span class="gold-text">passionné</span>. Un fan absolu de Queen, habité par la voix de Freddie, qu'il fait revivre chaque soir avec sincérité et puissance.</p>
+    </div>
+
+    <!-- SÉPARATEUR + SECTIONS DE L'ÉQUIPE générés dynamiquement -->
+    <div id="artistSections"></div>
+
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+
+<!-- ============ ABONNEZ-VOUS À LA NEWSLETTER ============ -->
+<section class="newsletter-block">
+  <div class="newsletter-wrap">
+    <div class="newsletter-eyebrow">RESTE INFORMÉ</div>
+    <h3 class="newsletter-title">Abonnez-vous à la newsletter</h3>
+    <p class="newsletter-text">Nouvelles dates, coulisses exclusives, concours &amp; promos — directement dans ta boîte mail.</p>
+    <form class="newsletter-form" onsubmit="event.preventDefault(); subscribeNewsletter(this);">
+      <input type="email" placeholder="ton.email@exemple.com" required />
+      <button type="submit">S'abonner →</button>
+    </form>
+    <div class="newsletter-helper">📧 Tu peux te désabonner à tout moment · Aucun spam, promis.</div>
+    <div class="newsletter-success" id="newsletterSuccess">✅ Merci ! Tu es bien inscrit·e à la newsletter TWOQ 🎤</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h5>THE WORLD OF QUEEN</h5>
+      <p>L'Éternelle Légende — Le show référence en hommage à Queen, produit par Oh My Prod.</p>
+    </div>
+        <div class="footer-col">
+      <h5>Navigation</h5>
+      <a href="index.html">Le Show</a>
+      <a href="dates.html">Dates Tour</a>
+      <a href="artistes.html">Artistes</a>
+      <a href="fanzone.html">Fan Zone</a>
+      <a href="medias.html">Médias</a>
+      <a href="moi.html">Mon Espace</a>
+    </div>
+        <div class="footer-col">
+      <h5>Professionnels</h5>
+      <a href="contact-prod.html">Contact Prod</a>
+      <a href="espace-pro.html">Espace Pro</a>
+      <a href="espace-presse.html">Espace Presse</a>
+      <a href="https://app.theworldofqueen.com" target="_blank">Appli TWOQ ↗</a>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <p>SAS OH MY PROD</p>
+      <p>Production live</p>
+      <p>contact@ohmyprod.com</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 <span class="gold-bottom">THE WORLD OF QUEEN</span> — Production <span class="gold-bottom">OH MY PROD</span>. Tous droits réservés.
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() { document.getElementById('mainNav').classList.toggle('open'); }
+  function closeMenu() { document.getElementById('mainNav').classList.remove('open'); }
+
+  // ===== Fallback photo Fred si l'image n'existe pas =====
+  (function() {
+    const fredPhoto = document.getElementById('fredPhoto');
+    const fallback = document.getElementById('fredFallback');
+    if (!fredPhoto || !fallback) return;
+    // Test si l'image existe
+    const url = 'https://regisohmyprod-sys.github.io/twoq-pwa/assets/fred-caramia.jpg';
+    const probe = new Image();
+    probe.onerror = () => {
+      fredPhoto.style.display = 'none';
+      fallback.style.display = 'flex';
+    };
+    probe.src = url;
+  })();
+
+  // ===== Génération du ciel étoilé =====
+  function generateTwinkleStars() {
+    const bg = document.getElementById('twinkleStars');
+    if (!bg) return;
+    const count = 220;
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < count; i++) {
+      const star = document.createElement('div');
+      const r = Math.random();
+      let size = 'small';
+      if (r < 0.12) size = 'big';
+      else if (r < 0.40) size = 'medium';
+      star.className = 'twinkle-star ' + size;
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDelay = (Math.random() * 4) + 's';
+      star.style.animationDuration = (2.5 + Math.random() * 3.5) + 's';
+      frag.appendChild(star);
+    }
+    bg.appendChild(frag);
+  }
+
+  // ===== Toutes les sections d'artistes (générées dynamiquement) =====
+  const ARTIST_SECTIONS = [
+    {
+      eyebrow: 'LE GROUPE',
+      title: 'Sur scène.',
+      intro: 'Autour de Fred Caramia, un <span class="gold-text">groupe de musiciens d\'exception</span> donne vie à l\'héritage de Queen avec puissance, virtuosité et émotion.',
+      members: [
+        {
+          role: 'BATTEUR · MISE EN SCÈNE',
+          name: 'Alex Caramia',
+          quote: 'Co-fondateur du show avec son frère Fred. Dans la lignée de Roger Taylor, il est la colonne vertébrale rythmique et scénique du spectacle.',
+          photo: 'https://regisohmyprod-sys.github.io/twoq-pwa/assets/alex-caramia.jpg'
+        },
+        {
+          role: 'GUITARISTE',
+          name: 'Adrien Husson',
+          quote: 'Précision millimétrée et instinct pur. Il fait revivre les solos légendaires de Brian May avec ferveur et virtuosité.',
+          photo: 'https://regisohmyprod-sys.github.io/twoq-pwa/assets/adrien-husson.jpg'
+        },
+        {
+          role: 'BASSISTE',
+          name: 'Morgan Michaud',
+          quote: 'Dans la veine de John Deacon, il pose le groove profond qui donne au show son ancrage et sa puissance.',
+          photo: 'https://regisohmyprod-sys.github.io/twoq-pwa/assets/morgan-michaud.jpg'
+        },
+        {
+          role: 'CLAVIERS',
+          name: 'Mathieu Le Nestour',
+          quote: 'L\'architecte sonore du show. Ses claviers tissent les textures, sa voix sublime la richesse des chœurs.',
+          photo: 'https://regisohmyprod-sys.github.io/twoq-pwa/assets/mathieu-le-nestour.jpg'
+        },
+      ]
+    },
+    {
+      eyebrow: 'LES SOPRANOS',
+      title: '',
+      intro: '',
+      members: [
+        {
+          role: 'SOPRANO',
+          name: 'Claire Lairy',
+          quote: 'L\'art lyrique porté avec humour et énergie. Son duo Barcelona avec Fred est un sommet d\'émotion.',
+          photo: 'https://regisohmyprod-sys.github.io/twoq-pwa/assets/claire-lairy.jpg'
+        },
+        {
+          role: 'SOPRANO',
+          name: 'Fanny Crouet',
+          quote: 'Étourdissante voix lyrique. Elle rend le classique aussi abordable que magique sur scène.',
+          photo: 'https://regisohmyprod-sys.github.io/twoq-pwa/assets/fanny-crouet.jpg'
+        },
+      ]
+    },
+    {
+      eyebrow: 'LES PIANISTES',
+      title: '',
+      intro: '',
+      members: [
+        {
+          role: 'PIANISTE',
+          name: 'Fred Penas',
+          quote: 'Bohemian Rhapsody, Love of My Life... sa précision pianistique donne corps aux harmonies les plus exigeantes.',
+          photo: 'https://regisohmyprod-sys.github.io/twoq-pwa/assets/fred-penas.jpg'
+        },
+        {
+          role: 'PIANISTE',
+          name: 'Florian Dupu',
+          quote: 'Sensible et exigeant. C\'est la discrétion qui fait vibrer les plus belles ballades du répertoire de Queen.',
+          photo: 'https://regisohmyprod-sys.github.io/twoq-pwa/assets/florian-dupu.jpg'
+        },
+      ]
+    },
+    {
+      eyebrow: 'LES CASCADEURS',
+      title: '',
+      intro: '',
+      members: [
+        {
+          role: 'PERFORMANCE SCÉNIQUE',
+          name: 'Nos cascadeurs',
+          quote: 'Le feu, la fureur, le frisson. L\'adrénaline pure qui électrise chaque scène du spectacle.',
+          photo: 'https://regisohmyprod-sys.github.io/twoq-pwa/assets/cascadeurs.jpg'
+        },
+      ]
+    },
+    {
+      eyebrow: 'LA DREAM TEAM',
+      title: '',
+      intro: '',
+      members: [
+        {
+          role: 'TOUS ENSEMBLE',
+          name: 'La Dream Team',
+          quote: 'L\'âme de The World of Queen. Une famille soudée, un seul show, une seule passion.',
+          photo: 'https://regisohmyprod-sys.github.io/twoq-pwa/assets/dream-team.jpg'
+        },
+      ]
+    },
+  ];
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  }
+
+  function renderArtistSections() {
+    const root = document.getElementById('artistSections');
+    if (!root) return;
+    const allMembers = [];
+    let memberCounter = 0;
+
+    let html = '';
+    for (const section of ARTIST_SECTIONS) {
+      html += `
+        <div class="gold-divider">
+          <span class="line"></span>
+          <span class="crown">♕</span>
+          <span class="line"></span>
+        </div>
+        <div class="section-eyebrow">${escapeHtml(section.eyebrow)}</div>
+      `;
+      if (section.title) {
+        html += `<h2 class="section-title">${escapeHtml(section.title)}</h2>`;
+      }
+      if (section.intro) {
+        html += `<div class="artist-bio"><p>${section.intro}</p></div>`;
+      }
+      html += '<div class="group-stack">';
+      for (const m of section.members) {
+        const id = memberCounter++;
+        allMembers.push({ id, photo: m.photo });
+        html += `
+          <div class="artist-card">
+            <div class="artist-photo" id="memberPhoto${id}" style="background-image: url('${m.photo}');"></div>
+            <div class="artist-photo-fallback" id="memberFallback${id}" style="display:none;">${escapeHtml(m.name.toUpperCase())}</div>
+            <div class="artist-overlay">
+              <div class="artist-role">${escapeHtml(m.role)}</div>
+              <div class="artist-name">${escapeHtml(m.name)}</div>
+              <div class="artist-quote">${escapeHtml(m.quote)}</div>
+            </div>
+          </div>
+        `;
+      }
+      html += '</div>';
+    }
+    root.innerHTML = html;
+
+    // Test si chaque image existe ; sinon fallback (nom en or sur fond dégradé)
+    allMembers.forEach(m => {
+      const photoEl = document.getElementById(`memberPhoto${m.id}`);
+      const fallbackEl = document.getElementById(`memberFallback${m.id}`);
+      if (!photoEl || !fallbackEl) return;
+      const probe = new Image();
+      probe.onerror = () => {
+        photoEl.style.display = 'none';
+        fallbackEl.style.display = 'flex';
+      };
+      probe.src = m.photo;
+    });
+  }
+
+  // ===== Init =====
+  generateTwinkleStars();
+  renderArtistSections();
+
+  // ============ NEWSLETTER ============
+  function subscribeNewsletter(form) {
+    const email = form.querySelector('input').value;
+    console.log('[Newsletter] Inscription :', email);
+    form.style.display = 'none';
+    const success = document.getElementById('newsletterSuccess');
+    if (success) success.classList.add('show');
+    // TODO : connecter à Supabase table 'newsletter_subscribers' ou service email
+  }
+
+
+  // ============ DROPDOWN ESPACE PRO ============
+  function toggleDropdown(e) {
+    if (e) e.stopPropagation();
+    const dd = document.getElementById('navDropdown');
+    if (dd) dd.classList.toggle('open');
+  }
+  function closeDropdown() {
+    const dd = document.getElementById('navDropdown');
+    if (dd) dd.classList.remove('open');
+  }
+  document.addEventListener('click', function(e) {
+    const dd = document.getElementById('navDropdown');
+    if (dd && !dd.contains(e.target)) dd.classList.remove('open');
+  });
+
+</script>
+
+</body>
+</html>
