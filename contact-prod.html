@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact Prod — THE WORLD OF QUEEN — L'Éternelle Légende</title>
+<meta name="description" content="Contact professionnel TWOQ — Booking, programmation, partenariats, presse." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --noir: #0A0A0A; --charcoal: #141414;
+    --gold: #D4AF37; --gold-pale: #F0D77A;
+    --cramoisi: #8B0000; --cream: #F5F1E8; --smoke: #8B8580;
+    --serif: 'Cinzel', serif; --sans: 'Inter', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--noir); color: var(--cream); font-family: var(--sans); min-height: 100vh; }
+  a { color: inherit; text-decoration: none; }
+
+  /* HEADER */
+  .site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(10,10,10,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(212,175,55,0.15); }
+  .header-inner {
+    position: relative;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px;
+  }
+  .brand {
+    font-family: var(--serif);
+    color: var(--gold);
+    font-size: 16px;
+    letter-spacing: 3px;
+    font-weight: 600;
+    line-height: 1.1;
+    position: absolute;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .brand small { display: block; font-family: var(--sans); color: var(--cream); font-size: 9px; letter-spacing: 4px; font-weight: 400; margin-top: 2px; opacity: 0.8; }
+  .menu-toggle { display: none; background: transparent; color: var(--gold); border: 1px solid var(--gold); border-radius: 6px; padding: 6px 12px; font-size: 18px; cursor: pointer; }
+  nav.main-nav { display: flex; gap: 22px; align-items: center; }
+  nav.main-nav a { color: var(--cream); font-size: 12px; letter-spacing: 2px; font-weight: 600; text-transform: uppercase; transition: color 0.2s; padding: 6px 0; border-bottom: 2px solid transparent; }
+  nav.main-nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+  nav.main-nav a.pro { border: 1px solid var(--gold); border-radius: 999px; padding: 6px 14px; color: var(--gold); }
+  nav.main-nav a.pro:hover { background: var(--gold); color: var(--noir); }
+  @media (max-width: 980px) {
+    .header-inner { justify-content: space-between; }
+    .brand { position: static; transform: none; }
+    .menu-toggle { display: block; }
+    nav.main-nav { position: absolute; top: 100%; right: 0; background: rgba(10,10,10,0.98); flex-direction: column; gap: 0; padding: 14px 20px; border-radius: 0 0 0 12px; border-left: 1px solid rgba(212,175,55,0.15); border-bottom: 1px solid rgba(212,175,55,0.15); max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    nav.main-nav.open { max-height: 90vh; }
+    nav.main-nav a { padding: 12px 0; width: 100%; border-bottom: 1px solid rgba(212,175,55,0.10); }
+  }
+
+  /* PAGE */
+  .contact-page { position: relative; overflow: hidden; background: #000; padding-bottom: 40px; padding-top: 110px; min-height: 100vh; }
+  .contact-page::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(212,175,55,0.10) 0%, transparent 60%), radial-gradient(ellipse 80% 70% at 50% 40%, rgba(91,163,245,0.03) 0%, transparent 70%); z-index: 0; pointer-events: none; }
+  .twinkle-stars { position: fixed; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+  .twinkle-star { position: absolute; background: #F0D77A; border-radius: 50%; opacity: 0; animation: twinkle 4s infinite ease-in-out; box-shadow: 0 0 4px #D4AF37, 0 0 8px rgba(240,215,122,0.5); }
+  @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(0.6); } 50% { opacity: 1; transform: scale(1.3); } }
+  .twinkle-star.big { width: 4px; height: 4px; box-shadow: 0 0 8px #D4AF37, 0 0 18px rgba(240,215,122,0.9); }
+  .twinkle-star.medium { width: 2.5px; height: 2.5px; box-shadow: 0 0 5px #D4AF37, 0 0 12px rgba(240,215,122,0.7); }
+  .twinkle-star.small { width: 1.5px; height: 1.5px; }
+
+  .contact-content { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; padding: 30px 20px; }
+
+  /* HERO */
+  .ct-hero { text-align: center; padding: 20px 0 40px; }
+  .ct-hero-eyebrow { color: var(--gold); font-size: 11px; letter-spacing: 5px; font-weight: 700; margin-bottom: 12px; }
+  .ct-hero h1 { font-family: var(--serif); color: var(--cream); font-size: clamp(36px, 6vw, 56px); font-weight: 500; letter-spacing: 2px; margin-bottom: 16px; text-shadow: 0 0 30px rgba(212,175,55,0.4); }
+  .ct-hero-text { color: var(--cream); font-size: 15px; line-height: 1.7; max-width: 600px; margin: 0 auto; opacity: 0.9; }
+  .ct-hero-text strong { color: var(--gold); font-weight: 600; }
+
+  /* SECTIONS */
+  .section-eyebrow { color: var(--gold); font-size: 11px; letter-spacing: 4px; font-weight: 700; text-transform: uppercase; margin-bottom: 14px; }
+  .section-eyebrow.with-mt { margin-top: 40px; }
+  .section-title { font-family: var(--serif); color: var(--cream); font-size: clamp(24px, 3.5vw, 32px); font-weight: 500; margin-bottom: 24px; letter-spacing: 0.5px; }
+
+  /* CARTES TYPES DE DEMANDE */
+  .request-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 30px; }
+  @media (max-width: 640px) { .request-grid { grid-template-columns: 1fr; } }
+  .request-card { background: linear-gradient(180deg, rgba(20,20,20,0.85), rgba(10,10,10,0.95)); border: 1px solid rgba(212,175,55,0.18); border-radius: 16px; padding: 22px 20px; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; cursor: pointer; }
+  .request-card:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(212,175,55,0.15); }
+  .request-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 14px; }
+  .request-icon.booking { background: linear-gradient(135deg, rgba(212,175,55,0.25), rgba(212,175,55,0.05)); border: 1px solid rgba(212,175,55,0.4); color: var(--gold); }
+  .request-icon.presse { background: linear-gradient(135deg, rgba(91,163,245,0.18), rgba(91,163,245,0.04)); border: 1px solid rgba(91,163,245,0.4); color: #6db4f5; }
+  .request-icon.partenariat { background: linear-gradient(135deg, rgba(255,138,115,0.18), rgba(255,138,115,0.04)); border: 1px solid rgba(255,138,115,0.4); color: #ff8a73; }
+  .request-icon.prod { background: linear-gradient(135deg, rgba(180,120,200,0.18), rgba(180,120,200,0.04)); border: 1px solid rgba(180,120,200,0.4); color: #d18ae8; }
+  .request-title { font-family: var(--serif); color: var(--cream); font-size: 20px; font-weight: 500; margin-bottom: 6px; letter-spacing: 0.5px; }
+  .request-desc { color: var(--cream); font-size: 13px; line-height: 1.6; opacity: 0.85; margin-bottom: 14px; }
+  .request-meta { font-size: 11px; color: var(--gold); letter-spacing: 1px; font-weight: 600; text-transform: uppercase; }
+
+  /* FORMULAIRE */
+  .contact-form-wrap { background: linear-gradient(180deg, rgba(20,20,20,0.85), rgba(10,10,10,0.95)); border: 1px solid var(--gold); border-radius: 16px; padding: 30px 24px; margin-bottom: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+  .form-row { margin-bottom: 16px; }
+  .form-row.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 600px) { .form-row.two-col { grid-template-columns: 1fr; } }
+  .form-label { display: block; color: var(--gold); font-size: 11px; letter-spacing: 2px; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; }
+  .form-input, .form-select, .form-textarea {
+    width: 100%; background: rgba(0,0,0,0.55); border: 1px solid rgba(212,175,55,0.3);
+    color: var(--cream); padding: 12px 16px; border-radius: 10px;
+    font-family: inherit; font-size: 14px; outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,175,55,0.12);
+  }
+  .form-input::placeholder, .form-textarea::placeholder { color: var(--smoke); font-style: italic; }
+  .form-textarea { min-height: 140px; resize: vertical; line-height: 1.5; }
+  .form-select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8'><polyline points='0,0 6,8 12,0' fill='none' stroke='%23D4AF37' stroke-width='2'/></svg>"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; }
+
+  .form-submit { background: var(--gold); color: var(--noir); border: none; border-radius: 999px; padding: 14px 30px; font-size: 14px; letter-spacing: 1.5px; font-weight: 700; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; font-family: inherit; }
+  .form-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(212,175,55,0.35); }
+  .form-helper { color: var(--smoke); font-size: 11px; margin-top: 14px; line-height: 1.5; }
+  .form-success { display: none; padding: 18px; background: rgba(16,185,129,0.1); border: 1px solid #10b981; border-radius: 10px; color: #10b981; text-align: center; font-weight: 600; }
+  .form-success.show { display: block; }
+
+  /* INFOS DE CONTACT */
+  .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 30px; }
+  @media (max-width: 768px) { .info-grid { grid-template-columns: 1fr; } }
+  .info-card { background: linear-gradient(180deg, rgba(20,20,20,0.85), rgba(10,10,10,0.95)); border: 1px solid rgba(212,175,55,0.18); border-radius: 14px; padding: 20px 18px; text-align: center; transition: border-color 0.2s; }
+  .info-card:hover { border-color: var(--gold); }
+  .info-icon { font-size: 28px; color: var(--gold); margin-bottom: 10px; }
+  .info-label { color: var(--gold); font-size: 11px; letter-spacing: 2px; font-weight: 700; margin-bottom: 6px; }
+  .info-value { color: var(--cream); font-size: 14px; font-weight: 500; line-height: 1.5; }
+  .info-value a { color: var(--cream); }
+  .info-value a:hover { color: var(--gold); }
+
+  /* SOCIÉTÉ */
+  .society-card { background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(212,175,55,0.02)); border: 1px dashed rgba(212,175,55,0.4); border-radius: 14px; padding: 24px 20px; text-align: center; margin-bottom: 30px; }
+  .society-name { font-family: var(--serif); color: var(--gold); font-size: 22px; letter-spacing: 2px; font-weight: 600; margin-bottom: 6px; }
+  .society-text { color: var(--cream); font-size: 13px; line-height: 1.6; opacity: 0.9; }
+
+  /* SÉPARATEUR */
+  .gold-divider { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 30px auto; max-width: 540px; }
+  .gold-divider .line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .gold-divider .crown { color: var(--gold); font-size: 18px; width: 32px; height: 32px; border: 1px solid rgba(212,175,55,0.45); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(10,10,10,0.6); }
+
+  /* NEWSLETTER */
+  .newsletter-block { position: relative; z-index: 3; background: linear-gradient(180deg, #0a0a0a 0%, #050505 100%); border-top: 1px solid rgba(212,175,55,0.15); border-bottom: 1px solid rgba(212,175,55,0.15); padding: 50px 20px; }
+  .newsletter-wrap { max-width: 600px; margin: 0 auto; text-align: center; }
+  .newsletter-eyebrow { color: var(--gold); font-size: 11px; letter-spacing: 5px; font-weight: 700; margin-bottom: 10px; }
+  .newsletter-title { font-family: var(--serif); color: var(--cream); font-size: clamp(24px, 4vw, 32px); font-weight: 500; letter-spacing: 1px; margin-bottom: 8px; }
+  .newsletter-text { color: var(--cream); font-size: 13px; line-height: 1.5; opacity: 0.85; margin-bottom: 22px; }
+  .newsletter-form { display: flex; gap: 10px; max-width: 480px; margin: 0 auto 12px; flex-wrap: wrap; justify-content: center; }
+  .newsletter-form input { flex: 1; min-width: 200px; background: rgba(0,0,0,0.5); border: 1px solid rgba(212,175,55,0.3); color: var(--cream); padding: 12px 18px; border-radius: 999px; font-family: inherit; font-size: 14px; outline: none; transition: border-color 0.2s; }
+  .newsletter-form input:focus { border-color: var(--gold); }
+  .newsletter-form input::placeholder { color: var(--smoke); }
+  .newsletter-form button { background: var(--gold); color: var(--noir); border: none; border-radius: 999px; padding: 12px 24px; font-family: inherit; font-size: 13px; letter-spacing: 1px; font-weight: 700; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+  .newsletter-form button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212,175,55,0.3); }
+  .newsletter-helper { color: var(--smoke); font-size: 11px; font-style: italic; }
+  .newsletter-success { color: #10b981; font-size: 13px; margin-top: 12px; display: none; }
+  .newsletter-success.show { display: block; }
+
+  /* FOOTER */
+  footer { background: #050505; padding: 50px 20px 24px; position: relative; z-index: 3; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+  .footer-col h5 { color: var(--gold); font-size: 12px; letter-spacing: 4px; font-weight: 700; text-transform: uppercase; margin-bottom: 14px; }
+  .footer-col p, .footer-col a { color: var(--cream); font-size: 13px; line-height: 1.8; opacity: 0.85; display: block; }
+  .footer-col a:hover { color: var(--gold); opacity: 1; }
+  .footer-bottom { border-top: 1px solid rgba(212,175,55,0.1); margin-top: 36px; padding-top: 20px; text-align: center; color: var(--smoke); font-size: 11px; letter-spacing: 1px; }
+  .gold-bottom { color: var(--gold); font-weight: 700; }
+  @media (max-width: 768px) { .footer-inner { grid-template-columns: 1fr 1fr; gap: 26px; } }
+  @media (max-width: 500px) { .footer-inner { grid-template-columns: 1fr; gap: 22px; } }
+
+  /* ============ DROPDOWN ESPACE PRO ============ */
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-toggle {
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 6px 0;
+    border-bottom: 2px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    user-select: none;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: inherit;
+    transition: border-color 0.2s;
+  }
+  .nav-dropdown-toggle:hover { border-bottom-color: var(--gold); }
+  .nav-dropdown-toggle .chev { font-size: 9px; transition: transform 0.2s; }
+  .nav-dropdown.open .nav-dropdown-toggle .chev { transform: rotate(180deg); }
+  .nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 200px;
+    background: rgba(10,10,10,0.98);
+    border: 1px solid rgba(212,175,55,0.35);
+    border-radius: 12px;
+    padding: 6px;
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    box-shadow: 0 14px 36px rgba(0,0,0,0.7), 0 0 30px rgba(212,175,55,0.1);
+    z-index: 200;
+  }
+  .nav-dropdown.open .nav-dropdown-menu,
+  .nav-dropdown:hover .nav-dropdown-menu { display: flex; }
+  .nav-dropdown-menu a {
+    color: var(--cream) !important;
+    font-size: 11px !important;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 10px 14px !important;
+    border-radius: 8px;
+    border-bottom: none !important;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+  .nav-dropdown-menu a:hover {
+    background: rgba(212,175,55,0.15);
+    color: var(--gold) !important;
+  }
+  @media (max-width: 980px) {
+    .nav-dropdown { width: 100%; }
+    .nav-dropdown-toggle {
+      width: 100%;
+      justify-content: space-between;
+      padding: 12px 0 !important;
+      border-bottom: 1px solid rgba(212,175,55,0.10) !important;
+    }
+    .nav-dropdown-menu {
+      position: static;
+      background: rgba(0,0,0,0.4);
+      margin: 4px 0 8px;
+      width: 100%;
+      border: none;
+      border-left: 2px solid rgba(212,175,55,0.3);
+      border-radius: 0;
+      padding: 4px 0 4px 14px;
+      box-shadow: none;
+    }
+    .nav-dropdown-menu a {
+      padding: 8px 0 !important;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">
+      THE WORLD OF QUEEN
+      <small>L'ÉTERNELLE LÉGENDE</small>
+    </a>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html" onclick="closeMenu()">LE SHOW</a>
+      <a href="dates.html" onclick="closeMenu()">DATES</a>
+      <a href="artistes.html" onclick="closeMenu()">ARTISTES</a>
+      <a href="fanzone.html" onclick="closeMenu()">FAN ZONE</a>
+      <a href="medias.html" onclick="closeMenu()">MÉDIAS</a>
+      <a href="moi.html" onclick="closeMenu()">MOI</a>
+      <a href="contact-prod.html" onclick="closeMenu()" style="color:var(--gold);border-bottom-color:var(--gold);">CONTACT PROD</a>
+      <div class="nav-dropdown" id="navDropdown">
+        <button type="button" class="nav-dropdown-toggle" onclick="toggleDropdown(event)">ESPACE PRO <span class="chev">▾</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="espace-pro.html" onclick="closeMenu(); closeDropdown();">Espace Pro</a>
+          <a href="espace-presse.html" onclick="closeMenu(); closeDropdown();">Espace Presse</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<section class="contact-page">
+  <div class="twinkle-stars" id="twinkleStars"></div>
+
+  <div class="contact-content">
+
+    <!-- HERO -->
+    <div class="ct-hero">
+      <div class="ct-hero-eyebrow">CONTACT PROFESSIONNEL</div>
+      <h1>Travaillons ensemble.</h1>
+      <p class="ct-hero-text">
+        Vous êtes <strong>programmateur</strong>, <strong>journaliste</strong>, <strong>partenaire</strong> ou <strong>producteur</strong>&nbsp;? Nous sommes ravis d'échanger avec vous sur tous les projets autour de <strong>THE WORLD OF QUEEN — L'Éternelle Légende</strong>.
+      </p>
+    </div>
+
+    <!-- TYPES DE DEMANDE -->
+    <div class="section-eyebrow">TYPES DE DEMANDE</div>
+    <h2 class="section-title">Comment pouvons-nous vous aider&nbsp;?</h2>
+
+    <div class="request-grid">
+      <div class="request-card" onclick="selectRequestType('booking')">
+        <div class="request-icon booking">🎤</div>
+        <div class="request-title">Booking &amp; Programmation</div>
+        <div class="request-desc">Inscrire le show dans votre salle, festival ou événement. Tournées 2026-2028.</div>
+        <div class="request-meta">→ Booking</div>
+      </div>
+      <div class="request-card" onclick="selectRequestType('presse')">
+        <div class="request-icon presse">📰</div>
+        <div class="request-title">Presse &amp; Médias</div>
+        <div class="request-desc">Interviews, reportages, accréditations, dossier de presse, photos HD.</div>
+        <div class="request-meta">→ Presse</div>
+      </div>
+      <div class="request-card" onclick="selectRequestType('partenariat')">
+        <div class="request-icon partenariat">🤝</div>
+        <div class="request-title">Partenariat &amp; Sponsoring</div>
+        <div class="request-desc">Marques, sponsors, opérations co-brandées, dotations concours.</div>
+        <div class="request-meta">→ Partenariat</div>
+      </div>
+      <div class="request-card" onclick="selectRequestType('production')">
+        <div class="request-icon prod">🎬</div>
+        <div class="request-title">Production &amp; Tournage</div>
+        <div class="request-desc">Captation, documentaire, événement privé, tournage corporate.</div>
+        <div class="request-meta">→ Production</div>
+      </div>
+    </div>
+
+    <!-- FORMULAIRE -->
+    <div class="section-eyebrow with-mt">FORMULAIRE</div>
+    <h2 class="section-title">Envoyez-nous votre demande</h2>
+
+    <div class="contact-form-wrap">
+      <form id="contactForm" onsubmit="event.preventDefault(); submitContactForm();">
+        <div class="form-row two-col">
+          <div>
+            <label class="form-label" for="ctName">Nom complet *</label>
+            <input class="form-input" id="ctName" type="text" required placeholder="Jean Dupont" />
+          </div>
+          <div>
+            <label class="form-label" for="ctOrg">Société / organisme</label>
+            <input class="form-input" id="ctOrg" type="text" placeholder="Zénith de Paris" />
+          </div>
+        </div>
+        <div class="form-row two-col">
+          <div>
+            <label class="form-label" for="ctEmail">Email *</label>
+            <input class="form-input" id="ctEmail" type="email" required placeholder="contact@exemple.com" />
+          </div>
+          <div>
+            <label class="form-label" for="ctPhone">Téléphone</label>
+            <input class="form-input" id="ctPhone" type="tel" placeholder="+33 6 12 34 56 78" />
+          </div>
+        </div>
+        <div class="form-row">
+          <label class="form-label" for="ctType">Type de demande *</label>
+          <select class="form-select" id="ctType" required>
+            <option value="">Sélectionne un type</option>
+            <option value="booking">🎤 Booking &amp; Programmation</option>
+            <option value="presse">📰 Presse &amp; Médias</option>
+            <option value="partenariat">🤝 Partenariat &amp; Sponsoring</option>
+            <option value="production">🎬 Production &amp; Tournage</option>
+            <option value="autre">Autre</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label class="form-label" for="ctSubject">Sujet *</label>
+          <input class="form-input" id="ctSubject" type="text" required placeholder="Programmation TWOQ saison 2027" />
+        </div>
+        <div class="form-row">
+          <label class="form-label" for="ctMessage">Votre message *</label>
+          <textarea class="form-textarea" id="ctMessage" required placeholder="Présente ton projet, tes dates, ta jauge, ton budget indicatif..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Envoyer ma demande →</button>
+        <div class="form-helper">📧 Réponse sous <strong style="color:var(--gold);">48h ouvrées</strong> · Vos infos restent confidentielles.</div>
+      </form>
+      <div class="form-success" id="formSuccess">
+        ✅ Merci ! Votre demande a bien été envoyée. Nous reviendrons vers vous sous 48h ouvrées.
+      </div>
+    </div>
+
+    <!-- INFOS DIRECTES -->
+    <div class="section-eyebrow with-mt">CONTACT DIRECT</div>
+    <h2 class="section-title">Préférez-vous nous joindre directement&nbsp;?</h2>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-icon">✉️</div>
+        <div class="info-label">EMAIL</div>
+        <div class="info-value"><a href="mailto:contact@ohmyprod.com">contact@ohmyprod.com</a></div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">🎤</div>
+        <div class="info-label">BOOKING</div>
+        <div class="info-value"><a href="mailto:booking@ohmyprod.com">booking@ohmyprod.com</a></div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">📰</div>
+        <div class="info-label">PRESSE</div>
+        <div class="info-value"><a href="mailto:presse@ohmyprod.com">presse@ohmyprod.com</a></div>
+      </div>
+    </div>
+
+    <!-- SOCIÉTÉ -->
+    <div class="society-card">
+      <div class="society-name">SAS OH MY PROD</div>
+      <div class="society-text">Production de spectacles vivants · Tournées nationales &amp; internationales<br>Producteur officiel de THE WORLD OF QUEEN</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABONNEZ-VOUS -->
+<section class="newsletter-block">
+  <div class="newsletter-wrap">
+    <div class="newsletter-eyebrow">RESTE INFORMÉ</div>
+    <h3 class="newsletter-title">Abonnez-vous à la newsletter</h3>
+    <p class="newsletter-text">Nouvelles dates, coulisses exclusives, concours &amp; promos — directement dans ta boîte mail.</p>
+    <form class="newsletter-form" onsubmit="event.preventDefault(); subscribeNewsletter(this);">
+      <input type="email" placeholder="ton.email@exemple.com" required />
+      <button type="submit">S'abonner →</button>
+    </form>
+    <div class="newsletter-helper">📧 Tu peux te désabonner à tout moment · Aucun spam, promis.</div>
+    <div class="newsletter-success" id="newsletterSuccess">✅ Merci ! Tu es bien inscrit·e à la newsletter TWOQ 🎤</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h5>THE WORLD OF QUEEN</h5>
+      <p>L'Éternelle Légende — Le show référence en hommage à Queen, produit par Oh My Prod.</p>
+    </div>
+        <div class="footer-col">
+      <h5>Navigation</h5>
+      <a href="index.html">Le Show</a>
+      <a href="dates.html">Dates Tour</a>
+      <a href="artistes.html">Artistes</a>
+      <a href="fanzone.html">Fan Zone</a>
+      <a href="medias.html">Médias</a>
+      <a href="moi.html">Mon Espace</a>
+    </div>
+        <div class="footer-col">
+      <h5>Professionnels</h5>
+      <a href="contact-prod.html">Contact Prod</a>
+      <a href="espace-pro.html">Espace Pro</a>
+      <a href="espace-presse.html">Espace Presse</a>
+      <a href="https://app.theworldofqueen.com" target="_blank">Appli TWOQ ↗</a>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <p>SAS OH MY PROD</p>
+      <p>Production live</p>
+      <p>contact@ohmyprod.com</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 <span class="gold-bottom">THE WORLD OF QUEEN</span> — Production <span class="gold-bottom">OH MY PROD</span>. Tous droits réservés.
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() { document.getElementById('mainNav').classList.toggle('open'); }
+  function closeMenu() { document.getElementById('mainNav').classList.remove('open'); }
+
+  function selectRequestType(type) {
+    const select = document.getElementById('ctType');
+    if (select) select.value = type;
+    // Scroll vers le formulaire
+    document.getElementById('contactForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function submitContactForm() {
+    const form = document.getElementById('contactForm');
+    const success = document.getElementById('formSuccess');
+    const payload = {
+      nom: document.getElementById('ctName').value,
+      societe: document.getElementById('ctOrg').value,
+      email: document.getElementById('ctEmail').value,
+      telephone: document.getElementById('ctPhone').value,
+      type: document.getElementById('ctType').value,
+      sujet: document.getElementById('ctSubject').value,
+      message: document.getElementById('ctMessage').value,
+    };
+    console.log('[ContactForm]', payload);
+    // TODO : connecter à Supabase table 'contact_demandes' ou à un service mail (Resend, EmailJS, etc.)
+    form.style.display = 'none';
+    success.classList.add('show');
+    success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function subscribeNewsletter(form) {
+    const email = form.querySelector('input').value;
+    console.log('[Newsletter] Inscription :', email);
+    form.style.display = 'none';
+    document.getElementById('newsletterSuccess').classList.add('show');
+  }
+
+  // CIEL ÉTOILÉ
+  (function generateTwinkleStars() {
+    const bg = document.getElementById('twinkleStars');
+    if (!bg) return;
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < 220; i++) {
+      const star = document.createElement('div');
+      const r = Math.random();
+      let size = 'small';
+      if (r < 0.12) size = 'big';
+      else if (r < 0.40) size = 'medium';
+      star.className = 'twinkle-star ' + size;
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDelay = (Math.random() * 4) + 's';
+      star.style.animationDuration = (2.5 + Math.random() * 3.5) + 's';
+      frag.appendChild(star);
+    }
+    bg.appendChild(frag);
+  })();
+
+  // ============ DROPDOWN ESPACE PRO ============
+  function toggleDropdown(e) {
+    if (e) e.stopPropagation();
+    const dd = document.getElementById('navDropdown');
+    if (dd) dd.classList.toggle('open');
+  }
+  function closeDropdown() {
+    const dd = document.getElementById('navDropdown');
+    if (dd) dd.classList.remove('open');
+  }
+  document.addEventListener('click', function(e) {
+    const dd = document.getElementById('navDropdown');
+    if (dd && !dd.contains(e.target)) dd.classList.remove('open');
+  });
+
+</script>
+
+</body>
+</html>
