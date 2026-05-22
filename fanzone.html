@@ -427,8 +427,165 @@
   .fm-success-text { color: var(--cream); font-size: 14px; line-height: 1.6; margin-bottom: 20px; opacity: 0.9; }
   .fm-success-text strong { color: var(--gold); }
   .fm-success-badge { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(212,175,55,0.04)); border: 1px solid var(--gold); border-radius: 999px; padding: 10px 20px; color: var(--gold); font-weight: 700; font-size: 13px; letter-spacing: 1.5px; margin-bottom: 20px; }
-  .fm-success-cta { display: block; margin-top: 8px; color: var(--smoke); font-size: 12px; }
-  .fm-success-cta a { color: var(--gold); }
+  /* ============ MODAL QUIZ CHAMPION'S QUEEN ============ */
+  .quiz-modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(12px); z-index: 9997; display: none; align-items: flex-start; justify-content: center; padding: 40px 16px; overflow-y: auto; }
+  .quiz-modal-overlay.open { display: flex; animation: fmFadeIn 0.3s ease; }
+  .quiz-modal { background: linear-gradient(180deg, #1a1a1a, #0a0a0a); border: 1px solid var(--gold); border-radius: 20px; max-width: 560px; width: 100%; padding: 28px 26px 30px; box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 60px rgba(212,175,55,0.18); position: relative; animation: fmSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+  .qm-close { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 50%; background: rgba(0,0,0,0.6); border: 1px solid var(--gold); color: var(--gold); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; z-index: 2; }
+  .qm-close:hover { background: var(--gold); color: var(--noir); }
+
+  .qm-slide { display: none; }
+  .qm-slide.active { display: block; animation: fmSlideIn 0.3s ease; }
+
+  /* INTRO */
+  .qm-intro { text-align: center; padding: 10px 0; }
+  .qm-intro-trophy { font-size: 60px; margin-bottom: 16px; animation: trophy 2s ease-in-out infinite; }
+  @keyframes trophy { 0%, 100% { transform: rotate(-5deg) scale(1); } 50% { transform: rotate(5deg) scale(1.05); } }
+  .qm-intro-eyebrow { color: var(--cramoisi); font-size: 11px; letter-spacing: 4px; font-weight: 700; margin-bottom: 6px; }
+  .qm-intro-title { font-family: var(--serif); color: var(--cream); font-size: 26px; font-weight: 500; margin-bottom: 12px; letter-spacing: 1px; }
+  .qm-intro-text { color: var(--cream); font-size: 14px; line-height: 1.6; margin-bottom: 16px; opacity: 0.9; }
+  .qm-intro-text strong { color: var(--gold); }
+  .qm-intro-rules { background: rgba(212,175,55,0.06); border: 1px solid rgba(212,175,55,0.2); border-radius: 12px; padding: 14px 18px; margin-bottom: 18px; text-align: left; }
+  .qm-rule { display: flex; align-items: flex-start; gap: 10px; color: var(--cream); font-size: 12px; line-height: 1.5; margin-bottom: 6px; }
+  .qm-rule:last-child { margin-bottom: 0; }
+  .qm-rule-icon { color: var(--gold); font-size: 14px; flex-shrink: 0; }
+  .qm-intro-deadline { color: var(--smoke); font-size: 11px; font-style: italic; margin-top: 12px; }
+
+  /* QUIZ */
+  .qm-quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .qm-quiz-num { color: var(--gold); font-size: 12px; letter-spacing: 2px; font-weight: 700; }
+  .qm-quiz-cat { background: rgba(212,175,55,0.12); border: 1px solid rgba(212,175,55,0.3); color: var(--gold); padding: 4px 10px; border-radius: 999px; font-size: 10px; letter-spacing: 1px; font-weight: 600; }
+  .qm-progress-bar { width: 100%; height: 6px; background: rgba(212,175,55,0.15); border-radius: 999px; overflow: hidden; margin-bottom: 22px; }
+  .qm-progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-pale)); border-radius: 999px; transition: width 0.4s ease; box-shadow: 0 0 10px rgba(212,175,55,0.5); }
+  .qm-question { font-family: var(--serif); color: var(--cream); font-size: 18px; font-weight: 500; line-height: 1.4; margin-bottom: 24px; min-height: 70px; }
+  .qm-answers { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .qm-answer-btn { padding: 22px 16px; background: linear-gradient(180deg, rgba(20,20,20,0.85), rgba(10,10,10,0.95)); border: 2px solid rgba(212,175,55,0.3); color: var(--cream); border-radius: 12px; font-family: var(--serif); font-size: 18px; letter-spacing: 2px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+  .qm-answer-btn:hover:not(:disabled) { border-color: var(--gold); background: linear-gradient(180deg, rgba(30,30,30,0.85), rgba(15,15,15,0.95)); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212,175,55,0.15); }
+  .qm-answer-btn:disabled { cursor: not-allowed; opacity: 0.5; }
+  .qm-answer-btn.correct { background: linear-gradient(180deg, rgba(16,185,129,0.2), rgba(16,185,129,0.05)); border-color: #10b981; color: #10b981; box-shadow: 0 0 20px rgba(16,185,129,0.3); }
+  .qm-answer-btn.wrong { background: linear-gradient(180deg, rgba(255,107,107,0.2), rgba(255,107,107,0.05)); border-color: #ff6b6b; color: #ff6b6b; }
+
+  /* FEEDBACK */
+  .qm-feedback { margin-top: 14px; padding: 14px 16px; border-radius: 12px; animation: fmSlideIn 0.3s ease; }
+  .qm-feedback.correct { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.4); }
+  .qm-feedback.wrong { background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.4); }
+  .qm-feedback-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-weight: 700; font-size: 14px; }
+  .qm-feedback-header.correct { color: #10b981; }
+  .qm-feedback-header.wrong { color: #ff6b6b; }
+  .qm-feedback-explain { color: var(--cream); font-size: 12px; line-height: 1.6; margin-bottom: 12px; }
+  .qm-feedback-next { width: 100%; padding: 11px 20px; background: var(--gold); color: var(--noir); border: none; border-radius: 999px; font-family: inherit; font-size: 13px; letter-spacing: 1px; font-weight: 700; cursor: pointer; transition: transform 0.2s; }
+  .qm-feedback-next:hover { transform: translateY(-2px); }
+
+  /* SCORE DISPLAY (en haut, pendant le quiz) */
+  .qm-running-score { display: inline-block; background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: var(--gold); padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; margin-left: 8px; }
+
+  /* FORM SLIDE */
+  .qm-form-header { text-align: center; margin-bottom: 18px; }
+  .qm-form-score { display: inline-block; background: linear-gradient(135deg, var(--gold), #8a7426); color: var(--noir); padding: 8px 24px; border-radius: 999px; font-family: var(--serif); font-size: 22px; font-weight: 700; margin-bottom: 10px; box-shadow: 0 6px 20px rgba(212,175,55,0.3); }
+  .qm-form-title { font-family: var(--serif); color: var(--cream); font-size: 20px; font-weight: 500; margin-bottom: 4px; letter-spacing: 0.5px; }
+  .qm-form-subtitle { color: var(--gold-pale); font-size: 12px; font-style: italic; }
+
+  /* RÉSULTAT */
+  .qm-result { text-align: center; }
+  .qm-result-icon { font-size: 60px; margin-bottom: 12px; animation: fmBounce 0.6s ease; }
+  .qm-result-score-big { font-family: var(--serif); color: var(--gold); font-size: 64px; font-weight: 700; line-height: 1; margin-bottom: 6px; text-shadow: 0 0 30px rgba(212,175,55,0.5); }
+  .qm-result-score-label { color: var(--smoke); font-size: 12px; letter-spacing: 3px; font-weight: 700; margin-bottom: 14px; }
+  .qm-result-comment { font-family: var(--serif); color: var(--cream); font-size: 20px; font-weight: 500; margin-bottom: 16px; letter-spacing: 0.5px; }
+  .qm-result-text { color: var(--cream); font-size: 13px; line-height: 1.6; margin-bottom: 18px; opacity: 0.9; }
+  .qm-result-text strong { color: var(--gold); }
+
+  /* LEADERBOARD */
+  .qm-leaderboard { background: rgba(0,0,0,0.4); border: 1px solid rgba(212,175,55,0.2); border-radius: 12px; padding: 14px 16px; margin: 16px 0; text-align: left; }
+  .qm-leaderboard-title { color: var(--gold); font-size: 11px; letter-spacing: 3px; font-weight: 700; margin-bottom: 10px; text-align: center; }
+  .qm-leader-row { display: grid; grid-template-columns: 24px 1fr auto; gap: 10px; align-items: center; padding: 6px 0; border-bottom: 1px dashed rgba(212,175,55,0.1); font-size: 13px; }
+  .qm-leader-row:last-child { border-bottom: none; }
+  .qm-leader-rank { color: var(--smoke); font-weight: 700; text-align: center; }
+  .qm-leader-rank.gold { color: var(--gold); font-size: 14px; }
+  .qm-leader-name { color: var(--cream); }
+  .qm-leader-name.me { color: var(--gold); font-weight: 700; }
+  /* ============ MODAL SUMMER CONTEST ============ */
+  .summer-modal { background: linear-gradient(180deg, #2a1a0a, #0a0a0a) !important; border-color: #f5a623 !important; }
+  .summer-modal .qm-close { border-color: #f5a623; color: #f5a623; }
+  .summer-modal .qm-close:hover { background: #f5a623; color: var(--noir); }
+  .summer-intro-sun { font-size: 70px; margin-bottom: 14px; animation: sunRotate 6s linear infinite; }
+  @keyframes sunRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .summer-eyebrow { color: #f5a623 !important; }
+  .summer-rule-icon { color: #f5a623 !important; }
+
+  /* Audio player */
+  .qm-audio-wrap { background: rgba(245,166,35,0.05); border: 1px solid rgba(245,166,35,0.3); border-radius: 14px; padding: 16px; margin-bottom: 16px; text-align: center; }
+  .qm-audio-player { width: 100%; height: 50px; outline: none; border-radius: 8px; }
+  .qm-audio-player::-webkit-media-controls-panel { background: linear-gradient(135deg, #2a1a0a, #0a0a0a); }
+  .qm-audio-hint { color: #f5a623; font-size: 11px; letter-spacing: 1px; margin-top: 8px; font-weight: 600; }
+  .qm-audio-wave { font-size: 36px; color: #f5a623; margin-bottom: 8px; animation: wave 1.5s ease-in-out infinite; }
+  @keyframes wave { 0%, 100% { transform: scale(1); opacity: 0.7; } 50% { transform: scale(1.1); opacity: 1; } }
+
+  /* Timer bar */
+  .qm-timer-wrap { margin-bottom: 16px; }
+  .qm-timer-label { display: flex; justify-content: space-between; color: var(--smoke); font-size: 11px; margin-bottom: 6px; font-weight: 600; letter-spacing: 1px; }
+  .qm-timer-bonus { color: #f5a623; font-weight: 700; }
+  .qm-timer-bar { width: 100%; height: 4px; background: rgba(245,166,35,0.15); border-radius: 999px; overflow: hidden; }
+  .qm-timer-fill { height: 100%; background: linear-gradient(90deg, #f5a623, #ffd700); border-radius: 999px; transition: width 0.15s linear; box-shadow: 0 0 8px rgba(245,166,35,0.5); }
+
+  /* 4 réponses (QCM) */
+  .qm-answers-4 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  @media (max-width: 480px) { .qm-answers-4 { grid-template-columns: 1fr; } }
+  .qm-answer-qcm { padding: 14px 16px; background: linear-gradient(180deg, rgba(20,20,20,0.85), rgba(10,10,10,0.95)); border: 2px solid rgba(245,166,35,0.3); color: var(--cream); border-radius: 12px; font-family: var(--sans); font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: left; line-height: 1.4; }
+  .qm-answer-qcm:hover:not(:disabled) { border-color: #f5a623; background: linear-gradient(180deg, rgba(30,30,30,0.85), rgba(15,15,15,0.95)); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(245,166,35,0.15); }
+  .qm-answer-qcm:disabled { cursor: not-allowed; opacity: 0.5; }
+  .qm-answer-qcm.correct { background: linear-gradient(180deg, rgba(16,185,129,0.2), rgba(16,185,129,0.05)); border-color: #10b981; color: #10b981; box-shadow: 0 0 20px rgba(16,185,129,0.3); }
+  .qm-answer-qcm.wrong { background: linear-gradient(180deg, rgba(255,107,107,0.2), rgba(255,107,107,0.05)); border-color: #ff6b6b; color: #ff6b6b; }
+  .qm-answer-qcm .letter { display: inline-block; width: 22px; height: 22px; line-height: 22px; text-align: center; background: rgba(245,166,35,0.2); color: #f5a623; border-radius: 50%; font-size: 11px; font-weight: 700; margin-right: 8px; }
+
+  /* Période juillet/août */
+  .summer-period-badge { display: inline-block; background: rgba(245,166,35,0.15); border: 1px solid #f5a623; color: #f5a623; padding: 4px 12px; border-radius: 999px; font-size: 10px; letter-spacing: 1px; font-weight: 700; margin-bottom: 12px; }
+
+  .summer-not-yet { background: rgba(245,166,35,0.08); border: 1px dashed #f5a623; border-radius: 14px; padding: 20px; margin: 16px 0; text-align: center; }
+  .summer-not-yet-title { color: #f5a623; font-family: var(--serif); font-size: 18px; font-weight: 500; margin-bottom: 8px; }
+  .summer-not-yet-text { color: var(--cream); font-size: 13px; line-height: 1.6; }
+  /* ============ MODAL WALL OF FANS ============ */
+  .wall-modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.92); backdrop-filter: blur(10px); z-index: 9997; display: none; align-items: flex-start; justify-content: center; padding: 40px 16px; overflow-y: auto; }
+  .wall-modal-overlay.open { display: flex; animation: fmFadeIn 0.3s ease; }
+  .wall-modal { background: linear-gradient(180deg, #1a1a1a, #0a0a0a); border: 1px solid var(--gold); border-radius: 20px; max-width: 540px; width: 100%; padding: 28px 26px 30px; box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 60px rgba(212,175,55,0.18); position: relative; animation: fmSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+  .wm-slide { display: none; }
+  .wm-slide.active { display: block; animation: fmSlideIn 0.3s ease; }
+
+  /* DROP ZONE */
+  .wm-drop { border: 2px dashed rgba(212,175,55,0.4); border-radius: 14px; padding: 32px 20px; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; background: rgba(212,175,55,0.03); margin-bottom: 14px; }
+  .wm-drop:hover, .wm-drop.dragover { border-color: var(--gold); background: rgba(212,175,55,0.08); }
+  .wm-drop-icon { font-size: 48px; margin-bottom: 12px; color: var(--gold); }
+  .wm-drop-title { font-family: var(--serif); color: var(--cream); font-size: 16px; font-weight: 500; margin-bottom: 6px; letter-spacing: 0.5px; }
+  .wm-drop-hint { color: var(--smoke); font-size: 12px; line-height: 1.5; }
+  .wm-drop-hint strong { color: var(--gold); }
+  .wm-file-input { display: none; }
+
+  /* PRÉVISUALISATION */
+  .wm-preview { display: none; position: relative; border-radius: 14px; overflow: hidden; border: 1px solid var(--gold); margin-bottom: 14px; background: #000; }
+  .wm-preview.show { display: block; animation: fmSlideIn 0.3s ease; }
+  .wm-preview-img { width: 100%; max-height: 380px; object-fit: contain; display: block; background: #000; }
+  .wm-preview-info { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: rgba(0,0,0,0.7); }
+  .wm-preview-name { color: var(--cream); font-size: 12px; font-weight: 600; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .wm-preview-size { color: var(--gold); font-size: 11px; margin: 0 10px; }
+  .wm-preview-remove { background: rgba(255,107,107,0.15); border: 1px solid #ff6b6b; color: #ff6b6b; padding: 5px 12px; border-radius: 999px; font-size: 11px; font-weight: 600; cursor: pointer; font-family: inherit; }
+  .wm-preview-remove:hover { background: #ff6b6b; color: #fff; }
+
+  /* GUIDELINES */
+  .wm-guidelines { background: rgba(212,175,55,0.05); border: 1px solid rgba(212,175,55,0.2); border-radius: 12px; padding: 12px 14px; margin-bottom: 14px; font-size: 12px; color: var(--cream); line-height: 1.5; }
+  .wm-guidelines strong { color: var(--gold); display: block; margin-bottom: 4px; }
+
+  /* SUCCÈS */
+  .wm-success { text-align: center; padding: 20px 0 10px; }
+  .wm-success-icon { font-size: 56px; margin-bottom: 16px; animation: fmBounce 0.6s ease; }
+  .wm-success-title { font-family: var(--serif); color: var(--cream); font-size: 24px; font-weight: 500; margin-bottom: 12px; letter-spacing: 1px; }
+  .wm-success-text { color: var(--cream); font-size: 14px; line-height: 1.6; margin-bottom: 18px; opacity: 0.9; }
+  .wm-success-text strong { color: var(--gold); }
+  .wm-success-info { background: rgba(212,175,55,0.08); border: 1px dashed rgba(212,175,55,0.4); border-radius: 12px; padding: 14px 18px; margin-bottom: 18px; color: var(--gold-pale); font-size: 12px; font-style: italic; line-height: 1.5; }
+
+  /* UPLOAD PROGRESS */
+  .wm-progress { display: none; align-items: center; gap: 10px; margin-top: 12px; padding: 12px 14px; background: rgba(212,175,55,0.08); border: 1px solid var(--gold); border-radius: 10px; }
+  .wm-progress.show { display: flex; }
+  .wm-progress-text { flex: 1; color: var(--gold); font-size: 13px; font-weight: 600; }
+  .wm-progress-pct { color: var(--gold); font-size: 13px; font-weight: 700; }
 </style>
 </head>
 <body>
@@ -500,8 +657,8 @@
       <div class="contest-meta">
         <div class="contest-participants" id="participants1">— participants</div>
         <div class="contest-actions">
-          <a href="https://app.theworldofqueen.com" target="_blank" class="btn-primary">Je tente ma chance →</a>
-          <a href="https://app.theworldofqueen.com" target="_blank" class="contest-rules">📜 Règlement du concours</a>
+          <button type="button" class="btn-primary" onclick="openQuizModal('quizz-champions-queen')">Je tente ma chance →</button>
+          <a href="https://regisohmyprod-sys.github.io/twoq-pwa/docs/reglement-concours.pdf" target="_blank" class="contest-rules">📜 Règlement du concours</a>
         </div>
       </div>
     </div>
@@ -516,8 +673,8 @@
       <div class="contest-meta">
         <div class="contest-participants" id="participants2">— participants</div>
         <div class="contest-actions">
-          <a href="https://app.theworldofqueen.com" target="_blank" class="btn-primary">Je tente ma chance →</a>
-          <a href="https://app.theworldofqueen.com" target="_blank" class="contest-rules">📜 Règlement du concours</a>
+          <button type="button" class="btn-primary" id="summerBtn" onclick="handleSummerClick()">Je tente ma chance →</button>
+          <a href="https://regisohmyprod-sys.github.io/twoq-pwa/docs/reglement-concours.pdf" target="_blank" class="contest-rules">📜 Règlement du concours</a>
         </div>
       </div>
     </div>
@@ -545,7 +702,7 @@
         <!-- Photos chargées depuis Supabase OU placeholders -->
       </div>
       <div style="text-align:center; margin-top:8px;">
-        <a href="https://app.theworldofqueen.com" target="_blank" class="btn-secondary">📷 Envoyer ma photo</a>
+        <button type="button" class="btn-secondary" onclick="openWallModal()">📷 Envoyer ma photo</button>
       </div>
     </div>
 
@@ -760,6 +917,735 @@
     return String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
   }
 
+  // ============ MODAL WALL OF FANS ============
+  let WALL_FILE = null;
+
+  function openWallModal() {
+    document.getElementById('wallModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    wGoToSlide('form');
+  }
+  function closeWallModal() {
+    document.getElementById('wallModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function wGoToSlide(slideName) {
+    document.querySelectorAll('#wallModal .wm-slide').forEach(el => el.classList.remove('active'));
+    const target = document.querySelector(`#wallModal .wm-slide[data-wslide="${slideName}"]`);
+    if (target) target.classList.add('active');
+  }
+
+  function handleWallDrop(e) {
+    const file = e.dataTransfer.files && e.dataTransfer.files[0];
+    if (file) handleWallFile(file);
+  }
+  function handleWallFile(file) {
+    if (!file) return;
+    // Validation type
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+      alert('Format non supporté. Utilise JPG, PNG ou WebP.');
+      return;
+    }
+    // Validation taille (10 MB max)
+    if (file.size > 10 * 1024 * 1024) {
+      alert('Photo trop lourde (max 10 MB). Compresse-la avant d\'envoyer.');
+      return;
+    }
+    WALL_FILE = file;
+    // Aperçu
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      document.getElementById('wmPreviewImg').src = e.target.result;
+      document.getElementById('wmPreviewName').textContent = file.name;
+      document.getElementById('wmPreviewSize').textContent = (file.size / 1024 / 1024).toFixed(2) + ' MB';
+      document.getElementById('wmPreview').classList.add('show');
+      document.getElementById('wmDrop').style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
+  function removeWallPhoto() {
+    WALL_FILE = null;
+    document.getElementById('wmPreview').classList.remove('show');
+    document.getElementById('wmDrop').style.display = 'block';
+    document.getElementById('wmFile').value = '';
+  }
+
+  async function submitWallForm() {
+    const prenom = document.getElementById('wmPrenom').value.trim();
+    const email = document.getElementById('wmEmail').value.trim().toLowerCase();
+    const author = document.getElementById('wmAuthor').checked;
+    const publish = document.getElementById('wmPublish').checked;
+    const err = document.getElementById('wmError');
+    err.classList.remove('show'); err.textContent = '';
+
+    if (!WALL_FILE) { err.textContent = '⚠️ Sélectionne une photo à envoyer.'; err.classList.add('show'); return; }
+    if (!prenom) { err.textContent = '⚠️ Merci d\'indiquer ton prénom.'; err.classList.add('show'); return; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = '⚠️ Email invalide.'; err.classList.add('show'); return; }
+    if (!author) { err.textContent = '⚠️ Tu dois certifier être l\'auteur de la photo.'; err.classList.add('show'); return; }
+    if (!publish) { err.textContent = '⚠️ Tu dois autoriser la publication publique.'; err.classList.add('show'); return; }
+
+    const btn = document.getElementById('wmSubmitBtn');
+    const txt = document.getElementById('wmSubmitText');
+    const loading = document.getElementById('wmLoading');
+    const progress = document.getElementById('wmProgress');
+    btn.disabled = true; txt.style.display = 'none'; loading.classList.add('show');
+    progress.classList.add('show');
+
+    try {
+      // 1. Upload de la photo dans Storage
+      const ext = WALL_FILE.name.split('.').pop().toLowerCase() || 'jpg';
+      const filename = `web_${Date.now()}_${Math.random().toString(36).substring(2, 10)}.${ext}`;
+      const photoPath = `pending/${filename}`;
+
+      document.getElementById('wmProgressPct').textContent = '20%';
+
+      const uploadRes = await fetch(`https://nhxqcavianozskxgfcbt.supabase.co/storage/v1/object/wall-of-fans/${photoPath}`, {
+        method: 'POST',
+        headers: {
+          'apikey': 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+          'Authorization': 'Bearer sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+          'Content-Type': WALL_FILE.type,
+          'x-upsert': 'false'
+        },
+        body: WALL_FILE
+      });
+
+      document.getElementById('wmProgressPct').textContent = '70%';
+
+      if (!uploadRes.ok) {
+        const t = await uploadRes.text();
+        console.warn('[Wall Upload] HTTP', uploadRes.status, t);
+        err.textContent = '⚠️ Échec de l\'upload de la photo. Réessaie.';
+        err.classList.add('show');
+        btn.disabled = false; txt.style.display = ''; loading.classList.remove('show'); progress.classList.remove('show');
+        return;
+      }
+
+      const photoUrl = `https://nhxqcavianozskxgfcbt.supabase.co/storage/v1/object/public/wall-of-fans/${photoPath}`;
+
+      // 2. INSERT dans wall_of_fans_photos
+      const payload = {
+        prenom: prenom,
+        nom: document.getElementById('wmNom').value.trim() || null,
+        email: email,
+        photo_url: photoUrl,
+        photo_path: photoPath,
+        ville_concert: document.getElementById('wmVilleConcert').value.trim() || null,
+        legende: document.getElementById('wmLegende').value.trim() || null,
+        statut: 'en_attente',
+        source: 'site_web'
+      };
+
+      const insertRes = await fetch('https://nhxqcavianozskxgfcbt.supabase.co/rest/v1/wall_of_fans_photos', {
+        method: 'POST',
+        headers: {
+          'apikey': 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+          'Authorization': 'Bearer sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      document.getElementById('wmProgressPct').textContent = '100%';
+
+      if (!insertRes.ok) {
+        const t = await insertRes.text();
+        console.warn('[Wall Insert] HTTP', insertRes.status, t);
+        err.textContent = '⚠️ Erreur lors de l\'enregistrement. Réessaie.';
+        err.classList.add('show');
+        btn.disabled = false; txt.style.display = ''; loading.classList.remove('show'); progress.classList.remove('show');
+        return;
+      }
+
+      console.log('[Wall] OK :', photoPath);
+      // Succès
+      document.getElementById('wmSuccessName').textContent = prenom + ' !';
+      wGoToSlide('success');
+      btn.disabled = false; txt.style.display = ''; loading.classList.remove('show'); progress.classList.remove('show');
+
+    } catch (e) {
+      console.error('[Wall Submit]', e);
+      err.textContent = '⚠️ Problème de connexion. Réessaie.';
+      err.classList.add('show');
+      btn.disabled = false; txt.style.display = ''; loading.classList.remove('show'); progress.classList.remove('show');
+    }
+  }
+
+  function restartWallForm() {
+    // Reset form
+    document.getElementById('wmPrenom').value = '';
+    document.getElementById('wmNom').value = '';
+    document.getElementById('wmEmail').value = '';
+    document.getElementById('wmVilleConcert').value = '';
+    document.getElementById('wmLegende').value = '';
+    document.getElementById('wmAuthor').checked = false;
+    document.getElementById('wmPublish').checked = false;
+    removeWallPhoto();
+    wGoToSlide('form');
+  }
+
+  // ============ MODAL SUMMER CONTEST ============
+  let SUMMER_CONCOURS = null;
+  let SUMMER_QUESTIONS = [];
+  let SUMMER_CURRENT = 0;
+  let SUMMER_ANSWERS = [];
+  let SUMMER_SCORE = 0;
+  let SUMMER_QUESTION_START_TIME = 0;
+  let SUMMER_TIMER_INTERVAL = null;
+  let SUMMER_PERIODE = ''; // 'juillet' ou 'aout'
+
+  // Au chargement : check le statut du concours pour activer le bouton ou pas
+  async function checkSummerStatus() {
+    try {
+      const res = await fetch(`https://nhxqcavianozskxgfcbt.supabase.co/rest/v1/concours_jeux?slug=eq.summer-contest-2026&select=statut,date_debut,date_fin&limit=1`, {
+        headers: {
+          'apikey': 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+          'Authorization': 'Bearer sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3'
+        }
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      if (!data || data.length === 0) return;
+      const c = data[0];
+      const now = new Date();
+      const debut = new Date(c.date_debut);
+      const fin = new Date(c.date_fin);
+      const isActive = (c.statut === 'actif') && (now >= debut) && (now <= fin);
+      const btn = document.getElementById('summerBtn');
+      if (!btn) return;
+      if (!isActive) {
+        // Bouton avec style "bientôt disponible"
+        btn.innerHTML = '⏳ Bientôt disponible';
+        btn.style.opacity = '0.7';
+        btn.style.cursor = 'pointer';
+        btn.dataset.status = 'not-yet';
+      } else {
+        btn.innerHTML = 'Je tente ma chance →';
+        btn.style.opacity = '1';
+        btn.dataset.status = 'active';
+      }
+    } catch (e) { console.warn('[Summer Status] :', e); }
+  }
+
+  function handleSummerClick() {
+    const btn = document.getElementById('summerBtn');
+    if (btn && btn.dataset.status === 'active') {
+      openSummerModal();
+    } else {
+      openSummerModalNotYet();
+    }
+  }
+
+  async function openSummerModalNotYet() {
+    sGoToSlide('not-yet');
+    document.getElementById('summerModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  async function openSummerModal() {
+    // Charger le concours
+    if (!SUMMER_CONCOURS) {
+      const ok = await loadSummerConcours();
+      if (!ok) {
+        alert("Impossible de charger le Summer Contest. Réessaie dans un instant.");
+        return;
+      }
+    }
+    // Reset
+    SUMMER_CURRENT = 0; SUMMER_ANSWERS = []; SUMMER_SCORE = 0;
+    sGoToSlide('intro');
+    document.getElementById('summerModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSummerModal() {
+    document.getElementById('summerModal').classList.remove('open');
+    document.body.style.overflow = '';
+    // Stop audio
+    const audio = document.getElementById('summerAudio');
+    if (audio) { audio.pause(); audio.currentTime = 0; }
+    // Stop timer
+    if (SUMMER_TIMER_INTERVAL) clearInterval(SUMMER_TIMER_INTERVAL);
+  }
+
+  async function loadSummerConcours() {
+    try {
+      const res = await fetch(`https://nhxqcavianozskxgfcbt.supabase.co/rest/v1/concours_jeux?slug=eq.summer-contest-2026&select=*&limit=1`, {
+        headers: {
+          'apikey': 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+          'Authorization': 'Bearer sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3'
+        }
+      });
+      if (!res.ok) return false;
+      const data = await res.json();
+      if (!data || data.length === 0) return false;
+      SUMMER_CONCOURS = data[0];
+      SUMMER_QUESTIONS = SUMMER_CONCOURS.questions || [];
+      document.getElementById('summerTotalNum').textContent = SUMMER_QUESTIONS.length;
+      // Détecter la période (juillet ou août)
+      const now = new Date();
+      const month = now.getMonth() + 1;
+      SUMMER_PERIODE = (month === 7) ? 'juillet' : (month === 8) ? 'aout' : 'test';
+      console.log('[Summer] Chargé. Période :', SUMMER_PERIODE);
+      return true;
+    } catch (e) { console.error('[Summer]', e); return false; }
+  }
+
+  function sGoToSlide(slideName) {
+    document.querySelectorAll('#summerModal .qm-slide').forEach(el => el.classList.remove('active'));
+    const target = document.querySelector(`#summerModal .qm-slide[data-sslide="${slideName}"]`);
+    if (target) target.classList.add('active');
+  }
+
+  function startSummer() {
+    SUMMER_CURRENT = 0; SUMMER_ANSWERS = []; SUMMER_SCORE = 0;
+    sGoToSlide('quiz');
+    showSummerQuestion(0);
+  }
+
+  function showSummerQuestion(idx) {
+    if (idx >= SUMMER_QUESTIONS.length) { showSummerForm(); return; }
+    const q = SUMMER_QUESTIONS[idx];
+    document.getElementById('summerCurrentNum').textContent = idx + 1;
+    document.getElementById('summerRunningScore').textContent = `Score : ${SUMMER_SCORE}`;
+    document.getElementById('summerProgressFill').style.width = ((idx / SUMMER_QUESTIONS.length) * 100) + '%';
+
+    // Charger l'audio
+    const audio = document.getElementById('summerAudio');
+    audio.src = q.audio_url;
+    audio.load();
+
+    // Mélanger les 4 propositions
+    const allChoices = [q.bonne_reponse, ...q.mauvaises_reponses];
+    const shuffled = allChoices.sort(() => Math.random() - 0.5);
+
+    // Générer les 4 boutons
+    const container = document.getElementById('summerAnswers');
+    const letters = ['A', 'B', 'C', 'D'];
+    container.innerHTML = shuffled.map((choice, i) =>
+      `<button type="button" class="qm-answer-qcm" data-choice="${escapeHtml(choice)}" onclick="answerSummerQuestion(this, '${escapeHtml(choice).replace(/'/g, "\\'")}')"><span class="letter">${letters[i]}</span> ${escapeHtml(choice)}</button>`
+    ).join('');
+
+    // Reset feedback
+    document.getElementById('summerFeedback').style.display = 'none';
+    container.style.display = 'grid';
+
+    // Reset timer bar
+    document.getElementById('summerTimerFill').style.width = '100%';
+    document.getElementById('summerBonusVal').textContent = '+100 pts';
+
+    // Démarrer le timer (10s pour le bonus)
+    SUMMER_QUESTION_START_TIME = Date.now();
+    if (SUMMER_TIMER_INTERVAL) clearInterval(SUMMER_TIMER_INTERVAL);
+    SUMMER_TIMER_INTERVAL = setInterval(() => {
+      const elapsed = (Date.now() - SUMMER_QUESTION_START_TIME) / 1000;
+      const remaining = Math.max(0, 10 - elapsed);
+      const pct = (remaining / 10) * 100;
+      document.getElementById('summerTimerFill').style.width = pct + '%';
+      const bonus = Math.round(remaining / 10 * 100);
+      document.getElementById('summerBonusVal').textContent = `+${bonus} pts`;
+      if (remaining <= 0) {
+        clearInterval(SUMMER_TIMER_INTERVAL);
+        document.getElementById('summerBonusVal').textContent = '+0 pts';
+      }
+    }, 100);
+  }
+
+  function answerSummerQuestion(btn, reponse) {
+    if (SUMMER_TIMER_INTERVAL) clearInterval(SUMMER_TIMER_INTERVAL);
+    const q = SUMMER_QUESTIONS[SUMMER_CURRENT];
+    const correct = (reponse === q.bonne_reponse);
+    const elapsed = (Date.now() - SUMMER_QUESTION_START_TIME) / 1000;
+    const remaining = Math.max(0, 10 - elapsed);
+    const bonus = correct ? Math.round((remaining / 10) * 100) : 0;
+    const pointsBase = correct ? 100 : 0;
+    const pointsTotal = pointsBase + bonus;
+    SUMMER_SCORE += pointsTotal;
+
+    SUMMER_ANSWERS.push({
+      audio_url: q.audio_url,
+      reponse: reponse,
+      correcte: correct,
+      temps_ms: Math.round(elapsed * 1000),
+      points_base: pointsBase,
+      bonus_rapidite: bonus,
+      points_total: pointsTotal
+    });
+
+    // Désactiver tous les boutons + marquer correct/wrong
+    document.querySelectorAll('#summerAnswers .qm-answer-qcm').forEach(b => {
+      b.disabled = true;
+      const choice = b.dataset.choice;
+      if (choice === q.bonne_reponse) b.classList.add('correct');
+      else if (choice === reponse) b.classList.add('wrong');
+    });
+
+    // Stop audio
+    const audio = document.getElementById('summerAudio');
+    audio.pause();
+
+    // Mise à jour score visible
+    document.getElementById('summerRunningScore').textContent = `Score : ${SUMMER_SCORE}`;
+
+    // Feedback
+    const fb = document.getElementById('summerFeedback');
+    fb.classList.remove('correct', 'wrong');
+    fb.classList.add(correct ? 'correct' : 'wrong');
+    const fbHead = document.getElementById('summerFeedbackHeader');
+    fbHead.classList.remove('correct', 'wrong');
+    fbHead.classList.add(correct ? 'correct' : 'wrong');
+    fbHead.innerHTML = correct
+      ? `<span>✅</span> ${q.bonne_reponse} ! <strong style="margin-left:auto;color:#f5a623;">+${pointsTotal} pts</strong>`
+      : `<span>❌</span> Mauvaise réponse · La bonne : <strong style="color:#10b981;">${q.bonne_reponse}</strong>`;
+    document.getElementById('summerFeedbackExplain').textContent = correct
+      ? (bonus > 50 ? `🔥 Rapide ! +${bonus} pts de bonus rapidité` : `+${bonus} pts de bonus rapidité`)
+      : '';
+    fb.style.display = 'block';
+
+    document.getElementById('summerFeedbackNext').textContent = (SUMMER_CURRENT === SUMMER_QUESTIONS.length - 1) ? 'Voir mon score 🌞' : 'Question suivante →';
+  }
+
+  function nextSummerQuestion() {
+    SUMMER_CURRENT++;
+    if (SUMMER_CURRENT >= SUMMER_QUESTIONS.length) {
+      document.getElementById('summerProgressFill').style.width = '100%';
+      showSummerForm();
+    } else { showSummerQuestion(SUMMER_CURRENT); }
+  }
+
+  function showSummerForm() {
+    document.getElementById('summerFinalScore').textContent = SUMMER_SCORE;
+    document.getElementById('summerScoreComment').textContent = summerScoreComment(SUMMER_SCORE);
+    sGoToSlide('form');
+  }
+
+  function summerScoreComment(score) {
+    if (score >= 900) return '🔥 INCROYABLE !';
+    if (score >= 700) return '🌟 Excellent !';
+    if (score >= 500) return '👏 Bien joué !';
+    if (score >= 300) return '💪 Pas mal !';
+    if (score >= 100) return '🎯 Peux mieux faire...';
+    return '😅 Aïe...';
+  }
+
+  async function submitSummerForm() {
+    const prenom = document.getElementById('summerPrenom').value.trim();
+    const email = document.getElementById('summerEmail').value.trim().toLowerCase();
+    const reglement = document.getElementById('summerReglement').checked;
+    const err = document.getElementById('summerError');
+    err.classList.remove('show'); err.textContent = '';
+    if (!prenom) { err.textContent = '⚠️ Merci d\'indiquer ton prénom.'; err.classList.add('show'); return; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = '⚠️ Email invalide.'; err.classList.add('show'); return; }
+    if (!reglement) { err.textContent = '⚠️ Tu dois accepter le règlement.'; err.classList.add('show'); return; }
+
+    const btn = document.getElementById('summerSubmitBtn');
+    const txt = document.getElementById('summerSubmitText');
+    const loading = document.getElementById('summerLoading');
+    btn.disabled = true; txt.style.display = 'none'; loading.classList.add('show');
+
+    const payload = {
+      concours_id: SUMMER_CONCOURS.id,
+      prenom: prenom,
+      nom: document.getElementById('summerNom').value.trim() || null,
+      email: email,
+      ville: document.getElementById('summerVille').value.trim() || null,
+      code_postal: document.getElementById('summerCP').value.trim() || null,
+      score: SUMMER_SCORE,
+      reponses: { periode: SUMMER_PERIODE, details: SUMMER_ANSWERS },
+      reglement_accepte: true,
+      source: 'site_web'
+    };
+
+    try {
+      const res = await fetch('https://nhxqcavianozskxgfcbt.supabase.co/rest/v1/concours_participations', {
+        method: 'POST',
+        headers: {
+          'apikey': 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+          'Authorization': 'Bearer sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) {
+        const t = await res.text();
+        console.warn('[Summer Submit] HTTP', res.status, t);
+        err.textContent = '⚠️ Erreur lors de l\'enregistrement. Réessaie.';
+        err.classList.add('show');
+        btn.disabled = false; txt.style.display = ''; loading.classList.remove('show');
+        return;
+      }
+      console.log('[Summer Submit] OK score =', SUMMER_SCORE);
+      showSummerResult(prenom);
+    } catch (e) {
+      console.error('[Summer Submit]', e);
+      err.textContent = '⚠️ Problème de connexion.';
+      err.classList.add('show');
+      btn.disabled = false; txt.style.display = ''; loading.classList.remove('show');
+    }
+  }
+
+  async function showSummerResult(monPrenom) {
+    document.getElementById('summerResultScore').textContent = SUMMER_SCORE;
+    document.getElementById('summerResultComment').textContent = summerScoreComment(SUMMER_SCORE);
+    const icon = (SUMMER_SCORE >= 900) ? '🏆' : (SUMMER_SCORE >= 700) ? '🌟' : (SUMMER_SCORE >= 500) ? '🌞' : (SUMMER_SCORE >= 300) ? '🎵' : '💪';
+    document.getElementById('summerResultIcon').textContent = icon;
+
+    let txt = 'Ta participation a bien été enregistrée. ';
+    if (SUMMER_SCORE >= 900) txt += '<strong>Énorme score !</strong> Tu es bien placé pour le Top 10. ';
+    else if (SUMMER_SCORE >= 700) txt += '<strong>Top score !</strong> Solide. ';
+    txt += 'Annonce des gagnants : <strong>5 septembre 2026</strong>.';
+    document.getElementById('summerResultText').innerHTML = txt;
+
+    await loadSummerLeaderboard(monPrenom);
+    sGoToSlide('result');
+  }
+
+  async function loadSummerLeaderboard(monPrenom) {
+    try {
+      const res = await fetch(`https://nhxqcavianozskxgfcbt.supabase.co/rest/v1/public_concours_classement?concours_id=eq.${SUMMER_CONCOURS.id}&select=*&order=score.desc,date_participation.asc&limit=10`, {
+        headers: {
+          'apikey': 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+          'Authorization': 'Bearer sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3'
+        }
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      if (!data || data.length === 0) return;
+      const list = document.getElementById('summerLeaderboardList');
+      list.innerHTML = data.map((row, i) => {
+        const rank = i + 1;
+        const rankLabel = (rank === 1) ? '🥇' : (rank === 2) ? '🥈' : (rank === 3) ? '🥉' : `#${rank}`;
+        const isMe = (row.prenom && row.prenom.toLowerCase() === monPrenom.toLowerCase());
+        const name = `${escapeHtml(row.prenom || '')} ${row.initiale_nom ? escapeHtml(row.initiale_nom) + '.' : ''}`;
+        const ville = row.ville ? ` <span style="color:var(--smoke); font-size:11px;">(${escapeHtml(row.ville)})</span>` : '';
+        return `<div class="qm-leader-row"><div class="qm-leader-rank ${rank <= 3 ? 'gold' : ''}" style="${rank <= 3 ? 'color:#f5a623;' : ''}">${rankLabel}</div><div class="qm-leader-name ${isMe ? 'me' : ''}" style="${isMe ? 'color:#f5a623;' : ''}">${name}${ville}${isMe ? ' ← toi 👇' : ''}</div><div class="qm-leader-score" style="color:#f5a623;">${row.score}</div></div>`;
+      }).join('');
+      document.getElementById('summerLeaderboard').style.display = 'block';
+    } catch (e) { console.warn('[Summer Leaderboard]', e); }
+  }
+
+  function restartSummer() {
+    SUMMER_CURRENT = 0; SUMMER_ANSWERS = []; SUMMER_SCORE = 0;
+    sGoToSlide('intro');
+  }
+
+  // Au chargement de la page, check le statut
+  checkSummerStatus();
+
+  // ============ MODAL QUIZ CHAMPION'S QUEEN ============
+  let QUIZ_CONCOURS = null;
+  let QUIZ_QUESTIONS = [];
+  let QUIZ_CURRENT = 0;
+  let QUIZ_ANSWERS = [];
+  let QUIZ_SCORE = 0;
+
+  async function openQuizModal(slug) {
+    if (!QUIZ_CONCOURS || QUIZ_CONCOURS.slug !== slug) {
+      const ok = await loadConcours(slug);
+      if (!ok) { alert("Impossible de charger le concours. Réessaie dans un instant."); return; }
+    }
+    QUIZ_CURRENT = 0; QUIZ_ANSWERS = []; QUIZ_SCORE = 0;
+    qmGoToSlide('intro');
+    document.getElementById('quizModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeQuizModal() {
+    document.getElementById('quizModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  async function loadConcours(slug) {
+    try {
+      const res = await fetch(`https://nhxqcavianozskxgfcbt.supabase.co/rest/v1/concours_jeux?slug=eq.${encodeURIComponent(slug)}&select=*&limit=1`, {
+        headers: {
+          'apikey': 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+          'Authorization': 'Bearer sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3'
+        }
+      });
+      if (!res.ok) { console.warn('[Quiz] HTTP', res.status); return false; }
+      const data = await res.json();
+      if (!data || data.length === 0) { console.warn('[Quiz] non trouvé:', slug); return false; }
+      QUIZ_CONCOURS = data[0];
+      QUIZ_QUESTIONS = QUIZ_CONCOURS.questions || [];
+      document.getElementById('qmIntroTitle').textContent = QUIZ_CONCOURS.nom;
+      document.getElementById('qmTotalNum').textContent = QUIZ_QUESTIONS.length;
+      console.log('[Quiz] Chargé:', QUIZ_CONCOURS.nom, '/', QUIZ_QUESTIONS.length, 'questions');
+      return true;
+    } catch (e) { console.error('[Quiz] Erreur:', e); return false; }
+  }
+  function qmGoToSlide(slideName) {
+    document.querySelectorAll('.qm-slide').forEach(el => el.classList.remove('active'));
+    const target = document.querySelector(`.qm-slide[data-qslide="${slideName}"]`);
+    if (target) target.classList.add('active');
+  }
+  function startQuiz() {
+    QUIZ_CURRENT = 0; QUIZ_ANSWERS = []; QUIZ_SCORE = 0;
+    qmGoToSlide('quiz');
+    showQuestion(0);
+  }
+  function showQuestion(idx) {
+    if (idx >= QUIZ_QUESTIONS.length) { showQuizForm(); return; }
+    const q = QUIZ_QUESTIONS[idx];
+    document.getElementById('qmCurrentNum').textContent = idx + 1;
+    document.getElementById('qmRunningScore').textContent = `Score : ${QUIZ_SCORE}`;
+    document.getElementById('qmCurrentCat').textContent = q.categorie || '';
+    document.getElementById('qmQuestionText').textContent = q.question;
+    document.getElementById('qmProgressFill').style.width = (((idx) / QUIZ_QUESTIONS.length) * 100) + '%';
+    const btnV = document.getElementById('qmBtnVrai');
+    const btnF = document.getElementById('qmBtnFaux');
+    btnV.disabled = false; btnF.disabled = false;
+    btnV.classList.remove('correct', 'wrong'); btnF.classList.remove('correct', 'wrong');
+    document.getElementById('qmFeedback').style.display = 'none';
+    document.getElementById('qmAnswers').style.display = 'grid';
+  }
+  function answerQuestion(reponse) {
+    const q = QUIZ_QUESTIONS[QUIZ_CURRENT];
+    const correct = (reponse === q.bonne_reponse);
+    if (correct) QUIZ_SCORE++;
+    QUIZ_ANSWERS.push({ question_id: q.id, reponse: reponse, correcte: correct });
+    const btnV = document.getElementById('qmBtnVrai');
+    const btnF = document.getElementById('qmBtnFaux');
+    btnV.disabled = true; btnF.disabled = true;
+    if (q.bonne_reponse === 'VRAI') btnV.classList.add('correct');
+    if (q.bonne_reponse === 'FAUX') btnF.classList.add('correct');
+    if (!correct) {
+      if (reponse === 'VRAI') btnV.classList.add('wrong');
+      if (reponse === 'FAUX') btnF.classList.add('wrong');
+    }
+    document.getElementById('qmRunningScore').textContent = `Score : ${QUIZ_SCORE}`;
+    const fb = document.getElementById('qmFeedback');
+    fb.classList.remove('correct', 'wrong');
+    fb.classList.add(correct ? 'correct' : 'wrong');
+    const fbHead = document.getElementById('qmFeedbackHeader');
+    fbHead.classList.remove('correct', 'wrong');
+    fbHead.classList.add(correct ? 'correct' : 'wrong');
+    fbHead.innerHTML = correct ? '<span>✅</span> Bonne réponse !' : '<span>❌</span> Mauvaise réponse';
+    document.getElementById('qmFeedbackExplain').textContent = q.explication || '';
+    fb.style.display = 'block';
+    document.getElementById('qmFeedbackNext').textContent = (QUIZ_CURRENT === QUIZ_QUESTIONS.length - 1) ? 'Voir mon score 🏆' : 'Question suivante →';
+  }
+  function nextQuestion() {
+    QUIZ_CURRENT++;
+    if (QUIZ_CURRENT >= QUIZ_QUESTIONS.length) {
+      document.getElementById('qmProgressFill').style.width = '100%';
+      showQuizForm();
+    } else { showQuestion(QUIZ_CURRENT); }
+  }
+  function showQuizForm() {
+    document.getElementById('qmFinalScore').textContent = QUIZ_SCORE;
+    document.getElementById('qmScoreComment').textContent = scoreComment(QUIZ_SCORE);
+    qmGoToSlide('form');
+  }
+  function scoreComment(score) {
+    if (score === 10) return '🔥 Score PARFAIT !';
+    if (score >= 8) return '🌟 Excellent !';
+    if (score >= 6) return '👏 Bien joué !';
+    if (score >= 4) return '💪 Pas mal !';
+    if (score >= 2) return '🎯 Peux mieux faire...';
+    return '😅 Faut réviser !';
+  }
+  async function submitQuizForm() {
+    const prenom = document.getElementById('qmPrenom').value.trim();
+    const email = document.getElementById('qmEmail').value.trim().toLowerCase();
+    const reglement = document.getElementById('qmReglement').checked;
+    const err = document.getElementById('qmError');
+    err.classList.remove('show'); err.textContent = '';
+    if (!prenom) { err.textContent = '⚠️ Merci d\'indiquer ton prénom.'; err.classList.add('show'); return; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = '⚠️ Email invalide.'; err.classList.add('show'); return; }
+    if (!reglement) { err.textContent = '⚠️ Tu dois accepter le règlement.'; err.classList.add('show'); return; }
+    const btn = document.getElementById('qmSubmitBtn');
+    const txt = document.getElementById('qmSubmitText');
+    const loading = document.getElementById('qmLoading');
+    btn.disabled = true; txt.style.display = 'none'; loading.classList.add('show');
+    const payload = {
+      concours_id: QUIZ_CONCOURS.id,
+      prenom: prenom,
+      nom: document.getElementById('qmNom').value.trim() || null,
+      email: email,
+      ville: document.getElementById('qmVille').value.trim() || null,
+      code_postal: document.getElementById('qmCP').value.trim() || null,
+      score: QUIZ_SCORE,
+      reponses: QUIZ_ANSWERS,
+      reglement_accepte: true,
+      source: 'site_web'
+    };
+    try {
+      const res = await fetch('https://nhxqcavianozskxgfcbt.supabase.co/rest/v1/concours_participations', {
+        method: 'POST',
+        headers: {
+          'apikey': 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+          'Authorization': 'Bearer sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) {
+        const t = await res.text();
+        console.warn('[Quiz Submit] HTTP', res.status, t);
+        err.textContent = '⚠️ Erreur lors de l\'enregistrement. Réessaie.';
+        err.classList.add('show');
+        btn.disabled = false; txt.style.display = ''; loading.classList.remove('show');
+        return;
+      }
+      console.log('[Quiz Submit] OK score =', QUIZ_SCORE);
+      showQuizResult(prenom);
+    } catch (e) {
+      console.error('[Quiz Submit] Erreur:', e);
+      err.textContent = '⚠️ Problème de connexion. Réessaie.';
+      err.classList.add('show');
+      btn.disabled = false; txt.style.display = ''; loading.classList.remove('show');
+    }
+  }
+  async function showQuizResult(monPrenom) {
+    document.getElementById('qmResultScore').textContent = QUIZ_SCORE;
+    document.getElementById('qmResultComment').textContent = scoreComment(QUIZ_SCORE);
+    const icon = (QUIZ_SCORE === 10) ? '🏆' : (QUIZ_SCORE >= 8) ? '🌟' : (QUIZ_SCORE >= 6) ? '🎤' : (QUIZ_SCORE >= 4) ? '🎯' : '💪';
+    document.getElementById('qmResultIcon').textContent = icon;
+    let txt = 'Ta participation a bien été enregistrée. ';
+    if (QUIZ_SCORE === 10) txt += '<strong>Score parfait, énorme !</strong> Tu es bien placé pour le Top 10. ';
+    else if (QUIZ_SCORE >= 8) txt += '<strong>Top score !</strong> Tu as toutes tes chances pour le Top 10. ';
+    else if (QUIZ_SCORE >= 6) txt += 'Solide ! ';
+    txt += 'Le tirage au sort des gagnants aura lieu le <strong>20 décembre 2026</strong>.';
+    document.getElementById('qmResultText').innerHTML = txt;
+    await loadLeaderboard(monPrenom);
+    qmGoToSlide('result');
+  }
+  async function loadLeaderboard(monPrenom) {
+    try {
+      const res = await fetch(`https://nhxqcavianozskxgfcbt.supabase.co/rest/v1/public_concours_classement?concours_id=eq.${QUIZ_CONCOURS.id}&select=*&order=score.desc,date_participation.asc&limit=10`, {
+        headers: {
+          'apikey': 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+          'Authorization': 'Bearer sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3'
+        }
+      });
+      if (!res.ok) { console.warn('[Leaderboard] Vue non dispo'); return; }
+      const data = await res.json();
+      if (!data || data.length === 0) return;
+      const list = document.getElementById('qmLeaderboardList');
+      list.innerHTML = data.map((row, i) => {
+        const rank = i + 1;
+        const rankLabel = (rank === 1) ? '🥇' : (rank === 2) ? '🥈' : (rank === 3) ? '🥉' : `#${rank}`;
+        const isMe = (row.prenom && row.prenom.toLowerCase() === monPrenom.toLowerCase());
+        const name = `${escapeHtml(row.prenom || '')} ${row.initiale_nom ? escapeHtml(row.initiale_nom) + '.' : ''}`;
+        const ville = row.ville ? ` <span style="color:var(--smoke); font-size:11px;">(${escapeHtml(row.ville)})</span>` : '';
+        return `<div class="qm-leader-row"><div class="qm-leader-rank ${rank <= 3 ? 'gold' : ''}">${rankLabel}</div><div class="qm-leader-name ${isMe ? 'me' : ''}">${name}${ville}${isMe ? ' ← toi 👇' : ''}</div><div class="qm-leader-score">${row.score}/10</div></div>`;
+      }).join('');
+      document.getElementById('qmLeaderboard').style.display = 'block';
+    } catch (e) { console.warn('[Leaderboard] Erreur:', e); }
+  }
+  function restartQuiz() {
+    QUIZ_CURRENT = 0; QUIZ_ANSWERS = []; QUIZ_SCORE = 0;
+    qmGoToSlide('intro');
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      const m = document.getElementById('quizModal');
+      if (m && m.classList.contains('open')) closeQuizModal();
+    }
+  });
+
   // ============ MODAL INSCRIPTION FAN ============
   function openFanModal() {
     document.getElementById('fanModal').classList.add('open');
@@ -962,13 +1848,11 @@
     if (!sb) return;
 
     try {
-      // Essaie d'abord une vue publique 'public_wall_of_fans'
+      // La vue publique public_wall_of_fans ne contient QUE les photos validées (statut validee ou mise_en_avant)
+      // Les photos mise_en_avant (TOP) sont remontées en premier via l'ORDER BY de la vue
       const { data, error } = await sb
         .from('public_wall_of_fans')
         .select('*')
-        .eq('statut', 'APPROUVE')
-        .order('is_top', { ascending: false })
-        .order('created_at', { ascending: false })
         .limit(9);
       if (error) throw error;
       renderWallPhotos(data || []);
@@ -1308,6 +2192,408 @@
       </div>
 
     </form>
+  </div>
+</div>
+
+<!-- ============ MODAL QUIZ CHAMPION'S QUEEN ============ -->
+<div class="quiz-modal-overlay" id="quizModal" onclick="if(event.target.id==='quizModal') closeQuizModal()">
+  <div class="quiz-modal">
+    <button class="qm-close" onclick="closeQuizModal()" aria-label="Fermer">✕</button>
+
+    <!-- SLIDE INTRO -->
+    <div class="qm-slide active" data-qslide="intro">
+      <div class="qm-intro">
+        <div class="qm-intro-trophy">🏆</div>
+        <div class="qm-intro-eyebrow" id="qmIntroEyebrow">CHAMPION'S QUEEN</div>
+        <h2 class="qm-intro-title" id="qmIntroTitle">Quizz Champion's Queen</h2>
+        <p class="qm-intro-text" id="qmIntroDesc">10 questions vrai/faux sur Queen, Freddie Mercury et la tournée TWOQ.</p>
+
+        <div class="qm-intro-rules">
+          <div class="qm-rule"><span class="qm-rule-icon">🎯</span> <span><strong style="color:var(--gold);">10 questions</strong> vrai/faux — 1 point par bonne réponse</span></div>
+          <div class="qm-rule"><span class="qm-rule-icon">🏆</span> <span>Le <strong style="color:var(--gold);">Top 10 du classement</strong> remporte 2 places concert TWOQ</span></div>
+          <div class="qm-rule"><span class="qm-rule-icon">🔄</span> <span>Tu peux <strong style="color:var(--gold);">retenter autant que tu veux</strong> — on garde ton meilleur score</span></div>
+          <div class="qm-rule"><span class="qm-rule-icon">🎤</span> <span>Annonce des gagnants : <strong style="color:var(--gold);">Facebook Live 20 décembre 2026 à 21h</strong></span></div>
+        </div>
+
+        <button type="button" class="btn-primary" onclick="startQuiz()" style="width:100%; padding: 14px 24px; font-size: 14px;">C'est parti ! 🎤</button>
+        <div class="qm-intro-deadline">📅 Tu as jusqu'au 20 décembre 2026</div>
+      </div>
+    </div>
+
+    <!-- SLIDE QUIZ -->
+    <div class="qm-slide" data-qslide="quiz">
+      <div class="qm-quiz-header">
+        <div class="qm-quiz-num">Question <span id="qmCurrentNum">1</span>/<span id="qmTotalNum">10</span> <span class="qm-running-score" id="qmRunningScore">Score : 0</span></div>
+        <span class="qm-quiz-cat" id="qmCurrentCat">Queen / Freddie</span>
+      </div>
+      <div class="qm-progress-bar">
+        <div class="qm-progress-fill" id="qmProgressFill" style="width: 10%"></div>
+      </div>
+      <div class="qm-question" id="qmQuestionText">Chargement...</div>
+      <div class="qm-answers" id="qmAnswers">
+        <button class="qm-answer-btn" id="qmBtnVrai" onclick="answerQuestion('VRAI')">VRAI</button>
+        <button class="qm-answer-btn" id="qmBtnFaux" onclick="answerQuestion('FAUX')">FAUX</button>
+      </div>
+      <div class="qm-feedback" id="qmFeedback" style="display:none;">
+        <div class="qm-feedback-header" id="qmFeedbackHeader"></div>
+        <div class="qm-feedback-explain" id="qmFeedbackExplain"></div>
+        <button type="button" class="qm-feedback-next" id="qmFeedbackNext" onclick="nextQuestion()">Question suivante →</button>
+      </div>
+    </div>
+
+    <!-- SLIDE FORM (avant validation finale) -->
+    <div class="qm-slide" data-qslide="form">
+      <div class="qm-form-header">
+        <div class="qm-form-score"><span id="qmFinalScore">0</span>/10</div>
+        <div class="qm-form-title">Tu as terminé !</div>
+        <div class="qm-form-subtitle" id="qmScoreComment">Encore quelques infos pour valider ta participation</div>
+      </div>
+
+      <form id="quizForm" novalidate onsubmit="event.preventDefault(); submitQuizForm();">
+        <div class="fm-row two">
+          <div>
+            <label class="fm-label" for="qmPrenom">Prénom<span class="req">*</span></label>
+            <input class="fm-input" type="text" id="qmPrenom" placeholder="Marie" required />
+          </div>
+          <div>
+            <label class="fm-label" for="qmNom">Nom</label>
+            <input class="fm-input" type="text" id="qmNom" placeholder="Dupont" />
+          </div>
+        </div>
+        <div class="fm-row">
+          <label class="fm-label" for="qmEmail">Email<span class="req">*</span></label>
+          <input class="fm-input" type="email" id="qmEmail" placeholder="marie@exemple.com" required />
+        </div>
+        <div class="fm-row two">
+          <div>
+            <label class="fm-label" for="qmVille">Ville</label>
+            <input class="fm-input" type="text" id="qmVille" placeholder="Paris" />
+          </div>
+          <div>
+            <label class="fm-label" for="qmCP">Code postal</label>
+            <input class="fm-input" type="text" id="qmCP" placeholder="75000" maxlength="5" />
+          </div>
+        </div>
+
+        <label class="fm-checkbox required" for="qmReglement">
+          <input type="checkbox" id="qmReglement" required />
+          <span class="fm-checkbox-text">
+            <strong>J'accepte le règlement du concours</strong> et que mes infos soient utilisées pour me contacter en cas de victoire.
+            <a href="https://regisohmyprod-sys.github.io/twoq-pwa/docs/reglement-concours.pdf" target="_blank" style="color:var(--gold);">📜 Lire le règlement</a>
+          </span>
+        </label>
+
+        <div class="fm-error" id="qmError"></div>
+
+        <div class="fm-footer">
+          <span></span>
+          <button type="submit" class="fm-btn fm-btn-primary" id="qmSubmitBtn">
+            <span id="qmSubmitText">🏆 Valider mon score</span>
+            <span class="fm-loading" id="qmLoading"><span class="fm-spinner"></span> Envoi...</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- SLIDE RÉSULTAT -->
+    <div class="qm-slide" data-qslide="result">
+      <div class="qm-result">
+        <div class="qm-result-icon" id="qmResultIcon">🎉</div>
+        <div class="qm-result-score-big"><span id="qmResultScore">0</span>/10</div>
+        <div class="qm-result-score-label">TON SCORE FINAL</div>
+        <div class="qm-result-comment" id="qmResultComment">Bravo !</div>
+        <p class="qm-result-text" id="qmResultText">Ta participation a bien été enregistrée. Le tirage au sort des gagnants aura lieu le <strong>20 décembre 2026</strong>.</p>
+
+        <div class="qm-leaderboard" id="qmLeaderboard" style="display:none;">
+          <div class="qm-leaderboard-title">🏆 TOP 10 DU CLASSEMENT</div>
+          <div id="qmLeaderboardList"></div>
+        </div>
+
+        <p style="color:var(--smoke); font-size: 11px; margin: 14px 0; font-style: italic;">
+          Tu peux retenter autant que tu veux — on garde ton meilleur score 🔥
+        </p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+          <button type="button" class="fm-btn fm-btn-ghost" onclick="restartQuiz()">🔄 Retenter ma chance</button>
+          <button type="button" class="fm-btn fm-btn-primary" onclick="closeQuizModal()">Fermer</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ MODAL SUMMER CONTEST ============ -->
+<div class="quiz-modal-overlay" id="summerModal" onclick="if(event.target.id==='summerModal') closeSummerModal()">
+  <div class="quiz-modal summer-modal">
+    <button class="qm-close" onclick="closeSummerModal()" aria-label="Fermer">✕</button>
+
+    <!-- SLIDE NOT-YET (concours en brouillon) -->
+    <div class="qm-slide active" data-sslide="not-yet">
+      <div class="qm-intro">
+        <div class="summer-intro-sun">🌞</div>
+        <div class="qm-intro-eyebrow summer-eyebrow">SUMMER CONTEST 2026</div>
+        <h2 class="qm-intro-title">Devine le titre !</h2>
+        <div class="summer-not-yet">
+          <div class="summer-not-yet-title">⏳ Bientôt disponible</div>
+          <div class="summer-not-yet-text">Le Summer Contest sera <strong>activé le 1er juillet 2026</strong>.<br>5 extraits audio à reconnaître, 2 essais autorisés (juillet + août), <strong>10 gagnants</strong> à la clé !</div>
+        </div>
+        <p class="qm-intro-text" style="font-size:13px;">En attendant, inscris-toi à la newsletter pour être notifié·e du lancement&nbsp;:</p>
+        <button type="button" class="btn-primary" onclick="closeSummerModal(); document.querySelector('.newsletter-form input').focus();" style="background: #f5a623;">📧 Je m'inscris à la newsletter</button>
+      </div>
+    </div>
+
+    <!-- SLIDE INTRO -->
+    <div class="qm-slide" data-sslide="intro">
+      <div class="qm-intro">
+        <div class="summer-intro-sun">🌞</div>
+        <div class="qm-intro-eyebrow summer-eyebrow">SUMMER CONTEST 2026</div>
+        <h2 class="qm-intro-title">Devine le titre !</h2>
+        <p class="qm-intro-text">5 extraits audio de <strong style="color:#f5a623;">THE WORLD OF QUEEN</strong> à reconnaître. À toi de jouer !</p>
+
+        <div class="qm-intro-rules" style="border-color: rgba(245,166,35,0.3); background: rgba(245,166,35,0.04);">
+          <div class="qm-rule"><span class="summer-rule-icon">🎵</span> <span><strong style="color:#f5a623;">5 questions audio</strong> · choix multiples</span></div>
+          <div class="qm-rule"><span class="summer-rule-icon">⚡</span> <span>Bonus de rapidité : <strong style="color:#f5a623;">+100 pts max</strong> par bonne réponse rapide</span></div>
+          <div class="qm-rule"><span class="summer-rule-icon">🏆</span> <span>Score sur <strong style="color:#f5a623;">1000</strong> · <strong style="color:#f5a623;">Top 10</strong> gagne 2 places</span></div>
+          <div class="qm-rule"><span class="summer-rule-icon">📅</span> <span>2 essais possibles : <strong style="color:#f5a623;">1 en juillet + 1 en août</strong> · on garde le meilleur</span></div>
+        </div>
+
+        <button type="button" class="btn-primary" onclick="startSummer()" style="width:100%; padding: 14px 24px; font-size: 14px; background: #f5a623;">Commencer 🌞</button>
+        <div class="qm-intro-deadline" id="summerPeriodBadge">📅 Concours actif jusqu'au 31 août 2026</div>
+      </div>
+    </div>
+
+    <!-- SLIDE QUIZ -->
+    <div class="qm-slide" data-sslide="quiz">
+      <div class="qm-quiz-header">
+        <div class="qm-quiz-num" style="color:#f5a623;">Question <span id="summerCurrentNum">1</span>/<span id="summerTotalNum">5</span> <span class="qm-running-score" id="summerRunningScore" style="background:rgba(245,166,35,0.1);border-color:rgba(245,166,35,0.3);color:#f5a623;">Score : 0</span></div>
+      </div>
+      <div class="qm-progress-bar">
+        <div class="qm-progress-fill" id="summerProgressFill" style="width: 20%; background: linear-gradient(90deg, #f5a623, #ffd700);"></div>
+      </div>
+
+      <div class="qm-audio-wrap">
+        <div class="qm-audio-wave">🎵</div>
+        <audio class="qm-audio-player" id="summerAudio" controls preload="auto"></audio>
+        <div class="qm-audio-hint">▶ Écoute, puis choisis le bon titre</div>
+      </div>
+
+      <div class="qm-timer-wrap">
+        <div class="qm-timer-label">
+          <span>⏱ Bonus rapidité</span>
+          <span class="qm-timer-bonus" id="summerBonusVal">+100 pts</span>
+        </div>
+        <div class="qm-timer-bar">
+          <div class="qm-timer-fill" id="summerTimerFill" style="width: 100%;"></div>
+        </div>
+      </div>
+
+      <div class="qm-answers-4" id="summerAnswers"></div>
+
+      <div class="qm-feedback" id="summerFeedback" style="display:none;">
+        <div class="qm-feedback-header" id="summerFeedbackHeader"></div>
+        <div class="qm-feedback-explain" id="summerFeedbackExplain"></div>
+        <button type="button" class="qm-feedback-next" id="summerFeedbackNext" onclick="nextSummerQuestion()" style="background:#f5a623;">Question suivante →</button>
+      </div>
+    </div>
+
+    <!-- SLIDE FORM -->
+    <div class="qm-slide" data-sslide="form">
+      <div class="qm-form-header">
+        <div class="qm-form-score" style="background: linear-gradient(135deg, #f5a623, #d48a14);"><span id="summerFinalScore">0</span>/1000</div>
+        <div class="qm-form-title">Tu as terminé !</div>
+        <div class="qm-form-subtitle" id="summerScoreComment">Encore quelques infos pour valider</div>
+      </div>
+
+      <form id="summerForm" novalidate onsubmit="event.preventDefault(); submitSummerForm();">
+        <div class="fm-row two">
+          <div>
+            <label class="fm-label" for="summerPrenom">Prénom<span class="req">*</span></label>
+            <input class="fm-input" type="text" id="summerPrenom" placeholder="Marie" required />
+          </div>
+          <div>
+            <label class="fm-label" for="summerNom">Nom</label>
+            <input class="fm-input" type="text" id="summerNom" placeholder="Dupont" />
+          </div>
+        </div>
+        <div class="fm-row">
+          <label class="fm-label" for="summerEmail">Email<span class="req">*</span></label>
+          <input class="fm-input" type="email" id="summerEmail" placeholder="marie@exemple.com" required />
+        </div>
+        <div class="fm-row two">
+          <div>
+            <label class="fm-label" for="summerVille">Ville</label>
+            <input class="fm-input" type="text" id="summerVille" placeholder="Paris" />
+          </div>
+          <div>
+            <label class="fm-label" for="summerCP">Code postal</label>
+            <input class="fm-input" type="text" id="summerCP" placeholder="75000" maxlength="5" />
+          </div>
+        </div>
+
+        <label class="fm-checkbox required" for="summerReglement">
+          <input type="checkbox" id="summerReglement" required />
+          <span class="fm-checkbox-text">
+            <strong>J'accepte le règlement du concours</strong> et que mes infos soient utilisées pour me contacter en cas de victoire.
+            <a href="https://regisohmyprod-sys.github.io/twoq-pwa/docs/reglement-concours.pdf" target="_blank" style="color:#f5a623;">📜 Lire le règlement</a>
+          </span>
+        </label>
+
+        <div class="fm-error" id="summerError"></div>
+
+        <div class="fm-footer">
+          <span></span>
+          <button type="submit" class="fm-btn fm-btn-primary" id="summerSubmitBtn" style="background:#f5a623;">
+            <span id="summerSubmitText">🌞 Valider mon score</span>
+            <span class="fm-loading" id="summerLoading"><span class="fm-spinner"></span> Envoi...</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- SLIDE RÉSULTAT -->
+    <div class="qm-slide" data-sslide="result">
+      <div class="qm-result">
+        <div class="qm-result-icon" id="summerResultIcon">🌞</div>
+        <div class="qm-result-score-big" style="color:#f5a623;"><span id="summerResultScore">0</span>/1000</div>
+        <div class="qm-result-score-label">TON SCORE FINAL</div>
+        <div class="qm-result-comment" id="summerResultComment">Bravo !</div>
+        <p class="qm-result-text" id="summerResultText">Ta participation a bien été enregistrée.</p>
+
+        <div class="qm-leaderboard" id="summerLeaderboard" style="display:none; border-color: rgba(245,166,35,0.3);">
+          <div class="qm-leaderboard-title" style="color:#f5a623;">🌞 TOP 10 DU CLASSEMENT</div>
+          <div id="summerLeaderboardList"></div>
+        </div>
+
+        <p style="color:var(--smoke); font-size: 11px; margin: 14px 0; font-style: italic;">
+          Tu peux retenter en août — on garde ton meilleur score 🔥
+        </p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+          <button type="button" class="fm-btn fm-btn-ghost" onclick="restartSummer()" style="border-color:#f5a623;color:#f5a623;">🔄 Retenter</button>
+          <button type="button" class="fm-btn fm-btn-primary" onclick="closeSummerModal()" style="background:#f5a623;">Fermer</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ MODAL WALL OF FANS ============ -->
+<div class="wall-modal-overlay" id="wallModal" onclick="if(event.target.id==='wallModal') closeWallModal()">
+  <div class="wall-modal">
+    <button class="qm-close" onclick="closeWallModal()" aria-label="Fermer">✕</button>
+
+    <!-- SLIDE FORM -->
+    <div class="wm-slide active" data-wslide="form">
+      <div class="fm-header">
+        <div class="fm-header-icon" style="background: linear-gradient(135deg, #f5a623, #d48a14); font-size: 28px;">📸</div>
+        <div class="fm-header-eyebrow">WALL OF FANS</div>
+        <div class="fm-header-title">Partage ta plus belle photo</div>
+        <div class="fm-header-subtitle">Validation manuelle sous 24-48h · Aucun fichier sensible</div>
+      </div>
+
+      <form id="wallForm" novalidate onsubmit="event.preventDefault(); submitWallForm();">
+
+        <!-- DROP ZONE -->
+        <div class="wm-drop" id="wmDrop" onclick="document.getElementById('wmFile').click();"
+             ondragover="event.preventDefault(); this.classList.add('dragover');"
+             ondragleave="this.classList.remove('dragover');"
+             ondrop="event.preventDefault(); this.classList.remove('dragover'); handleWallDrop(event);">
+          <div class="wm-drop-icon">📷</div>
+          <div class="wm-drop-title">Glisse ta photo ici</div>
+          <div class="wm-drop-hint">ou <strong>clique pour parcourir</strong><br>JPG, PNG, WebP · Max 10 MB</div>
+        </div>
+        <input type="file" id="wmFile" class="wm-file-input" accept="image/jpeg,image/png,image/webp" onchange="handleWallFile(this.files[0]);" />
+
+        <!-- PREVIEW -->
+        <div class="wm-preview" id="wmPreview">
+          <img class="wm-preview-img" id="wmPreviewImg" alt="Aperçu" />
+          <div class="wm-preview-info">
+            <span class="wm-preview-name" id="wmPreviewName"></span>
+            <span class="wm-preview-size" id="wmPreviewSize"></span>
+            <button type="button" class="wm-preview-remove" onclick="removeWallPhoto()">Retirer</button>
+          </div>
+        </div>
+
+        <!-- FORM FIELDS -->
+        <div class="fm-row two">
+          <div>
+            <label class="fm-label" for="wmPrenom">Prénom<span class="req">*</span></label>
+            <input class="fm-input" type="text" id="wmPrenom" placeholder="Marie" required />
+          </div>
+          <div>
+            <label class="fm-label" for="wmNom">Nom</label>
+            <input class="fm-input" type="text" id="wmNom" placeholder="Dupont" />
+          </div>
+        </div>
+        <div class="fm-row">
+          <label class="fm-label" for="wmEmail">Email<span class="req">*</span></label>
+          <input class="fm-input" type="email" id="wmEmail" placeholder="marie@exemple.com" required />
+        </div>
+        <div class="fm-row">
+          <label class="fm-label" for="wmVilleConcert">Ville du concert</label>
+          <input class="fm-input" type="text" id="wmVilleConcert" placeholder="Dôme de Paris" />
+        </div>
+        <div class="fm-row">
+          <label class="fm-label" for="wmLegende">Légende <span style="color:var(--smoke);font-weight:400;text-transform:none;letter-spacing:0;">(optionnelle)</span></label>
+          <input class="fm-input" type="text" id="wmLegende" placeholder="Une soirée magique avec Fred et l'équipe !" maxlength="200" />
+        </div>
+
+        <!-- GUIDELINES -->
+        <div class="wm-guidelines">
+          <strong>📌 Quelles photos partager ?</strong>
+          Photos prises pendant les concerts TWOQ : avec Fred et l'équipe, en salle, ambiance, souvenirs du show. <strong style="color:#f5a623;">Pas de fichiers sensibles ni de personnes sans leur accord.</strong>
+        </div>
+
+        <!-- CONSENTEMENTS -->
+        <label class="fm-checkbox required" for="wmAuthor">
+          <input type="checkbox" id="wmAuthor" required />
+          <span class="fm-checkbox-text">
+            <strong>Je certifie être l'auteur de cette photo</strong> (ou avoir l'autorisation des personnes apparaissant dessus).
+          </span>
+        </label>
+
+        <label class="fm-checkbox required" for="wmPublish">
+          <input type="checkbox" id="wmPublish" required />
+          <span class="fm-checkbox-text">
+            <strong>J'autorise sa publication publique</strong> sur le Wall of Fans du site et de l'application TWOQ.
+          </span>
+        </label>
+
+        <div class="fm-error" id="wmError"></div>
+
+        <div class="wm-progress" id="wmProgress">
+          <div class="fm-spinner"></div>
+          <span class="wm-progress-text">Upload en cours...</span>
+          <span class="wm-progress-pct" id="wmProgressPct">0%</span>
+        </div>
+
+        <div class="fm-footer">
+          <span></span>
+          <button type="submit" class="fm-btn fm-btn-primary" id="wmSubmitBtn">
+            <span id="wmSubmitText">📷 Envoyer ma photo</span>
+            <span class="fm-loading" id="wmLoading"><span class="fm-spinner"></span> Envoi...</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- SLIDE SUCCESS -->
+    <div class="wm-slide" data-wslide="success">
+      <div class="wm-success">
+        <div class="wm-success-icon">🎉</div>
+        <div class="wm-success-title">Photo bien reçue !</div>
+        <p class="wm-success-text">Merci <strong id="wmSuccessName">!</strong> Ta photo a bien été envoyée et sera examinée par l'équipe.</p>
+        <div class="wm-success-info">⏳ <strong>Délai de validation : 24-48h</strong><br>Tu recevras un email dès qu'elle sera mise en ligne.</div>
+        <p style="color:var(--smoke); font-size: 11px; margin: 14px 0; font-style: italic;">
+          Les plus belles photos seront mises en avant ⭐ sur le Wall of Fans !
+        </p>
+        <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+          <button type="button" class="fm-btn fm-btn-ghost" onclick="restartWallForm()">📸 Envoyer une autre</button>
+          <button type="button" class="fm-btn fm-btn-primary" onclick="closeWallModal()">Fermer</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
