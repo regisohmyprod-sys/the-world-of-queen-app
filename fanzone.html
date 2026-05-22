@@ -902,31 +902,10 @@
       <div class="fan-card-title" style="margin-bottom: 16px;">Ce qu'ils en disent</div>
 
       <div id="temoignagesList">
-        <!-- Témoignages chargés dynamiquement depuis Supabase -->
-        <!-- Fallback si pas de connexion : 3 témoignages statiques -->
-        <div class="review-bubble">
-          <div class="review-stars">★★★★★</div>
-          <div class="review-text">« Un super hommage à Freddie, j'en ai eu les larmes aux yeux. Vous êtes tous merveilleux. »</div>
-          <div class="review-meta">
-            <span class="review-author">Béatrice G.</span>
-            <span class="review-location">Angers · 2024</span>
-          </div>
-        </div>
-        <div class="review-bubble">
-          <div class="review-stars">★★★★★</div>
-          <div class="review-text">« Sans aucun doute, le meilleur du meilleur des hommages à notre cher Freddy. Quel spectacle, quelle émotion ! »</div>
-          <div class="review-meta">
-            <span class="review-author">Lauren P.</span>
-            <span class="review-location">Dôme de Paris · 2025</span>
-          </div>
-        </div>
-        <div class="review-bubble">
-          <div class="review-stars">★★★★★</div>
-          <div class="review-text">« Vu à Caen, j'ai adoré. Love of My Life, Barcelona magnifique. J'en ai eu des frissons ! »</div>
-          <div class="review-meta">
-            <span class="review-author">Steliahuor</span>
-            <span class="review-location">Caen · 2024</span>
-          </div>
+        <!-- Témoignages chargés dynamiquement depuis Supabase (vue public_temoignages_fans) -->
+        <div style="padding: 30px 16px; text-align: center; color: var(--smoke); font-size: 13px; font-style: italic;">
+          <div style="display:inline-block; width: 18px; height: 18px; border: 2px solid rgba(212,175,55,0.25); border-top-color: var(--gold); border-radius: 50%; animation: fmSpin 0.8s linear infinite; vertical-align: middle; margin-right: 8px;"></div>
+          Chargement des avis...
         </div>
       </div>
 
@@ -1359,7 +1338,7 @@
     const container = document.getElementById('temoignagesList');
     if (!container) return;
     try {
-      const res = await fetch(`https://nhxqcavianozskxgfcbt.supabase.co/rest/v1/public_temoignages_fans?select=*&order=created_at.desc&limit=3`, {
+      const res = await fetch(`https://nhxqcavianozskxgfcbt.supabase.co/rest/v1/public_temoignages_fans?select=*&order=created_at.desc&limit=4`, {
         headers: {
           'apikey': 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
           'Authorization': 'Bearer sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3'
