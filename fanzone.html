@@ -712,7 +712,34 @@
   .cm-fb-big-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(24,119,242,0.35); }
   .cm-fb-big-btn.done { background: #10b981; }
   .cm-fb-icon { font-size: 22px; font-weight: 900; background: #fff; color: #1877F2; width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
-  .cm-fb-big-btn.done .cm-fb-icon { color: #10b981; }
+  /* ============ VIDÉOS BACKSTAGE ============ */
+  .bs-soon-card { text-align: center; padding: 30px 18px; background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(212,175,55,0.02)); border: 1px dashed rgba(212,175,55,0.4); border-radius: 14px; }
+  .bs-soon-icon { font-size: 44px; margin-bottom: 12px; color: var(--gold); animation: bsCamera 3s ease-in-out infinite; }
+  @keyframes bsCamera { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+  .bs-soon-title { font-family: var(--serif); color: var(--cream); font-size: 18px; font-weight: 500; margin-bottom: 8px; letter-spacing: 0.5px; }
+  .bs-soon-text { color: var(--gold-pale); font-size: 13px; line-height: 1.5; font-style: italic; margin-bottom: 14px; }
+  .bs-soon-emoji { font-size: 22px; margin: 0 4px; }
+
+  /* Backstage cards améliorées */
+  .backstage-card-real { cursor: pointer; transition: transform 0.2s; flex: 0 0 auto; width: 160px; }
+  .backstage-card-real:hover { transform: translateY(-3px); }
+  .backstage-thumb-real { width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg, #2a2a2a, #0a0a0a); border-radius: 10px; border: 1px solid rgba(212,175,55,0.3); position: relative; overflow: hidden; background-size: cover; background-position: center; }
+  .backstage-thumb-real::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.7) 100%); }
+  .backstage-play-real { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 44px; height: 44px; background: rgba(212,175,55,0.95); color: var(--noir); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; box-shadow: 0 6px 14px rgba(0,0,0,0.6); z-index: 2; }
+  .backstage-source-badge { position: absolute; top: 6px; right: 6px; background: rgba(0,0,0,0.7); color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 9px; font-weight: 700; letter-spacing: 0.5px; z-index: 2; }
+  .backstage-cap-real { color: var(--cream); font-size: 12px; margin-top: 8px; font-weight: 600; line-height: 1.3; }
+  .backstage-desc-real { color: var(--smoke); font-size: 10px; margin-top: 2px; line-height: 1.3; }
+
+  /* Lightbox vidéo backstage */
+  .video-lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.96); backdrop-filter: blur(10px); z-index: 9998; display: none; align-items: center; justify-content: center; padding: 20px; }
+  .video-lightbox.open { display: flex; }
+  .video-lightbox-content { max-width: 1000px; width: 100%; max-height: 90vh; position: relative; }
+  .video-lightbox-frame { width: 100%; aspect-ratio: 16/9; border-radius: 14px; overflow: hidden; border: 1px solid rgba(212,175,55,0.4); background: #000; box-shadow: 0 30px 80px rgba(0,0,0,0.7); }
+  .video-lightbox-frame iframe, .video-lightbox-frame video { width: 100%; height: 100%; border: 0; }
+  .video-lightbox-close { position: absolute; top: -50px; right: 0; width: 40px; height: 40px; border-radius: 50%; background: rgba(0,0,0,0.7); border: 1px solid var(--gold); color: var(--gold); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .video-lightbox-close:hover { background: var(--gold); color: var(--noir); }
+  .video-lightbox-title { color: var(--cream); font-family: var(--serif); font-size: 18px; margin-top: 14px; text-align: center; font-weight: 500; }
+  .video-lightbox-desc { color: var(--smoke); font-size: 13px; margin-top: 6px; text-align: center; }
 </style>
 </head>
 <body>
@@ -916,7 +943,22 @@
     <div class="fan-card">
       <div class="fan-card-title" style="margin-bottom: 6px;">Les coulisses !</div>
       <div class="fan-card-text" style="font-style: italic;">Vis l'envers du décor de la tournée</div>
-      <div class="backstage-scroll" id="backstageScroll"></div>
+      <div id="backstageContainer">
+        <!-- Soit videos chargées dynamiquement, soit placeholder "Bientôt" -->
+        <div class="bs-soon-card">
+          <div class="bs-soon-icon">🎬</div>
+          <div class="bs-soon-title">Vidéos bientôt disponibles</div>
+          <div class="bs-soon-text">
+            <span class="bs-soon-emoji">🎤</span>
+            On prépare les coulisses pour toi : Fred, l'équipe, les répétitions, les moments rigolos avant le show...
+            <span class="bs-soon-emoji">🎸</span>
+          </div>
+          <p style="color: var(--smoke); font-size: 11px; margin-top: 6px;">
+            En attendant, suis-nous sur Instagram pour ne rien rater 👉
+          </p>
+          <a href="https://www.instagram.com/theworldofqueenofficiel/" target="_blank" class="btn-secondary" style="margin-top: 10px;">📷 Voir notre Instagram</a>
+        </div>
+      </div>
     </div>
 
     <!-- ============ COMMUNAUTÉ ============ -->
@@ -2762,35 +2804,123 @@
     }
   }
 
-  // ============ BACKSTAGE VIDEOS (placeholders à compléter) ============
-  // ⚠️ POULETTE : remplace les YOUTUBE_ID par les vrais IDs YouTube des coulisses
-  const BACKSTAGE = [
-    { id: 'YOUTUBE_ID_BS1', caption: 'Backstage #1' },
-    { id: 'YOUTUBE_ID_BS2', caption: 'Backstage #2' },
-    { id: 'YOUTUBE_ID_BS3', caption: 'Backstage #3' },
-    { id: 'YOUTUBE_ID_BS4', caption: 'Backstage #4' },
-  ];
-
-  function renderBackstage() {
-    const scroll = document.getElementById('backstageScroll');
-    if (!scroll) return;
-    scroll.innerHTML = BACKSTAGE.map(b => {
-      const isPlaceholder = b.id.startsWith('YOUTUBE_ID');
-      const thumb = isPlaceholder
-        ? ''
-        : `background-image:url('https://img.youtube.com/vi/${b.id}/hqdefault.jpg');`;
-      const href = isPlaceholder ? '#' : `https://www.youtube.com/watch?v=${b.id}`;
-      const tgt = isPlaceholder ? '' : 'target="_blank"';
-      return `
-        <a href="${href}" ${tgt} class="backstage-card" style="text-decoration:none;">
-          <div class="backstage-thumb" style="${thumb}">
-            <div class="backstage-play">▶</div>
+  // ============ VIDÉOS BACKSTAGE (depuis Supabase) ============
+  // Charge la table videos_backstage et affiche les vidéos publiées
+  async function loadBackstageVideos() {
+    const container = document.getElementById('backstageContainer');
+    if (!container) return;
+    try {
+      const res = await fetch(`https://nhxqcavianozskxgfcbt.supabase.co/rest/v1/videos_backstage?select=*&publie=eq.true&order=ordre_affichage.asc,created_at.desc&limit=20`, {
+        headers: {
+          'apikey': 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+          'Authorization': 'Bearer sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3'
+        }
+      });
+      if (!res.ok) { console.warn('[Backstage] HTTP', res.status); return; }
+      const data = await res.json();
+      if (!data || data.length === 0) {
+        console.log('[Backstage] Aucune vidéo publiée — placeholder conservé');
+        return;
+      }
+      // Remplacer le placeholder par les vraies vidéos
+      container.innerHTML = `<div class="backstage-scroll" id="backstageScroll"></div>`;
+      const scroll = document.getElementById('backstageScroll');
+      scroll.innerHTML = data.map((v, idx) => {
+        const info = parseVideoSource(v.video_url);
+        const thumbUrl = v.thumbnail_url || info.thumbnail || '';
+        const thumbStyle = thumbUrl ? `background-image:url('${escapeHtml(thumbUrl)}');` : '';
+        const sourceBadge = info.source ? `<span class="backstage-source-badge">${info.source}</span>` : '';
+        return `
+          <div class="backstage-card-real" onclick="openVideoLightbox(${idx})" data-video-idx="${idx}">
+            <div class="backstage-thumb-real" style="${thumbStyle}">
+              ${sourceBadge}
+              <div class="backstage-play-real">▶</div>
+            </div>
+            <div class="backstage-cap-real">${escapeHtml(v.titre || 'Backstage')}</div>
+            ${v.description ? `<div class="backstage-desc-real">${escapeHtml(v.description)}</div>` : ''}
           </div>
-          <div class="backstage-cap">${escapeHtml(b.caption)}</div>
-        </a>
-      `;
-    }).join('');
+        `;
+      }).join('');
+      // Stocker les vidéos pour la lightbox
+      window.__BACKSTAGE_VIDEOS = data;
+    } catch (e) { console.warn('[Backstage]', e); }
   }
+
+  // Détecte la source d'une URL vidéo et extrait l'ID + génère la miniature
+  function parseVideoSource(url) {
+    if (!url) return { source: '', embedUrl: '', thumbnail: '' };
+    // YouTube
+    let m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/);
+    if (m) {
+      const id = m[1];
+      return {
+        source: 'YouTube',
+        embedUrl: `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`,
+        thumbnail: `https://img.youtube.com/vi/${id}/hqdefault.jpg`
+      };
+    }
+    // Instagram (reel ou post)
+    m = url.match(/instagram\.com\/(reel|p)\/([a-zA-Z0-9_-]+)/);
+    if (m) {
+      return {
+        source: 'Instagram',
+        embedUrl: `https://www.instagram.com/${m[1]}/${m[2]}/embed/`,
+        thumbnail: ''
+      };
+    }
+    // TikTok
+    m = url.match(/tiktok\.com\/@[^/]+\/video\/(\d+)/);
+    if (m) {
+      return {
+        source: 'TikTok',
+        embedUrl: `https://www.tiktok.com/embed/v2/${m[1]}`,
+        thumbnail: ''
+      };
+    }
+    // Facebook
+    if (url.includes('facebook.com')) {
+      return {
+        source: 'Facebook',
+        embedUrl: `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false`,
+        thumbnail: ''
+      };
+    }
+    // MP4 direct ou autre
+    if (url.match(/\.(mp4|webm|mov)$/i)) {
+      return { source: 'Vidéo', embedUrl: url, thumbnail: '' };
+    }
+    // Fallback : ouvre en iframe direct
+    return { source: 'Vidéo', embedUrl: url, thumbnail: '' };
+  }
+
+  function openVideoLightbox(idx) {
+    const videos = window.__BACKSTAGE_VIDEOS || [];
+    const v = videos[idx];
+    if (!v) return;
+    const info = parseVideoSource(v.video_url);
+    const frame = document.getElementById('videoLightboxFrame');
+    // Choix entre iframe (YouTube, Instagram, TikTok, FB) et <video> natif (MP4)
+    if (v.video_url.match(/\.(mp4|webm|mov)$/i)) {
+      frame.innerHTML = `<video src="${escapeHtml(v.video_url)}" controls autoplay playsinline></video>`;
+    } else {
+      frame.innerHTML = `<iframe src="${escapeHtml(info.embedUrl)}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+    }
+    document.getElementById('videoLightboxTitle').textContent = v.titre || '';
+    document.getElementById('videoLightboxDesc').textContent = v.description || '';
+    document.getElementById('videoLightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeVideoLightbox() {
+    document.getElementById('videoLightbox').classList.remove('open');
+    document.getElementById('videoLightboxFrame').innerHTML = ''; // Stop la vidéo
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      const lb = document.getElementById('videoLightbox');
+      if (lb && lb.classList.contains('open')) closeVideoLightbox();
+    }
+  });
 
   // ============ FALLBACK BOUTIQUE IMAGE ============
   (function() {
@@ -2806,7 +2936,7 @@
 
   // ============ INIT ============
   generateTwinkleStars();
-  renderBackstage();
+  loadBackstageVideos();
   loadWallOfFans();
   loadTemoignages();
   checkLiveConcert();
@@ -3667,6 +3797,16 @@
       </div>
     </div>
 
+  </div>
+</div>
+
+<!-- ============ LIGHTBOX VIDÉO BACKSTAGE ============ -->
+<div class="video-lightbox" id="videoLightbox" onclick="if(event.target.id==='videoLightbox') closeVideoLightbox()">
+  <div class="video-lightbox-content">
+    <button class="video-lightbox-close" onclick="closeVideoLightbox()" aria-label="Fermer">✕</button>
+    <div class="video-lightbox-frame" id="videoLightboxFrame"></div>
+    <div class="video-lightbox-title" id="videoLightboxTitle"></div>
+    <div class="video-lightbox-desc" id="videoLightboxDesc"></div>
   </div>
 </div>
 
