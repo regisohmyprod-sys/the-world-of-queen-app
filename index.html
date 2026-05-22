@@ -1,0 +1,3130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>THE WORLD OF QUEEN — L'Éternelle Légende</title>
+<meta name="description" content="THE WORLD OF QUEEN — L'Éternelle Légende. Un hommage vibrant porté par plus d'1 million 2 de spectateurs. En tournée dans toute la France." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- Supabase SDK pour connexion base OMP -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root {
+    --noir: #0A0A0A;
+    --charcoal: #141414;
+    --gold: #D4AF37;
+    --gold-pale: #F0D77A;
+    --cramoisi: #8B0000;
+    --cream: #F5F1E8;
+    --smoke: #8B8580;
+    --serif: 'Cinzel', serif;
+    --sans: 'Inter', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--noir);
+    color: var(--cream);
+    font-family: var(--sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ============ SPLASH HYPERDRIVE ============ */
+  .splash {
+    position: fixed; inset: 0;
+    background: #000;
+    overflow: hidden;
+    z-index: 9999;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  .splash.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+  .nebula {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 45%, rgba(212,175,55,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 70% at 50% 50%, rgba(91,163,245,0.08) 0%, transparent 70%),
+      radial-gradient(circle at 75% 25%, rgba(212,175,55,0.10) 0%, transparent 40%),
+      #000;
+  }
+  .hyper-star {
+    position: absolute; top: 50%; left: 50%;
+    width: 2px; height: 2px;
+    background: var(--gold-pale);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--gold), 0 0 12px var(--gold-pale);
+    transform-origin: center;
+    will-change: transform, opacity;
+    opacity: 0;
+  }
+  @keyframes hyperWarp {
+    0%   { opacity: 0; transform: rotate(var(--angle, 0deg)) translateX(0) scale(0.5); box-shadow: 0 0 2px var(--gold-pale); }
+    15%  { opacity: 1; box-shadow: 0 0 6px var(--gold), 0 0 12px var(--gold-pale); }
+    85%  { opacity: 1; }
+    100% { opacity: 0; transform: rotate(var(--angle, 0deg)) translateX(80vmax) scale(2.5); box-shadow: 0 0 14px var(--gold), 0 0 30px var(--gold-pale); }
+  }
+  .hyper-star::after {
+    content: '';
+    position: absolute; right: 100%; top: 50%;
+    height: 1px; width: 60px;
+    transform: translateY(-50%);
+    background: linear-gradient(to left, var(--gold-pale), transparent);
+    opacity: 0.85;
+  }
+  .splash-logo {
+    position: absolute; top: 42%; left: 50%;
+    transform: translate(-50%, -55%) scale(0.85);
+    width: 90%;
+    max-width: 552px;
+    opacity: 0;
+    animation: logoEnter 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards;
+    z-index: 10;
+    filter: drop-shadow(0 0 30px rgba(212,175,55,0.4));
+  }
+  @keyframes logoEnter {
+    0% { opacity: 0; transform: translate(-50%, -55%) scale(0.85); }
+    100% { opacity: 1; transform: translate(-50%, -55%) scale(1); }
+  }
+  .splash-subtitle {
+    position: absolute;
+    top: calc(42% + 90px);
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 10;
+    font-family: var(--serif);
+    font-size: clamp(13px, 2.2vw, 20px);
+    letter-spacing: clamp(4px, 1vw, 8px);
+    color: var(--gold-pale);
+    font-weight: 400;
+    opacity: 0;
+    animation: subtitleEnter 1s ease-out 1.6s forwards;
+    white-space: nowrap;
+  }
+  @keyframes subtitleEnter {
+    0% { opacity: 0; transform: translate(-50%, 10px); }
+    100% { opacity: 1; transform: translate(-50%, 0); }
+  }
+  .splash-button-wrap {
+    position: absolute; bottom: 10%; left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    opacity: 0;
+    animation: buttonEnter 1s ease-out 2.4s forwards;
+    z-index: 20;
+  }
+  @keyframes buttonEnter {
+    0% { opacity: 0; transform: translate(-50%, 20px) scale(0.85); }
+    100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+  }
+  .splash-button {
+    background: var(--gold);
+    color: #0A0A0A;
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 6px;
+    padding: 16px 56px;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 0 30px rgba(212,175,55,0.6);
+    animation: buttonPulse 2.4s ease-in-out 3.5s infinite;
+  }
+  .splash-button:active { background: var(--gold-pale); transform: scale(0.97); }
+  @keyframes buttonPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(212,175,55,0.6); }
+    50% { transform: scale(1.05); box-shadow: 0 0 50px rgba(212,175,55,0.9); }
+  }
+  .splash-hint {
+    margin-top: 16px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--smoke);
+    text-transform: uppercase;
+  }
+
+  /* ============ HEADER ============ */
+  header.site-header {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+    transition: all 0.3s;
+  }
+  .header-inner {
+    position: relative;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px;
+  }
+  .brand {
+    font-family: var(--serif);
+    color: var(--gold);
+    font-size: 16px;
+    letter-spacing: 3px;
+    font-weight: 600;
+    line-height: 1.1;
+    position: absolute;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .brand small {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--gold-pale);
+    font-weight: 400;
+    margin-top: 1px;
+  }
+  nav.main-nav { display: flex; gap: 22px; align-items: center; }
+  nav.main-nav a {
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    padding: 6px 2px;
+    transition: color 0.2s;
+    border-bottom: 1px solid transparent;
+  }
+  nav.main-nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+  nav.main-nav a.pro {
+    color: var(--gold-pale);
+    border: 1px solid var(--gold);
+    padding: 6px 12px;
+    border-radius: 999px;
+  }
+  nav.main-nav a.pro:hover { background: var(--gold); color: var(--noir); }
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--gold);
+    cursor: pointer;
+    font-size: 24px;
+    padding: 4px 8px;
+  }
+  @media (max-width: 1100px) {
+    .header-inner { padding: 14px 16px; }
+    nav.main-nav {
+      position: fixed;
+      top: 60px; left: 0; right: 0;
+      flex-direction: column;
+      gap: 0;
+      background: rgba(10, 10, 10, 0.96);
+      backdrop-filter: blur(20px);
+      padding: 20px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+    nav.main-nav.open { max-height: 90vh; }
+    nav.main-nav a {
+      width: 100%;
+      padding: 14px 8px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.08);
+      text-align: center;
+      font-size: 13px;
+    }
+    nav.main-nav a.pro { margin-top: 10px; border-bottom: 1px solid var(--gold); }
+    .menu-toggle { display: block; }
+    .header-inner { justify-content: space-between; }
+    .brand { position: static; transform: none; }
+  }
+
+  /* ============ HERO (continuation du splash) ============ */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    padding: 100px 20px 20px;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 45%, rgba(212,175,55,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 70% at 50% 50%, rgba(91,163,245,0.08) 0%, transparent 70%),
+      radial-gradient(circle at 75% 25%, rgba(212,175,55,0.10) 0%, transparent 40%),
+      #050505;
+    z-index: 0;
+  }
+  /* Hyperdrive subtil dans le hero (moins dense que le splash) */
+  .hero-hyperdrive {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+  }
+  .hero-eyebrow {
+    font-size: clamp(11px, 1.4vw, 14px);
+    letter-spacing: clamp(4px, 0.8vw, 7px);
+    text-indent: clamp(4px, 0.8vw, 7px); /* compense le letter-spacing pour centrer */
+    color: var(--gold);
+    margin-bottom: -35px;
+    font-weight: 600;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 3;
+    display: inline-block;
+    animation: heartbeat 1.8s ease-in-out infinite;
+    transform-origin: center;
+    will-change: transform;
+  }
+  @keyframes heartbeat {
+    0%   { transform: scale(1); }
+    14%  { transform: scale(1.18); }
+    28%  { transform: scale(1); }
+    42%  { transform: scale(1.14); }
+    70%  { transform: scale(1); }
+    100% { transform: scale(1); }
+  }
+  .hero-logo {
+    display: block;
+    width: 90%;
+    max-width: 552px;
+    margin: 0 auto 30px;
+    filter: drop-shadow(0 0 30px rgba(212,175,55,0.4));
+  }
+  .hero-tagline {
+    margin: 0 auto 36px;
+    max-width: 980px;
+  }
+  .tagline-line {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(14px, 2vw, 18px);
+    color: var(--cream);
+    line-height: 1.7;
+    opacity: 0.95;
+    padding: 0 10px;
+  }
+  .tagline-line.tagline-strong {
+    font-style: normal;
+    font-weight: 500;
+    font-size: clamp(16px, 2.3vw, 22px);
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+  .tagline-line strong { color: var(--gold-pale); font-weight: 600; }
+  .gold-num {
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 1.1em;
+    text-shadow: 0 0 20px rgba(212,175,55,0.4);
+  }
+  .hero-cta {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 36px;
+  }
+  .btn-primary, .btn-secondary {
+    display: inline-block;
+    text-decoration: none;
+    padding: 14px 32px;
+    border-radius: 999px;
+    font-size: 12px;
+    letter-spacing: 3px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--noir);
+    border-color: var(--gold);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+  }
+  .btn-primary:hover { background: var(--gold-pale); box-shadow: 0 0 40px rgba(212, 175, 55, 0.6); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--cream);
+    border-color: rgba(212, 175, 55, 0.5);
+  }
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ============ STATS BAND ============ */
+  .stats-band {
+    background: linear-gradient(180deg, #0A0A0A 0%, #141414 50%, #0A0A0A 100%);
+    padding: 60px 20px;
+    border-top: 1px solid rgba(212, 175, 55, 0.12);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.12);
+  }
+  .stats-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 30px;
+    text-align: center;
+  }
+  .stat-item .number {
+    font-family: var(--serif);
+    font-size: clamp(32px, 5vw, 50px);
+    color: var(--gold);
+    font-weight: 700;
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+    line-height: 1;
+  }
+  .stat-item .label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--smoke);
+    margin-top: 10px;
+    text-transform: uppercase;
+  }
+
+  /* ============ SECTIONS ============ */
+  section.block {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(28px, 4vw, 44px);
+    color: var(--cream);
+    text-align: center;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+    font-weight: 500;
+  }
+  .gold-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin: 0 auto 36px;
+    max-width: 400px;
+  }
+  .gold-divider .line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .gold-divider .crown { color: var(--gold); font-size: 18px; }
+
+  /* Bounce effect pour titres */
+  @keyframes title-bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-14px); }
+    60% { transform: translateY(-7px); }
+  }
+  .title-bounce {
+    display: inline-block;
+    animation: title-bounce 2.2s ease-in-out infinite;
+  }
+
+  /* Video teaser (lecture auto on scroll) */
+  .teaser-stage {
+    position: relative;
+    max-width: 100%;
+    margin: 14px auto 0;
+    padding: 50px 30px;
+    overflow: hidden;
+  }
+  .teaser-stage::before,
+  .teaser-stage::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+  /* Faisceau radial central qui souligne la vidéo */
+  .teaser-stage::before {
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 50%, rgba(212,175,55,0.18) 0%, transparent 65%);
+    animation: stagePulse 4s ease-in-out infinite;
+  }
+  @keyframes stagePulse {
+    0%, 100% { opacity: 0.7; }
+    50%      { opacity: 1; }
+  }
+
+  /* Faisceaux lumineux individuels (spotlights) */
+  .spot {
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+    width: 24px;
+    height: 70%;
+    top: 0;
+    background: linear-gradient(to bottom,
+      rgba(212,175,55,0.55) 0%,
+      rgba(212,175,55,0.25) 35%,
+      rgba(212,175,55,0.05) 70%,
+      transparent 100%);
+    filter: blur(8px);
+    mix-blend-mode: screen;
+    transform-origin: top center;
+    border-radius: 50% / 8%;
+  }
+  /* 3 spots qui partent du haut-gauche et convergent vers le centre */
+  .spot.s-tl-1 { left: 6%;  transform: rotate(28deg);  animation: spotFlicker 3.5s ease-in-out infinite; }
+  .spot.s-tl-2 { left: 14%; transform: rotate(18deg);  animation: spotFlicker 4.2s ease-in-out infinite 0.3s; }
+  .spot.s-tl-3 { left: 24%; transform: rotate(8deg);   animation: spotFlicker 3.8s ease-in-out infinite 0.7s; }
+  /* 3 spots qui partent du haut-droit et convergent vers le centre */
+  .spot.s-tr-1 { right: 6%;  transform: rotate(-28deg);  animation: spotFlicker 3.9s ease-in-out infinite 0.2s; }
+  .spot.s-tr-2 { right: 14%; transform: rotate(-18deg);  animation: spotFlicker 3.3s ease-in-out infinite 0.5s; }
+  .spot.s-tr-3 { right: 24%; transform: rotate(-8deg);   animation: spotFlicker 4.1s ease-in-out infinite 0.9s; }
+
+  @keyframes spotFlicker {
+    0%, 100% { opacity: 0.35; }
+    20%      { opacity: 0.95; }
+    40%      { opacity: 0.6; }
+    60%      { opacity: 1; }
+    80%      { opacity: 0.45; }
+  }
+
+  /* Halos colorés au-dessus pour ambiance scène */
+  .stage-halo {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+    z-index: 0;
+    mix-blend-mode: screen;
+  }
+  .stage-halo.h-left  { top: 10px; left:  -40px; background: rgba(212, 175, 55, 0.45); }
+  .stage-halo.h-right { top: 10px; right: -40px; background: rgba(139, 0, 0, 0.35); }
+
+  .teaser-video-wrap {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow:
+      0 20px 60px rgba(0,0,0,0.7),
+      0 0 0 1px rgba(212,175,55,0.4),
+      0 0 80px rgba(212,175,55,0.25),
+      0 0 140px rgba(212,175,55,0.15);
+    background: #000;
+  }
+  .teaser-video-wrap video,
+  .teaser-video-wrap iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    object-fit: cover;
+  }
+  @media (max-width: 768px) {
+    .teaser-stage { padding: 60px 20px; }
+    .spot { width: 14px; }
+  }
+
+  /* === BLOC AFFICHE TOP (au-dessus de la vidéo) === */
+  .affiche-top-block {
+    max-width: 900px;
+    margin: 0 auto 30px;
+    background: linear-gradient(180deg, rgba(20,20,20,0.95) 0%, rgba(10,10,10,0.98) 100%);
+    border: 1px solid rgba(212,175,55,0.45);
+    border-radius: 16px;
+    padding: 36px 24px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 30px rgba(212,175,55,0.10);
+  }
+  .affiche-top-pre {
+    font-family: var(--serif);
+    font-size: clamp(14px, 1.6vw, 18px);
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .affiche-top-main {
+    font-family: var(--serif);
+    font-size: clamp(24px, 3.4vw, 38px);
+    color: var(--cream);
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .affiche-top-actu {
+    display: inline-block;
+    background: #C8102E;
+    color: #FFFFFF;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    vertical-align: middle;
+    box-shadow: 0 0 18px rgba(200, 16, 46, 0.6);
+    animation: actuBlink 1.1s ease-in-out infinite;
+  }
+  @keyframes actuBlink {
+    0%, 100% { opacity: 1;   box-shadow: 0 0 24px rgba(200, 16, 46, 0.9); }
+    50%      { opacity: 0.3; box-shadow: 0 0 6px  rgba(200, 16, 46, 0.2); }
+  }
+  .affiche-top-sub {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--cream);
+    font-size: clamp(14px, 1.6vw, 18px);
+    margin-bottom: 18px;
+  }
+  .affiche-top-crown {
+    color: var(--gold);
+    font-size: 22px;
+    margin: 4px 0 18px;
+  }
+  .affiche-top-poster {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(212,175,55,0.35);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  }
+
+  /* SHOW teaser */
+  .show-card {
+    background: linear-gradient(135deg, rgba(212,175,55,0.05) 0%, rgba(139,0,0,0.05) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 16px;
+    padding: 50px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .show-card::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(212,175,55,0.05) 0%, transparent 60%);
+    animation: rotate 30s linear infinite;
+  }
+  @keyframes rotate {
+    to { transform: rotate(360deg); }
+  }
+  .show-card > * { position: relative; z-index: 1; }
+  .show-card h3 {
+    font-family: var(--serif);
+    color: var(--gold);
+    font-size: clamp(20px, 3vw, 26px);
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+  .show-card p {
+    color: var(--cream);
+    margin-bottom: 14px;
+    line-height: 1.75;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* CARDS GRID */
+  .cards-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    margin-top: 30px;
+  }
+  .preview-card {
+    background: var(--charcoal);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    border-radius: 12px;
+    padding: 26px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  .preview-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-4px);
+  }
+  .preview-card .icon { font-size: 36px; margin-bottom: 14px; }
+  .preview-card h4 {
+    font-family: var(--serif);
+    color: var(--gold-pale);
+    font-size: 16px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+  .preview-card p {
+    color: var(--smoke);
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+  .preview-card a {
+    color: var(--gold);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 2px;
+  }
+  .preview-card a:hover { color: var(--gold-pale); border-bottom-color: var(--gold-pale); }
+
+  /* APP TWOQ CTA — version premium */
+  .app-cta-wrap {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 4px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, var(--gold) 0%, rgba(212,175,55,0.2) 30%, rgba(212,175,55,0.1) 70%, var(--gold-pale) 100%);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(212,175,55,0.15);
+  }
+  .app-cta {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212,175,55,0.18) 0%, transparent 60%),
+      linear-gradient(180deg, #0d0d0d 0%, #161103 50%, #0a0a0a 100%);
+    border-radius: 22px;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  /* Halo doré décoratif derrière */
+  .app-cta::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,175,55,0.25) 0%, transparent 70%);
+    filter: blur(40px);
+    pointer-events: none;
+  }
+  .app-cta-phone {
+    position: relative;
+    width: 200px;
+    height: 380px;
+    border-radius: 32px;
+    background: linear-gradient(145deg, #1a1a1a 0%, #0a0a0a 100%);
+    border: 2px solid rgba(212,175,55,0.45);
+    box-shadow:
+      0 30px 60px rgba(0,0,0,0.7),
+      0 0 40px rgba(212,175,55,0.25),
+      inset 0 0 0 4px #050505;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    animation: phoneTilt 6s ease-in-out infinite;
+  }
+  @keyframes phoneTilt {
+    0%, 100% { transform: rotate(-3deg) translateY(0); }
+    50%      { transform: rotate(-1deg) translateY(-6px); }
+  }
+  .app-cta-phone-notch {
+    position: absolute;
+    top: 8px; left: 50%;
+    transform: translateX(-50%);
+    width: 80px; height: 16px;
+    background: #050505;
+    border-radius: 0 0 12px 12px;
+    z-index: 2;
+  }
+  .app-cta-phone-screen {
+    position: absolute;
+    inset: 12px;
+    border-radius: 22px;
+    background:
+      radial-gradient(circle at 50% 30%, rgba(212,175,55,0.35) 0%, transparent 60%),
+      linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 30px 14px;
+    overflow: hidden;
+  }
+  .app-cta-phone-crown {
+    color: var(--gold);
+    font-size: 36px;
+    margin-bottom: 8px;
+    filter: drop-shadow(0 0 12px rgba(212,175,55,0.8));
+  }
+  .app-cta-phone-title {
+    font-family: var(--serif);
+    color: var(--gold);
+    font-size: 18px;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+    line-height: 1.1;
+  }
+  .app-cta-phone-sub {
+    color: var(--cream);
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .app-cta-phone-btn {
+    background: linear-gradient(135deg, var(--gold), var(--gold-pale));
+    color: #0a0a0a;
+    padding: 8px 22px;
+    border-radius: 18px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .app-cta-content {
+    position: relative;
+    z-index: 1;
+  }
+  .app-cta-eyebrow {
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .app-cta-title {
+    font-family: var(--serif);
+    color: var(--cream);
+    font-size: clamp(28px, 4vw, 42px);
+    letter-spacing: 2px;
+    margin-bottom: 18px;
+    line-height: 1.1;
+  }
+  .app-cta-title span {
+    color: var(--gold);
+    display: block;
+    font-style: italic;
+  }
+  .app-cta-desc {
+    color: var(--cream);
+    opacity: 0.85;
+    line-height: 1.7;
+    margin-bottom: 26px;
+    font-size: 15px;
+  }
+  .app-cta-perks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .app-cta-perk {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(212,175,55,0.08);
+    border: 1px solid rgba(212,175,55,0.25);
+    color: var(--cream);
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+  .app-cta-perk svg {
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+  .app-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-pale) 100%);
+    color: #0a0a0a;
+    padding: 16px 32px;
+    border-radius: 50px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    font-size: 13px;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 0 12px 30px rgba(212,175,55,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .app-cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px rgba(212,175,55,0.55);
+  }
+  .app-cta-btn-arrow {
+    transition: transform 0.2s;
+  }
+  .app-cta-btn:hover .app-cta-btn-arrow { transform: translateX(4px); }
+
+  @media (max-width: 768px) {
+    .app-cta {
+      grid-template-columns: 1fr;
+      padding: 40px 24px;
+      text-align: center;
+      gap: 30px;
+    }
+    .app-cta-phone { margin: 0 auto; width: 180px; height: 340px; }
+    .app-cta-perks { justify-content: center; }
+  }
+
+  /* ============ PARTENAIRES OFFICIELS ============ */
+  .partners-wrap {
+    max-width: 100%;
+    margin: 0 auto;
+    background: linear-gradient(180deg, rgba(20,20,20,0.6) 0%, rgba(10,10,10,0.9) 100%);
+    border: 1px solid rgba(212,175,55,0.18);
+    border-radius: 18px;
+    padding: 36px 24px 30px;
+    text-align: center;
+  }
+  .partners-title {
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .partners-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    align-items: center;
+    justify-items: center;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .partner-card {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #ffffff;
+    border: 1px solid rgba(212,175,55,0.2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+    max-height: 80px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .partner-card.dark {
+    background: #0a0a0a;
+  }
+  .partner-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--gold);
+    box-shadow: 0 6px 18px rgba(212,175,55,0.18);
+  }
+  .partner-card img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  @media (max-width: 768px) {
+    .partners-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 360px; }
+    .partners-title { letter-spacing: 3px; font-size: 11px; }
+    .partner-card { max-height: 70px; }
+  }
+
+  /* FOOTER */
+  footer {
+    background: #050505;
+    border-top: 1px solid rgba(212, 175, 55, 0.15);
+    padding: 60px 20px 30px;
+    margin-top: 60px;
+  }
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+  }
+  .footer-col h5 {
+    font-family: var(--serif);
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 3px;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+  .footer-col p, .footer-col a {
+    color: var(--smoke);
+    font-size: 13px;
+    line-height: 1.9;
+    text-decoration: none;
+    display: block;
+  }
+  .footer-col a:hover { color: var(--gold); }
+  .footer-social {
+    display: flex;
+    gap: 14px;
+    margin-top: 10px;
+  }
+  .footer-social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 50%;
+    color: var(--gold);
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+  .footer-social a:hover { background: var(--gold); color: var(--noir); }
+  .footer-bottom {
+    max-width: 1200px;
+    margin: 50px auto 0;
+    padding-top: 24px;
+    border-top: 1px solid rgba(212, 175, 55, 0.08);
+    text-align: center;
+    color: var(--smoke);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+  }
+  .footer-bottom .gold-text { color: var(--gold); }
+
+  /* ============ AFFICHE OFFICIELLE ============ */
+  .affiche-wrap {
+    max-width: 580px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .affiche-crown {
+    color: var(--gold);
+    font-size: 22px;
+    margin: 14px 0;
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(212,175,55,0.3);
+    border-radius: 50%;
+    line-height: 36px;
+  }
+  .affiche-frame {
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 0 50px rgba(212,175,55,0.18), 0 20px 50px rgba(0,0,0,0.6);
+    border: 1px solid rgba(212,175,55,0.25);
+  }
+  .affiche-img {
+    width: 100%;
+    display: block;
+  }
+  .affiche-caption {
+    text-align: left;
+    padding: 24px 4px 0;
+    position: relative;
+  }
+  .affiche-title-pre {
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--cream);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .affiche-title-main {
+    font-family: var(--serif);
+    font-size: clamp(24px, 4vw, 32px);
+    color: var(--cream);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .affiche-actu-badge {
+    background: var(--cramoisi);
+    color: #fff;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+  .affiche-title-sub {
+    color: var(--smoke);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ============ PROCHAIN CONCERT + DATES ============ */
+  .next-concert-h2 {
+    font-family: var(--serif);
+    color: var(--cream);
+    font-size: clamp(28px, 4vw, 38px);
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+    font-weight: 500;
+    text-align: center;
+  }
+  .next-concert-sub {
+    margin-bottom: 26px;
+    text-align: center;
+  }
+  .ncs-line1 {
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--cream);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .ncs-line2 {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    font-weight: 600;
+  }
+  .next-concert-card {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    min-height: 220px;
+    border: 1px solid rgba(212,175,55,0.2);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  }
+  .next-concert-img {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.5) saturate(1.1);
+  }
+  .next-concert-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.85) 100%);
+  }
+  .next-concert-content {
+    position: relative;
+    z-index: 2;
+    padding: 30px 26px;
+    color: var(--cream);
+  }
+  .next-concert-badge {
+    display: inline-block;
+    background: var(--cramoisi);
+    color: #fff;
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .next-concert-venue {
+    font-family: var(--serif);
+    font-size: clamp(26px, 4vw, 38px);
+    color: var(--cream);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .next-concert-where {
+    font-size: 14px;
+    color: var(--cream);
+    opacity: 0.85;
+    margin-bottom: 18px;
+  }
+  .next-concert-cta {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--noir);
+    text-decoration: none;
+    padding: 11px 26px;
+    border-radius: 999px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    transition: all 0.2s;
+  }
+  .next-concert-cta:hover { background: var(--gold-pale); }
+
+  /* DATES TEASER */
+  .dates-teaser-card {
+    background: linear-gradient(135deg, rgba(212,175,55,0.04) 0%, rgba(10,10,10,0.6) 100%);
+    border: 1px solid rgba(212,175,55,0.18);
+    border-radius: 14px;
+    padding: 36px 30px;
+    text-align: center;
+  }
+  .dates-eyebrow {
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: var(--cream);
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+  .dates-search-fake {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(212,175,55,0.25);
+    border-radius: 999px;
+    padding: 14px 22px;
+    max-width: 480px;
+    margin: 0 auto 20px;
+    color: var(--smoke);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .dates-search-fake:focus-within {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 4px rgba(212,175,55,0.15);
+  }
+  .dates-search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--cream);
+    font-family: var(--sans);
+    font-size: 14px;
+    font-style: italic;
+  }
+  .dates-search-input::placeholder { color: var(--smoke); }
+  .dates-search-placeholder {
+    font-style: italic;
+    font-size: 14px;
+    color: var(--smoke);
+  }
+
+  /* Résultats de recherche */
+  .dates-search-results {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+    display: none;
+  }
+  .dates-search-results.active { display: block; }
+  .dates-search-empty {
+    padding: 20px;
+    color: var(--smoke);
+    font-style: italic;
+    font-size: 14px;
+    text-align: center;
+  }
+  .closest-suggest {
+    background: rgba(20,20,20,0.6);
+    border: 1px dashed rgba(212,175,55,0.4);
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+  }
+  .closest-label {
+    color: var(--cream);
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  .closest-label strong {
+    color: var(--gold);
+    text-transform: capitalize;
+  }
+  .closest-tag {
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .dates-result-item {
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    gap: 14px;
+    align-items: center;
+    padding: 14px 16px;
+    background: rgba(20,20,20,0.85);
+    border: 1px solid rgba(212,175,55,0.18);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .dates-result-item:hover {
+    border-color: var(--gold);
+    transform: translateX(4px);
+  }
+  .dates-result-day {
+    background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(212,175,55,0.05));
+    border: 1px solid rgba(212,175,55,0.4);
+    border-radius: 10px;
+    padding: 8px 4px;
+    text-align: center;
+  }
+  .dates-result-num {
+    font-family: var(--serif);
+    color: var(--gold);
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .dates-result-mois {
+    color: var(--cream);
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .dates-result-info { min-width: 0; }
+  .dates-result-ville {
+    color: var(--cream);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .dates-result-salle {
+    color: var(--smoke);
+    font-size: 12px;
+    margin-top: 2px;
+  }
+  .dates-result-cta {
+    background: linear-gradient(135deg, var(--gold), var(--gold-pale));
+    color: #0a0a0a;
+    padding: 9px 16px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .dates-result-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(212,175,55,0.4);
+  }
+  .dates-result-cta.complet {
+    background: var(--cramoisi);
+    color: #fff;
+    pointer-events: none;
+  }
+  .dates-result-cta.bientot {
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    pointer-events: none;
+  }
+  @media (max-width: 600px) {
+    .dates-result-item { grid-template-columns: 48px 1fr; }
+    .dates-result-cta { grid-column: 1 / -1; text-align: center; }
+  }
+  .dates-region-toggle {
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 3px;
+    font-weight: 700;
+    margin-top: 6px;
+    cursor: pointer;
+    user-select: none;
+    transition: opacity 0.2s;
+  }
+  .dates-region-toggle:hover { opacity: 0.8; }
+  .dates-region-toggle .arrow { display: inline-block; transition: transform 0.3s; }
+  .dates-region-toggle.open .arrow { transform: rotate(180deg); }
+  .dates-region-grid {
+    display: none;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    max-width: 600px;
+    margin: 18px auto 0;
+  }
+  .dates-region-grid.open { display: grid; }
+  .region-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--charcoal);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 999px;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    color: var(--cream);
+    font-size: 13px;
+    font-weight: 500;
+    text-align: left;
+    font-family: inherit;
+  }
+  .region-btn:hover {
+    border-color: rgba(212, 175, 55, 0.55);
+    transform: translateY(-1px);
+  }
+  .region-btn.active {
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(212, 175, 55, 0.08));
+    border-color: var(--gold);
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
+    color: var(--gold);
+  }
+  .region-btn-icon { font-size: 16px; line-height: 1; flex-shrink: 0; }
+  .region-btn-name { flex: 1; letter-spacing: 0.3px; }
+  @media (max-width: 500px) {
+    .dates-region-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ============ PAGE SHOW REPRISE ============ */
+  .show-logo-wrap { text-align: center; margin-top: 10px; }
+  .show-logo {
+    width: 80%;
+    max-width: 320px;
+    filter: drop-shadow(0 0 25px rgba(212,175,55,0.4));
+  }
+  .show-h1 {
+    font-family: var(--serif);
+    text-align: center;
+    color: var(--cream);
+    font-size: clamp(32px, 5vw, 44px);
+    margin: 18px 0 10px;
+    font-weight: 500;
+    letter-spacing: 1px;
+  }
+
+  /* Video placeholder */
+  .video-placeholder {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    background: #000;
+    max-width: 900px;
+    margin: 16px auto 0;
+  }
+  .video-placeholder-link {
+    display: block;
+    position: absolute; inset: 0;
+    text-decoration: none;
+    color: var(--cream);
+  }
+  .video-placeholder-bg {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.55);
+  }
+  .video-placeholder-overlay {
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.4) 100%);
+  }
+  .video-play-btn {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90px;
+    height: 90px;
+    background: var(--gold);
+    color: var(--noir);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 40px rgba(212,175,55,0.5);
+    transition: all 0.2s;
+  }
+  .video-placeholder-link:hover .video-play-btn {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 0 60px rgba(212,175,55,0.7);
+  }
+  .video-placeholder-label {
+    position: absolute;
+    bottom: 20px;
+    left: 0; right: 0;
+    text-align: center;
+    color: var(--cream);
+    font-size: 14px;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+
+  /* PITCH CARD */
+  .pitch-card {
+    background: linear-gradient(180deg, rgba(20,20,20,0.95) 0%, rgba(10,10,10,0.98) 100%);
+    border: 1px solid rgba(212,175,55,0.3);
+    border-radius: 18px;
+    padding: 40px 30px;
+    margin: 30px auto 0;
+    max-width: 900px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 60px rgba(212,175,55,0.08);
+  }
+  .pitch-header { text-align: center; margin-bottom: 30px; }
+  .pitch-visuel-3 {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 24px auto 30px;
+    border: 1px solid rgba(212,175,55,0.35);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.55), 0 0 24px rgba(212,175,55,0.12);
+  }
+  .pitch-header-pre {
+    font-style: italic;
+    color: var(--gold-pale);
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  .pitch-header-title {
+    font-family: var(--serif);
+    font-size: clamp(22px, 4vw, 32px);
+    color: var(--gold);
+    letter-spacing: 4px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .pitch-header-subtitle {
+    font-family: var(--serif);
+    font-size: clamp(18px, 3vw, 24px);
+    color: var(--cream);
+    font-style: italic;
+    margin-bottom: 14px;
+  }
+  .pitch-header-tag {
+    display: inline-block;
+    background: rgba(212,175,55,0.15);
+    color: var(--gold);
+    padding: 5px 16px;
+    border-radius: 999px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    border: 1px solid rgba(212,175,55,0.4);
+  }
+  .pitch-stats-zone {
+    background: linear-gradient(180deg, rgba(212,175,55,0.06) 0%, rgba(212,175,55,0.02) 100%);
+    border: 1px solid rgba(212,175,55,0.15);
+    border-radius: 12px;
+    padding: 22px 20px;
+    margin-bottom: 24px;
+  }
+  .pitch-stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    text-align: center;
+  }
+  .pitch-stats-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,175,55,0.3), transparent);
+    margin: 18px 0;
+  }
+  .pitch-stat-num {
+    font-family: var(--serif);
+    color: var(--gold);
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 700;
+    line-height: 1;
+  }
+  .pitch-stat-stars {
+    color: var(--gold);
+    font-size: clamp(14px, 2vw, 18px);
+    letter-spacing: 1px;
+  }
+  .pitch-stat-lab {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    color: var(--smoke);
+    font-weight: 600;
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+  .pitch-body {
+    color: var(--cream);
+    line-height: 1.7;
+    text-align: center;
+    margin-bottom: 24px;
+    font-size: 15px;
+  }
+  .pitch-setlist {
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .pitch-setlist-label {
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 3px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .pitch-setlist-text {
+    color: var(--cream);
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  .pitch-setlist-text .dot { color: var(--gold); margin: 0 4px; }
+  .pitch-setlist-more {
+    font-style: italic;
+    color: var(--smoke);
+    font-size: 12px;
+    margin-top: 8px;
+  }
+  .pitch-reviews { margin-bottom: 24px; }
+  .pitch-reviews-label {
+    text-align: center;
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 3px;
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+  .pitch-reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+  }
+  .pitch-review-bubble {
+    background: rgba(212,175,55,0.04);
+    border: 1px solid rgba(212,175,55,0.15);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+  }
+  .pitch-review-stars {
+    color: var(--gold);
+    font-size: 13px;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .pitch-review-text {
+    color: var(--cream);
+    font-size: 13px;
+    line-height: 1.6;
+    font-style: italic;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  .pitch-review-author {
+    color: var(--gold-pale);
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+  }
+  .pitch-tagline {
+    text-align: center;
+    padding: 24px 10px;
+    border-top: 1px solid rgba(212,175,55,0.15);
+    border-bottom: 1px solid rgba(212,175,55,0.15);
+    margin-bottom: 20px;
+  }
+  .pt-line-1 {
+    font-family: var(--serif);
+    color: var(--gold);
+    font-size: clamp(16px, 2.5vw, 22px);
+    letter-spacing: 3px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .pt-line-2 {
+    font-style: italic;
+    color: var(--cream);
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+  .pt-line-3 {
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: var(--smoke);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .pt-line-4 {
+    font-family: var(--serif);
+    color: var(--gold);
+    font-size: clamp(20px, 3vw, 28px);
+    letter-spacing: 3px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .pt-line-5 {
+    font-family: var(--serif);
+    color: var(--gold-pale);
+    font-size: clamp(14px, 2vw, 18px);
+    font-style: italic;
+  }
+  .pitch-credit {
+    text-align: center;
+    color: var(--smoke);
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  .omp-logo {
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-size: 16px;
+  }
+
+  /* REELS */
+  .reels-scroll {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-top: 26px;
+  }
+  .reel-card {
+    text-decoration: none;
+    display: block;
+    transition: transform 0.2s;
+    cursor: pointer;
+  }
+  .reel-card:hover { transform: translateY(-4px); }
+
+  /* ============ LIGHTBOX VIDÉO REELS ============ */
+  .video-lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .video-lightbox.open { display: flex; }
+  .vl-stage {
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .vl-frame {
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    max-height: 80vh;
+    background: #000;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(212,175,55,0.4);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(212,175,55,0.15);
+  }
+  .vl-frame iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+  .vl-caption {
+    color: var(--cream);
+    font-family: var(--serif);
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-align: center;
+    max-width: 460px;
+  }
+  .vl-counter {
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 3px;
+    font-weight: 700;
+  }
+  .vl-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.6);
+    border: 1px solid rgba(212,175,55,0.45);
+    color: var(--gold);
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.2s, color 0.2s;
+    font-family: inherit;
+    z-index: 10001;
+  }
+  .vl-close:hover {
+    background: var(--gold);
+    color: var(--noir);
+    transform: rotate(90deg);
+  }
+  .vl-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.6);
+    border: 1px solid rgba(212,175,55,0.45);
+    color: var(--gold);
+    font-size: 38px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.2s, color 0.2s;
+    font-family: inherit;
+    line-height: 0;
+    padding-bottom: 6px;
+    z-index: 10001;
+  }
+  .vl-prev { left: 24px; }
+  .vl-next { right: 24px; }
+  .vl-arrow:hover {
+    background: var(--gold);
+    color: var(--noir);
+    border-color: var(--gold);
+  }
+  .vl-prev:hover { transform: translateY(-50%) translateX(-4px); }
+  .vl-next:hover { transform: translateY(-50%) translateX(4px); }
+
+  @media (max-width: 768px) {
+    .vl-arrow { width: 44px; height: 44px; font-size: 30px; }
+    .vl-prev { left: 8px; }
+    .vl-next { right: 8px; }
+    .vl-close { top: 12px; right: 12px; width: 38px; height: 38px; font-size: 18px; }
+    .vl-stage { max-width: 100%; }
+    .vl-caption { font-size: 15px; }
+  }
+  .reel-thumb {
+    position: relative;
+    aspect-ratio: 9/16;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    border: 1px solid rgba(212,175,55,0.2);
+    margin-bottom: 10px;
+  }
+  .reel-thumb::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.7) 100%);
+  }
+  .reel-play {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 46px; height: 46px;
+    background: rgba(212,175,55,0.9);
+    color: var(--noir);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 0 30px rgba(212,175,55,0.5);
+    z-index: 2;
+  }
+  .reel-caption {
+    color: var(--cream);
+    font-size: 13px;
+    text-align: center;
+    line-height: 1.4;
+    padding: 0 4px;
+  }
+
+  @media (max-width: 600px) {
+    section.block { padding: 60px 14px; }
+    .show-card { padding: 36px 22px; }
+    .app-cta { padding: 36px 22px; }
+    .pitch-card { padding: 30px 18px; }
+    .pitch-stats-row { gap: 8px; }
+  }
+
+  /* ============ NEWSLETTER BLOCK ============ */
+  .newsletter-block { position: relative; z-index: 3; background: linear-gradient(180deg, #0a0a0a 0%, #050505 100%); border-top: 1px solid rgba(212,175,55,0.15); border-bottom: 1px solid rgba(212,175,55,0.15); padding: 50px 20px; }
+  .newsletter-wrap { max-width: 600px; margin: 0 auto; text-align: center; }
+  .newsletter-eyebrow { color: var(--gold); font-size: 11px; letter-spacing: 5px; font-weight: 700; margin-bottom: 10px; }
+  .newsletter-title { font-family: var(--serif); color: var(--cream); font-size: clamp(24px, 4vw, 32px); font-weight: 500; letter-spacing: 1px; margin-bottom: 8px; }
+  .newsletter-text { color: var(--cream); font-size: 13px; line-height: 1.5; opacity: 0.85; margin-bottom: 22px; }
+  .newsletter-form { display: flex; gap: 10px; max-width: 480px; margin: 0 auto 12px; flex-wrap: wrap; justify-content: center; }
+  .newsletter-form input { flex: 1; min-width: 200px; background: rgba(0,0,0,0.5); border: 1px solid rgba(212,175,55,0.3); color: var(--cream); padding: 12px 18px; border-radius: 999px; font-family: inherit; font-size: 14px; outline: none; transition: border-color 0.2s; }
+  .newsletter-form input:focus { border-color: var(--gold); }
+  .newsletter-form input::placeholder { color: var(--smoke); }
+  .newsletter-form button { background: var(--gold); color: var(--noir); border: none; border-radius: 999px; padding: 12px 24px; font-family: inherit; font-size: 13px; letter-spacing: 1px; font-weight: 700; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+  .newsletter-form button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212,175,55,0.3); }
+  .newsletter-helper { color: var(--smoke); font-size: 11px; font-style: italic; }
+  .newsletter-success { color: #10b981; font-size: 13px; margin-top: 12px; display: none; }
+  .newsletter-success.show { display: block; }
+
+
+  /* ============ DROPDOWN ESPACE PRO ============ */
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-toggle {
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 6px 0;
+    border-bottom: 2px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    user-select: none;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: inherit;
+    transition: border-color 0.2s;
+  }
+  .nav-dropdown-toggle:hover { border-bottom-color: var(--gold); }
+  .nav-dropdown-toggle .chev { font-size: 9px; transition: transform 0.2s; }
+  .nav-dropdown.open .nav-dropdown-toggle .chev { transform: rotate(180deg); }
+  .nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 200px;
+    background: rgba(10,10,10,0.98);
+    border: 1px solid rgba(212,175,55,0.35);
+    border-radius: 12px;
+    padding: 6px;
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    box-shadow: 0 14px 36px rgba(0,0,0,0.7), 0 0 30px rgba(212,175,55,0.1);
+    z-index: 200;
+  }
+  .nav-dropdown.open .nav-dropdown-menu,
+  .nav-dropdown:hover .nav-dropdown-menu { display: flex; }
+  .nav-dropdown-menu a {
+    color: var(--cream) !important;
+    font-size: 11px !important;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 10px 14px !important;
+    border-radius: 8px;
+    border-bottom: none !important;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+  .nav-dropdown-menu a:hover {
+    background: rgba(212,175,55,0.15);
+    color: var(--gold) !important;
+  }
+  @media (max-width: 980px) {
+    .nav-dropdown { width: 100%; }
+    .nav-dropdown-toggle {
+      width: 100%;
+      justify-content: space-between;
+      padding: 12px 0 !important;
+      border-bottom: 1px solid rgba(212,175,55,0.10) !important;
+    }
+    .nav-dropdown-menu {
+      position: static;
+      background: rgba(0,0,0,0.4);
+      margin: 4px 0 8px;
+      width: 100%;
+      border: none;
+      border-left: 2px solid rgba(212,175,55,0.3);
+      border-radius: 0;
+      padding: 4px 0 4px 14px;
+      box-shadow: none;
+    }
+    .nav-dropdown-menu a {
+      padding: 8px 0 !important;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ============ SPLASH HYPERDRIVE ============ -->
+<div id="splash" class="splash">
+  <div class="nebula"></div>
+  <div id="hyperdrive"></div>
+  <img src="https://regisohmyprod-sys.github.io/twoq-pwa/icons/logo-twoq-titre.png" alt="The World of Queen — L'Éternelle Légende" class="splash-logo">
+  <div class="splash-subtitle">L'ÉTERNELLE LÉGENDE</div>
+  <div class="splash-button-wrap">
+    <button class="splash-button" id="splashEnterBtn">ENTRER</button>
+    <div class="splash-hint">Touchez pour commencer l'expérience</div>
+  </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#home" class="brand">
+      THE WORLD OF QUEEN
+      <small>L'ÉTERNELLE LÉGENDE</small>
+    </a>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html" onclick="closeMenu()" style="color:var(--gold);border-bottom-color:var(--gold);">LE SHOW</a>
+      <a href="dates.html" onclick="closeMenu()">DATES</a>
+      <a href="artistes.html" onclick="closeMenu()">ARTISTES</a>
+      <a href="fanzone.html" onclick="closeMenu()">FAN ZONE</a>
+      <a href="medias.html" onclick="closeMenu()">MÉDIAS</a>
+      <a href="moi.html" onclick="closeMenu()">MOI</a>
+      <a href="contact-prod.html" onclick="closeMenu()">CONTACT PROD</a>
+      <div class="nav-dropdown" id="navDropdown">
+        <button type="button" class="nav-dropdown-toggle" onclick="toggleDropdown(event)">ESPACE PRO <span class="chev">▾</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="espace-pro.html" onclick="closeMenu(); closeDropdown();">Espace Pro</a>
+          <a href="espace-presse.html" onclick="closeMenu(); closeDropdown();">Espace Presse</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HERO (continuation du splash) ============ -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div id="heroHyperdrive" class="hero-hyperdrive"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">UN HOMMAGE VIBRANT</div>
+    <img src="https://regisohmyprod-sys.github.io/twoq-pwa/icons/logo-twoq-titre.png"
+         alt="The World of Queen — L'Éternelle Légende" class="hero-logo">
+    <div class="hero-tagline">
+      <div class="tagline-line tagline-strong">Porté par plus d'<span class="gold-num">1 million 3</span> de spectateurs</div>
+      <div class="tagline-line">le show référence en hommage à <strong>Freddie Mercury</strong> et à la légende Queen</div>
+      <div class="tagline-line">en tournée dans toute la France.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LE NOUVEAU SPECTACLE (bloc doré + teaser + pitch) ============ -->
+<section class="block" id="nouveau-spectacle" style="padding-top: 0;">
+  <div class="gold-divider" style="margin:-20px auto 40px;"><span class="line"></span><span class="crown">♕</span><span class="line"></span></div>
+
+  <!-- BLOC DORÉ : texte + VIDÉO TEASER intégrée -->
+  <div class="affiche-top-block">
+    <div class="affiche-top-pre">THE WORLD OF QUEEN</div>
+    <div class="affiche-top-main">
+      L'Éternelle Légende
+      <span class="affiche-top-actu">ACTU</span>
+    </div>
+    <div class="affiche-top-sub">Le grand lancement de la nouvelle tournée et du nouveau show !</div>
+    <div class="affiche-top-crown">♕</div>
+
+    <!-- VIDÉO TEASER avec spotlights de concert -->
+    <div class="teaser-stage">
+      <span class="stage-halo h-left"></span>
+      <span class="stage-halo h-right"></span>
+      <span class="spot s-tl-1"></span>
+      <span class="spot s-tl-2"></span>
+      <span class="spot s-tl-3"></span>
+      <span class="spot s-tr-1"></span>
+      <span class="spot s-tr-2"></span>
+      <span class="spot s-tr-3"></span>
+      <div class="teaser-video-wrap">
+        <video
+          id="teaserVideo"
+          muted
+          playsinline
+          preload="metadata"
+          controls
+          poster="https://regisohmyprod-sys.github.io/twoq-pwa/icons/affiche-show.jpg"
+          src="https://regisohmyprod-sys.github.io/twoq-pwa/assets/TEASER1.mp4">
+          Votre navigateur ne supporte pas la vidéo HTML5.
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <!-- SÉPARATEUR sous la vidéo -->
+  <div class="gold-divider" style="margin:60px auto;"><span class="line"></span><span class="crown">♕</span><span class="line"></span></div>
+
+  <!-- PITCH-CARD (remontée depuis la section SHOW) -->
+  <div class="pitch-card">
+    <div class="pitch-header">
+      <div class="pitch-header-pre">Oh my prod présente</div>
+      <div class="pitch-header-title">THE WORLD OF QUEEN</div>
+      <div class="pitch-header-subtitle">L'Éternelle Légende</div>
+      <div class="pitch-header-tag">Nouveau spectacle</div>
+    </div>
+
+    <!-- VISUEL HORIZONTAL (Caramia + Un Hommage Magistral) -->
+    <img src="https://regisohmyprod-sys.github.io/twoq-pwa/assets/VISUEL_3.jpeg"
+         alt="The World of Queen — Un Hommage Magistral — Starring Fred Caramia"
+         class="pitch-visuel-3">
+
+    <div class="pitch-stats-zone">
+      <div class="pitch-stats-row">
+        <div class="pitch-stat">
+          <div class="pitch-stat-num">1,3M</div>
+          <div class="pitch-stat-lab">SPECTATEURS</div>
+        </div>
+        <div class="pitch-stat">
+          <div class="pitch-stat-num">N°1</div>
+          <div class="pitch-stat-lab">VENTES FRANCE</div>
+        </div>
+        <div class="pitch-stat">
+          <div class="pitch-stat-num">N°1</div>
+          <div class="pitch-stat-lab">HOMMAGE QUEEN</div>
+        </div>
+      </div>
+      <div class="pitch-stats-divider"></div>
+      <div class="pitch-stats-row">
+        <div class="pitch-stat">
+          <div class="pitch-stat-stars">★★★★★</div>
+          <div class="pitch-stat-lab">TICKETMASTER</div>
+        </div>
+        <div class="pitch-stat">
+          <div class="pitch-stat-stars">★★★★★</div>
+          <div class="pitch-stat-lab">GOOGLE</div>
+        </div>
+        <div class="pitch-stat">
+          <div class="pitch-stat-stars">★★★★★</div>
+          <div class="pitch-stat-lab">AVIS PUBLIC</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pitch-body">
+      Un nouveau show de plus de deux heures à travers un voyage immersif au cœur de l'héritage de Freddie Mercury et de Queen — nouveaux décors, mise en scène spectaculaire et création technique époustouflante.
+    </div>
+
+    <div class="pitch-setlist">
+      <div class="pitch-setlist-label">AU PROGRAMME</div>
+      <div class="pitch-setlist-text">
+        Bohemian&nbsp;Rhapsody <span class="dot">·</span> We&nbsp;Will&nbsp;Rock&nbsp;You <span class="dot">·</span> The&nbsp;Show&nbsp;Must&nbsp;Go&nbsp;On <span class="dot">·</span> I&nbsp;Want&nbsp;To&nbsp;Break&nbsp;Free <span class="dot">·</span> Don't&nbsp;Stop&nbsp;Me&nbsp;Now <span class="dot">·</span> Love&nbsp;of&nbsp;my&nbsp;Life <span class="dot">·</span> We&nbsp;Are&nbsp;the&nbsp;Champions
+      </div>
+      <div class="pitch-setlist-more">… et bien d'autres surprises encore !!</div>
+    </div>
+
+    <div class="pitch-reviews">
+      <div class="pitch-reviews-label">★ &nbsp;ILS ONT VU LE SHOW&nbsp; ★</div>
+      <div class="pitch-reviews-grid">
+        <div class="pitch-review-bubble">
+          <div class="pitch-review-stars">★★★★★</div>
+          <div class="pitch-review-text">« Un super hommage à Freddie, j'en ai eu les larmes aux yeux. Vous êtes tous merveilleux. »</div>
+          <div class="pitch-review-author">— Béatrice C.</div>
+        </div>
+        <div class="pitch-review-bubble">
+          <div class="pitch-review-stars">★★★★★</div>
+          <div class="pitch-review-text">« Sans aucun doute, le meilleur du meilleur des hommages à notre cher Freddy. Quel spectacle, quelle émotion, quelle ambiance. Merciii ! »</div>
+          <div class="pitch-review-author">— Lauren P.</div>
+        </div>
+        <div class="pitch-review-bubble">
+          <div class="pitch-review-stars">★★★★★</div>
+          <div class="pitch-review-text">« Fan absolue, je vous garantis que ce sont les meilleurs et que Freddie est là à chaque concert ! »</div>
+          <div class="pitch-review-author">— Mag 06</div>
+        </div>
+        <div class="pitch-review-bubble">
+          <div class="pitch-review-stars">★★★★★</div>
+          <div class="pitch-review-text">« Si les fans veulent vraiment du spectacle et entendre le sosie vocal de Freddie, y a pas photo : c'est The World Of Queen qu'il faut aller voir. Vous êtes les meilleurs ! »</div>
+          <div class="pitch-review-author">— Chris67</div>
+        </div>
+        <div class="pitch-review-bubble">
+          <div class="pitch-review-stars">★★★★★</div>
+          <div class="pitch-review-text">« C'est tout simplement époustouflant… Un show grandiose et une précision millimétrée. »</div>
+          <div class="pitch-review-author">— Philinath</div>
+        </div>
+        <div class="pitch-review-bubble">
+          <div class="pitch-review-stars">★★★★★</div>
+          <div class="pitch-review-text">« Magnifique spectacle et quel duo avec la soprano ! Brillantissime !!! »</div>
+          <div class="pitch-review-author">— Decoptatines</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pitch-tagline">
+      <div class="pt-line-1">THE WORLD OF QUEEN</div>
+      <div class="pt-line-2">Pas de copie, pas d'imitation</div>
+      <div class="pt-line-3">CÉLÈBRE</div>
+      <div class="pt-line-4">FREDDIE MERCURY</div>
+      <div class="pt-line-5">L'éternelle légende</div>
+    </div>
+
+    <div class="pitch-credit">
+      Production exclusive<br>
+      <span class="omp-logo">Oh my prod !</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SÉPARATEUR avant PROCHAIN CONCERT ============ -->
+<div class="block" style="padding:0 20px;max-width:1200px;margin:0 auto;">
+  <div class="gold-divider" style="margin:20px auto 0;"><span class="line"></span><span class="crown">♕</span><span class="line"></span></div>
+</div>
+
+<!-- ============ PROCHAIN CONCERT (dynamique via Supabase) ============ -->
+<section class="block" id="prochain-concert" style="padding-top: 30px;">
+  <h2 class="next-concert-h2">Prochain concert</h2>
+  <div class="next-concert-sub">
+    <div class="ncs-line1">THE WORLD OF QUEEN</div>
+    <div class="ncs-line2">L'ÉTERNELLE LÉGENDE</div>
+  </div>
+  <div class="next-concert-card" id="nextConcertCard">
+    <div class="next-concert-img" id="nextConcertImg" style="background-image:url('https://regisohmyprod-sys.github.io/twoq-pwa/icons/affiche-show.jpg');"></div>
+    <div class="next-concert-overlay"></div>
+    <div class="next-concert-content">
+      <div class="next-concert-badge">PROCHAINE DATE</div>
+      <div class="next-concert-venue" id="nextConcertVenue">Arena</div>
+      <div class="next-concert-where" id="nextConcertWhere">Narbonne · 19 septembre 2026 · 20h30</div>
+      <a href="https://www.ticketmaster.fr/fr/manifestation/the-world-of-queen-billet/idmanif/635440" target="_blank" rel="noopener" class="next-concert-cta" id="nextConcertCta">Réserver</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SÉPARATEUR entre PROCHAIN CONCERT et DATES ============ -->
+<div class="block" style="padding:0 20px;max-width:1200px;margin:0 auto;">
+  <div class="gold-divider" style="margin:20px auto 0;"><span class="line"></span><span class="crown">♕</span><span class="line"></span></div>
+</div>
+
+<!-- ============ DATES TEASER ============ -->
+<section class="block" id="dates" style="padding-top: 30px; padding-bottom: 20px;">
+  <h2 class="next-concert-h2">Les dates de tournée</h2>
+  <div class="next-concert-sub">
+    <div class="ncs-line1">THE WORLD OF QUEEN</div>
+    <div class="ncs-line2">L'ÉTERNELLE LÉGENDE</div>
+  </div>
+  <div class="dates-teaser-card">
+    <div class="dates-eyebrow">RECHERCHER MA DATE</div>
+    <label class="dates-search-fake" for="datesSearchInput">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--gold);"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="datesSearchInput" class="dates-search-input" type="text" placeholder="Tape ta ville..." autocomplete="off" />
+    </label>
+    <div id="datesSearchResults" class="dates-search-results"></div>
+    <div class="dates-region-toggle" id="regionToggle" style="margin-top:14px;">OU CHERCHE PAR RÉGION <span class="arrow">▼</span></div>
+    <div class="dates-region-grid" id="regionGrid"></div>
+    <a href="dates.html" class="btn-primary" style="margin-top:30px;">VOIR TOUTES LES DATES</a>
+  </div>
+</section>
+
+<!-- ============ MOMENTS FORTS / REELS ============ -->
+<section class="block" id="show" style="padding-top: 20px;">
+  <div class="gold-divider" style="margin:0 auto 30px;"><span class="line"></span><span class="crown">♕</span><span class="line"></span></div>
+
+  <div class="section-eyebrow">REELS</div>
+  <h3 class="section-title">Les moments forts</h3>
+  <div class="reels-scroll" id="reelsScroll">
+    <div class="reel-card" data-video-id="4lmPj2BXx7c">
+      <div class="reel-thumb" style="background-image:url('https://img.youtube.com/vi/4lmPj2BXx7c/hqdefault.jpg');">
+        <div class="reel-play">▶</div>
+      </div>
+      <div class="reel-caption">Et cette note ??</div>
+    </div>
+    <div class="reel-card" data-video-id="iNp1AolF68c">
+      <div class="reel-thumb" style="background-image:url('https://img.youtube.com/vi/iNp1AolF68c/hqdefault.jpg');">
+        <div class="reel-play">▶</div>
+      </div>
+      <div class="reel-caption">Short TWOQ</div>
+    </div>
+    <div class="reel-card" data-video-id="yoFYxLacJlc">
+      <div class="reel-thumb" style="background-image:url('https://img.youtube.com/vi/yoFYxLacJlc/hqdefault.jpg');">
+        <div class="reel-play">▶</div>
+      </div>
+      <div class="reel-caption">Quand la scène s'enflamme</div>
+    </div>
+    <div class="reel-card" data-video-id="DfbSREMEgio">
+      <div class="reel-thumb" style="background-image:url('https://img.youtube.com/vi/DfbSREMEgio/hqdefault.jpg');">
+        <div class="reel-play">▶</div>
+      </div>
+      <div class="reel-caption">Des balances au live</div>
+    </div>
+    <div class="reel-card" data-video-id="GhSKNMFzlMs">
+      <div class="reel-thumb" style="background-image:url('https://img.youtube.com/vi/GhSKNMFzlMs/hqdefault.jpg');">
+        <div class="reel-play">▶</div>
+      </div>
+      <div class="reel-caption">Quand tout devient crazy !!</div>
+    </div>
+    <div class="reel-card" data-video-id="jZSqzuP7A5o">
+      <div class="reel-thumb" style="background-image:url('https://img.youtube.com/vi/jZSqzuP7A5o/hqdefault.jpg');">
+        <div class="reel-play">▶</div>
+      </div>
+      <div class="reel-caption">Notre plus belle vue c'est vous !</div>
+    </div>
+    <div class="reel-card" data-video-id="tuAwkGunrM0">
+      <div class="reel-thumb" style="background-image:url('https://img.youtube.com/vi/tuAwkGunrM0/hqdefault.jpg');">
+        <div class="reel-play">▶</div>
+      </div>
+      <div class="reel-caption">T'étais pas prêt pour cette note</div>
+    </div>
+    <div class="reel-card" data-video-id="g1wHig3iBOM">
+      <div class="reel-thumb" style="background-image:url('https://img.youtube.com/vi/g1wHig3iBOM/hqdefault.jpg');">
+        <div class="reel-play">▶</div>
+      </div>
+      <div class="reel-caption">Quand le public te défie</div>
+    </div>
+    <div class="reel-card" data-video-id="JhE2YZaTAs4">
+      <div class="reel-thumb" style="background-image:url('https://img.youtube.com/vi/JhE2YZaTAs4/hqdefault.jpg');">
+        <div class="reel-play">▶</div>
+      </div>
+      <div class="reel-caption">Don't Lose Your Head — Live</div>
+    </div>
+    <div class="reel-card" data-video-id="wQEHlQAs_ME">
+      <div class="reel-thumb" style="background-image:url('https://img.youtube.com/vi/wQEHlQAs_ME/hqdefault.jpg');">
+        <div class="reel-play">▶</div>
+      </div>
+      <div class="reel-caption">Quand tu commences le...</div>
+    </div>
+    <div class="reel-card" data-video-id="FXyvUcRq1M8">
+      <div class="reel-thumb" style="background-image:url('https://img.youtube.com/vi/FXyvUcRq1M8/hqdefault.jpg');">
+        <div class="reel-play">▶</div>
+      </div>
+      <div class="reel-caption">Short TWOQ</div>
+    </div>
+    <div class="reel-card" data-video-id="cT4qz3AN4GY">
+      <div class="reel-thumb" style="background-image:url('https://img.youtube.com/vi/cT4qz3AN4GY/hqdefault.jpg');">
+        <div class="reel-play">▶</div>
+      </div>
+      <div class="reel-caption">Short TWOQ</div>
+    </div>
+  </div>
+
+  <!-- ===== LIGHTBOX VIDÉO ===== -->
+  <div class="video-lightbox" id="videoLightbox" aria-hidden="true">
+    <button class="vl-close" id="vlClose" aria-label="Fermer">✕</button>
+    <button class="vl-arrow vl-prev" id="vlPrev" aria-label="Vidéo précédente">‹</button>
+    <button class="vl-arrow vl-next" id="vlNext" aria-label="Vidéo suivante">›</button>
+    <div class="vl-stage">
+      <div class="vl-frame">
+        <iframe id="vlIframe" allow="autoplay; encrypted-media; fullscreen" allowfullscreen frameborder="0"></iframe>
+      </div>
+      <div class="vl-caption" id="vlCaption"></div>
+      <div class="vl-counter" id="vlCounter"></div>
+    </div>
+  </div>
+
+  <div class="gold-divider" style="margin:40px auto 0;"><span class="line"></span><span class="crown">♕</span><span class="line"></span></div>
+</section>
+
+<!-- ============ APP CTA (refonte premium) ============ -->
+<section class="block" id="app-twoq" style="padding-top: 30px;">
+  <div class="app-cta-wrap">
+    <div class="app-cta">
+      <!-- Téléphone décoratif -->
+      <div class="app-cta-phone" aria-hidden="true">
+        <div class="app-cta-phone-notch"></div>
+        <div class="app-cta-phone-screen">
+          <div class="app-cta-phone-crown">♕</div>
+          <div class="app-cta-phone-title">THE WORLD<br>OF QUEEN</div>
+          <div class="app-cta-phone-sub">L'éternelle légende</div>
+          <div class="app-cta-phone-btn">Ouvrir</div>
+        </div>
+      </div>
+      <!-- Contenu -->
+      <div class="app-cta-content">
+        <div class="app-cta-eyebrow">L'EXPÉRIENCE FAN</div>
+        <h3 class="app-cta-title">L'application <span>TWOQ</span></h3>
+        <p class="app-cta-desc">
+          Toutes les dates, des concours exclusifs, le Wall of Fans, et des avantages réservés aux membres pour vivre la tournée comme jamais.
+        </p>
+        <div class="app-cta-perks">
+          <span class="app-cta-perk">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            Calendrier complet
+          </span>
+          <span class="app-cta-perk">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            Concours & cadeaux
+          </span>
+          <span class="app-cta-perk">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            Wall of Fans
+          </span>
+          <span class="app-cta-perk">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            Jusqu'à -10% sur les billets
+          </span>
+        </div>
+        <a href="https://app.theworldofqueen.com" target="_blank" rel="noopener" class="app-cta-btn">
+          OUVRIR L'APPLI
+          <svg class="app-cta-btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SÉPARATEUR entre APPLI et PARTENAIRES ============ -->
+<div class="block" style="padding:0 20px;max-width:1200px;margin:0 auto;">
+  <div class="gold-divider" style="margin:30px auto;"><span class="line"></span><span class="crown">♕</span><span class="line"></span></div>
+</div>
+
+<!-- ============ PARTENAIRES OFFICIELS ============ -->
+<section class="block" id="partenaires" style="padding-top: 0;">
+  <div class="partners-wrap">
+    <div class="partners-title">★ PARTENAIRES OFFICIELS ★</div>
+    <div class="partners-grid">
+      <a href="https://www.ohmyprod.com" target="_blank" rel="noopener" class="partner-card dark" title="Oh My Prod">
+        <img src="https://regisohmyprod-sys.github.io/twoq-pwa/assets/partners/oh-my-prod.png" alt="Oh My Prod" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'color:var(--gold);font-family:var(--serif);font-weight:700;letter-spacing:2px;\'>OH MY PROD!</span>';">
+      </a>
+      <a href="https://www.m6.fr" target="_blank" rel="noopener" class="partner-card" title="M6">
+        <img src="https://regisohmyprod-sys.github.io/twoq-pwa/assets/partners/m6.jpg" alt="M6" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'color:#0a0a0a;font-weight:900;font-size:24px;\'>M6</span>';">
+      </a>
+      <a href="https://www.ticketmaster.fr/fr/artiste/the-world-of-queen/idartiste/33538" target="_blank" rel="noopener" class="partner-card" title="Ticketmaster">
+        <img src="https://regisohmyprod-sys.github.io/twoq-pwa/assets/partners/ticketmaster.png" alt="Ticketmaster" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'color:#024ddf;font-weight:700;letter-spacing:1px;\'>ticketmaster</span>';">
+      </a>
+      <a href="https://www.fnacspectacles.com/artist/the-world-of-queen/" target="_blank" rel="noopener" class="partner-card" title="Fnac Spectacles">
+        <img src="https://regisohmyprod-sys.github.io/twoq-pwa/assets/partners/fnac-spectacles.png" alt="Fnac Spectacles" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'color:#e88600;font-weight:800;\'>fnac SPECTACLES</span>';">
+      </a>
+      <a href="https://queenfrancefanclub.fr/" target="_blank" rel="noopener" class="partner-card dark" title="Queen France Fan Club">
+        <img src="https://regisohmyprod-sys.github.io/twoq-pwa/assets/partners/queen-france-fanclub.png" alt="Queen France Fan Club" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'color:var(--gold);font-size:32px;\'>♕</span>';">
+      </a>
+      <a href="https://mag-scene.com/" target="_blank" rel="noopener" class="partner-card" title="Mag Scène">
+        <img src="https://regisohmyprod-sys.github.io/twoq-pwa/assets/partners/mag-scene.png" alt="Mag Scène" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'color:#0a0a0a;font-weight:900;letter-spacing:1px;\'>mag SCÈNE</span>';">
+      </a>
+      <a href="https://www.coulisses.be/" target="_blank" rel="noopener" class="partner-card dark" title="Coulisses Events">
+        <img src="https://regisohmyprod-sys.github.io/twoq-pwa/assets/partners/coulisses-events.jpg" alt="Coulisses Events" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'color:#fff;font-weight:700;letter-spacing:1px;font-size:11px;text-align:center;\'>COULISSES<br>EVENTS</span>';">
+      </a>
+      <div class="partner-card" title="OH! Spectacle" style="cursor:default;">
+        <img src="https://regisohmyprod-sys.github.io/twoq-pwa/assets/partners/oh-spectacle.png" alt="OH! Spectacle" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'color:#0066b3;font-weight:900;font-size:18px;letter-spacing:1px;\'>OH! SPECTACLE</span>';">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+
+<!-- ============ ABONNEZ-VOUS À LA NEWSLETTER ============ -->
+<section class="newsletter-block">
+  <div class="newsletter-wrap">
+    <div class="newsletter-eyebrow">RESTE INFORMÉ</div>
+    <h3 class="newsletter-title">Abonnez-vous à la newsletter</h3>
+    <p class="newsletter-text">Nouvelles dates, coulisses exclusives, concours &amp; promos — directement dans ta boîte mail.</p>
+    <form class="newsletter-form" onsubmit="event.preventDefault(); subscribeNewsletter(this);">
+      <input type="email" placeholder="ton.email@exemple.com" required />
+      <button type="submit">S'abonner →</button>
+    </form>
+    <div class="newsletter-helper">📧 Tu peux te désabonner à tout moment · Aucun spam, promis.</div>
+    <div class="newsletter-success" id="newsletterSuccess">✅ Merci ! Tu es bien inscrit·e à la newsletter TWOQ 🎤</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h5>THE WORLD OF QUEEN</h5>
+      <p>L'Éternelle Légende — Le show référence en hommage à Queen, produit par Oh My Prod.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/theworldofqueen" target="_blank" aria-label="Facebook">f</a>
+        <a href="https://www.instagram.com/theworldofqueen" target="_blank" aria-label="Instagram">📸</a>
+        <a href="https://www.youtube.com/@theworldofqueen" target="_blank" aria-label="YouTube">▶</a>
+        <a href="https://www.tiktok.com/@theworldofqueen" target="_blank" aria-label="TikTok">♪</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>NAVIGATION</h5>
+      <a href="index.html">Le Show</a>
+      <a href="dates.html">Dates Tour</a>
+      <a href="artistes.html">Artistes</a>
+      <a href="fanzone.html">Fan Zone</a>
+      <a href="medias.html">Médias</a>
+      <a href="moi.html">Mon Espace</a>
+    </div>
+    <div class="footer-col">
+      <h5>PROFESSIONNELS</h5>
+      <a href="contact-prod.html">Contact Prod</a>
+      <a href="espace-pro.html">Espace Pro</a>
+      <a href="espace-presse.html">Espace Presse</a>
+      <a href="https://app.theworldofqueen.com" target="_blank">Appli TWOQ ↗</a>
+    </div>
+    <div class="footer-col">
+      <h5>CONTACT</h5>
+      <p>SAS OH MY PROD</p>
+      <p>Production live</p>
+      <a href="mailto:contact@ohmyprod.com">contact@ohmyprod.com</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 <span class="gold-text">THE WORLD OF QUEEN</span> — Production <span class="gold-text">OH MY PROD</span>. Tous droits réservés.
+  </div>
+</footer>
+
+<script>
+  // ===== SPLASH HYPERDRIVE =====
+  function generateHyperdrive(containerId, count) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    let html = '';
+    for (let i = 0; i < count; i++) {
+      const angle = Math.random() * 360;
+      const delay = Math.random() * 7;
+      const duration = 5 + Math.random() * 4;
+      html += `<div class="hyper-star" style="--angle:${angle}deg; animation: hyperWarp ${duration}s linear ${delay}s infinite;"></div>`;
+    }
+    container.innerHTML = html;
+  }
+  // 60 étoiles pour le splash (effet plein)
+  generateHyperdrive('hyperdrive', 60);
+  // 30 étoiles pour le hero (effet subtil, après splash)
+  generateHyperdrive('heroHyperdrive', 30);
+
+  const splash = document.getElementById('splash');
+  const enterBtn = document.getElementById('splashEnterBtn');
+  // Flag pour autoriser l'unmute auto de la vidéo après interaction utilisateur
+  window.__userInteracted = false;
+  if (enterBtn) {
+    enterBtn.addEventListener('click', () => {
+      window.__userInteracted = true;
+      splash.classList.add('hidden');
+      setTimeout(() => { splash.style.display = 'none'; }, 900);
+    });
+  }
+  // Backup : tout clic / touch / scroll compte aussi comme interaction
+  ['click','touchstart','keydown'].forEach(evt => {
+    document.addEventListener(evt, () => { window.__userInteracted = true; }, { once: false, passive: true });
+  });
+
+  // ===== MOBILE MENU =====
+  function toggleMenu() {
+    document.getElementById('mainNav').classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('mainNav').classList.remove('open');
+  }
+
+  // ===== HEADER scroll effect =====
+  window.addEventListener('scroll', () => {
+    const header = document.querySelector('.site-header');
+    if (window.scrollY > 80) {
+      header.style.background = 'rgba(10, 10, 10, 0.96)';
+    } else {
+      header.style.background = 'rgba(10, 10, 10, 0.85)';
+    }
+  });
+
+  // ===== AUTO-PLAY vidéo teaser quand elle entre dans le viewport =====
+  // Son AUTO si l'utilisateur a déjà interagi (clic ENTRER, etc.)
+  // → la vidéo CONTINUE à jouer même quand on scrolle hors zone
+  // → LIMITE à 2 lectures complètes, puis stop
+  const teaserVid = document.getElementById('teaserVideo');
+  const MAX_LOOPS = 2;
+  let _videoLoopCount = 0;
+  let _videoMaxReached = false;
+  if (teaserVid) {
+    // Compteur de fin de lecture → relance jusqu'à 2 fois max
+    teaserVid.addEventListener('ended', () => {
+      _videoLoopCount++;
+      if (_videoLoopCount < MAX_LOOPS) {
+        teaserVid.currentTime = 0;
+        teaserVid.play().catch(()=>{});
+      } else {
+        _videoMaxReached = true;
+        console.log(`[Teaser] ${MAX_LOOPS} lectures atteintes, vidéo stoppée`);
+      }
+    });
+
+    const teaserObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !_videoMaxReached) {
+          // Si l'utilisateur a déjà cliqué quelque part → on active le son
+          if (window.__userInteracted) {
+            teaserVid.muted = false;
+            teaserVid.volume = 1.0;
+          }
+          const p = teaserVid.play();
+          if (p && p.catch) {
+            // Si le navigateur refuse le son auto, on retombe sur muted
+            p.catch(() => {
+              teaserVid.muted = true;
+              teaserVid.play().catch(()=>{});
+            });
+          }
+        }
+        // ⚠️ PAS de pause quand on scrolle hors zone → la vidéo + son continuent
+      });
+    }, { threshold: 0.4 });
+    teaserObs.observe(teaserVid);
+  }
+  // ===== BASE GPS villes françaises (pour recherche "date la plus proche") =====
+  const CITIES_GPS = {
+    'paris':[48.8566,2.3522],'marseille':[43.2965,5.3698],'lyon':[45.764,4.8357],
+    'toulouse':[43.6047,1.4442],'nice':[43.7102,7.262],'nantes':[47.2184,-1.5536],
+    'montpellier':[43.6109,3.8772],'strasbourg':[48.5734,7.7521],'bordeaux':[44.8378,-0.5792],
+    'lille':[50.6292,3.0573],'rennes':[48.1173,-1.6778],'reims':[49.2583,4.0317],
+    'le havre':[49.4944,0.1079],'saint-etienne':[45.4397,4.3872],'toulon':[43.1242,5.928],
+    'grenoble':[45.1885,5.7245],'dijon':[47.322,5.0415],'angers':[47.4784,-0.5632],
+    'nimes':[43.8367,4.3601],'aix-en-provence':[43.5297,5.4474],'aix en provence':[43.5297,5.4474],
+    'clermont-ferrand':[45.7772,3.087],'clermont ferrand':[45.7772,3.087],
+    'le mans':[48.0061,0.1996],'brest':[48.3905,-4.4861],'amiens':[49.8941,2.2958],
+    'tours':[47.3941,0.6848],'limoges':[45.8336,1.2611],'annecy':[45.8992,6.1294],
+    'perpignan':[42.6886,2.8946],'besançon':[47.238,6.0244],'besancon':[47.238,6.0244],
+    'orléans':[47.9029,1.9039],'orleans':[47.9029,1.9039],
+    'metz':[49.1193,6.1757],'rouen':[49.4431,1.0993],'mulhouse':[47.7508,7.3359],
+    'caen':[49.1829,-0.3707],'nancy':[48.6921,6.1844],'argenteuil':[48.9472,2.2467],
+    'montreuil':[48.8634,2.4485],'roubaix':[50.6927,3.1746],'tourcoing':[50.7237,3.1612],
+    'dunkerque':[51.0383,2.3775],'avignon':[43.9493,4.8055],'poitiers':[46.5802,0.3404],
+    'creteil':[48.7904,2.4554],'créteil':[48.7904,2.4554],
+    'versailles':[48.8014,2.1301],'vitry-sur-seine':[48.7878,2.4023],
+    'colombes':[48.9234,2.2549],'asnières-sur-seine':[48.9166,2.2853],
+    'aulnay-sous-bois':[48.9347,2.4942],'rueil-malmaison':[48.8775,2.184],
+    'pau':[43.2951,-0.3708],'la rochelle':[46.1591,-1.1518],'calais':[50.9513,1.8587],
+    'cannes':[43.5528,7.0174],'antibes':[43.5808,7.1251],'saint-denis':[48.9362,2.3574],
+    'cherbourg':[49.6386,-1.6164],'cherbourg-octeville':[49.6386,-1.6164],
+    'fort-de-france':[14.6037,-61.0732],'mérignac':[44.8336,-0.6471],'merignac':[44.8336,-0.6471],
+    'beauvais':[49.4295,2.0808],'levallois-perret':[48.8943,2.2858],
+    'troyes':[48.2973,4.0744],'evry':[48.6299,2.4395],'évry':[48.6299,2.4395],
+    'cergy':[49.036,2.0775],'ivry-sur-seine':[48.8125,2.3859],'antony':[48.7521,2.297],
+    'meaux':[48.9605,2.8784],'sarcelles':[48.9883,2.3782],'noisy-le-grand':[48.8475,2.5497],
+    'pessac':[44.8067,-0.6311],'venissieux':[45.6976,4.8853],'vénissieux':[45.6976,4.8853],
+    'narbonne':[43.1838,3.0042],'la roche-sur-yon':[46.6705,-1.4262],'mouilleron-le-captif':[46.7166,-1.4666],
+    'chartres':[48.4469,1.4894],'bourges':[47.0844,2.3964],'montbéliard':[47.5108,6.7993],'montbeliard':[47.5108,6.7993],
+    'alençon':[48.4319,0.0916],'alencon':[48.4319,0.0916],'chamonix':[45.9237,6.8694],
+    'chateauroux':[46.8103,1.6909],'châteauroux':[46.8103,1.6909],'déols':[46.8378,1.7012],'deols':[46.8378,1.7012],
+    'niort':[46.3236,-0.4647],'agen':[44.2049,0.6212],'futuroscope':[46.6739,0.3681],
+    'lons-le-saunier':[46.6736,5.5499],'mâcon':[46.3055,4.8294],'macon':[46.3055,4.8294],
+    'fougères':[48.3540,-1.2056],'fougeres':[48.3540,-1.2056],
+    'quimper':[47.9961,-4.1024],'le grand-quevilly':[49.4133,1.0571],
+    'boulogne-sur-mer':[50.7264,1.6147],'les sables d\'olonne':[46.4961,-1.7836],
+    'sables d\'olonne':[46.4961,-1.7836],'périgueux':[45.1909,0.7184],'perigueux':[45.1909,0.7184],
+    'boulazac':[45.1842,0.7558],'montélimar':[44.5556,4.7497],'montelimar':[44.5556,4.7497],
+    // Sud-Ouest / Pays Basque
+    'biarritz':[43.4832,-1.5586],'bayonne':[43.4929,-1.4748],'anglet':[43.4843,-1.5158],
+    'dax':[43.7039,-1.0521],'hendaye':[43.3573,-1.7747],'arcachon':[44.6582,-1.1683],
+    'tarbes':[43.2329,0.0712],'lourdes':[43.0921,-0.0466],'mont-de-marsan':[43.8911,-0.5009],
+    'angoulême':[45.6483,0.1561],'angouleme':[45.6483,0.1561],'royan':[45.6261,-1.0289],
+    'saintes':[45.7459,-0.6275],
+    // Sud-Est / Côte d'Azur supplémentaires
+    'fréjus':[43.4332,6.7370],'frejus':[43.4332,6.7370],'hyères':[43.1205,6.1286],'hyeres':[43.1205,6.1286],
+    'saint-tropez':[43.2677,6.6407],'gap':[44.5598,6.0790],'briançon':[44.8973,6.6354],'briancon':[44.8973,6.6354],
+    'valence':[44.9333,4.8919],'romans-sur-isère':[45.0497,5.0511],'romans-sur-isere':[45.0497,5.0511],
+    'aubagne':[43.2935,5.5707],'martigues':[43.4053,5.0488],
+    // Centre / Auvergne
+    'nevers':[46.9896,3.1626],'montluçon':[46.3408,2.6044],'montlucon':[46.3408,2.6044],
+    'vichy':[46.1273,3.4252],'moulins':[46.5645,3.3328],
+    'auxerre':[47.7982,3.5734],'sens':[48.1971,3.2839],
+    // Nord-Est supplémentaires
+    'charleville-mézières':[49.7724,4.7196],'charleville-mezieres':[49.7724,4.7196],
+    'épinal':[48.1741,6.4506],'epinal':[48.1741,6.4506],'belfort':[47.6379,6.8628],
+    'thionville':[49.3580,6.1697],'forbach':[49.1899,6.9006],
+    // Normandie supplémentaires
+    'evreux':[49.0241,1.1508],'évreux':[49.0241,1.1508],'bayeux':[49.2768,-0.7029],
+    // Occitanie supplémentaires
+    'carcassonne':[43.2130,2.3491],'béziers':[43.3445,3.2191],'beziers':[43.3445,3.2191],
+    'sete':[43.4036,3.6963],'sète':[43.4036,3.6963],'albi':[43.9298,2.1481],'castres':[43.6053,2.2407],
+    'rodez':[44.3506,2.5728],'cahors':[44.4476,1.4406],'foix':[42.9656,1.6045],
+    // Bretagne supplémentaires
+    'saint-malo':[48.6492,-2.0258],'saint-brieuc':[48.5133,-2.7653],'lorient':[47.7484,-3.3702],
+    'vannes':[47.6582,-2.7607],'fougères':[48.3540,-1.2056],
+  };
+
+  function haversineKm(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const toRad = x => x * Math.PI / 180;
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a = Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
+    return Math.round(2 * R * Math.asin(Math.sqrt(a)));
+  }
+
+  function findClosestDate(query) {
+    const q = query.toLowerCase().trim();
+    const queryGps = CITIES_GPS[q];
+    if (!queryGps || !_allDates) return null;
+
+    let best = null;
+    for (const d of _allDates) {
+      const cityKey = (d.ville || '').toLowerCase().trim();
+      const cityGps = CITIES_GPS[cityKey];
+      if (!cityGps) continue;
+      const dist = haversineKm(queryGps[0], queryGps[1], cityGps[0], cityGps[1]);
+      if (!best || dist < best.distance) best = { date: d, distance: dist };
+    }
+    return best;
+  }
+
+  // ===== MAPPING ville → région (pour filtre par région) =====
+  const CITY_TO_REGION = {
+    // Nord (Hauts-de-France)
+    'lille':'nord','amiens':'nord','boulogne-sur-mer':'nord','beauvais':'nord',
+    'arras':'nord','dunkerque':'nord','valenciennes':'nord','calais':'nord',
+    'roubaix':'nord','tourcoing':'nord',
+    // Normandie
+    'le havre':'normandie','caen':'normandie','rouen':'normandie',
+    'le grand-quevilly':'normandie','grand-quevilly':'normandie',
+    'alençon':'normandie','alencon':'normandie','cherbourg':'normandie',
+    'cherbourg-octeville':'normandie',
+    // Ouest (Bretagne + Pays de la Loire)
+    'brest':'ouest','quimper':'ouest','rennes':'ouest','lorient':'ouest',
+    'vannes':'ouest','saint-brieuc':'ouest','nantes':'ouest','angers':'ouest',
+    'mouilleron-le-captif':'ouest','les sables d\'olonne':'ouest',
+    'sables d\'olonne':'ouest','le mans':'ouest','laval':'ouest','cholet':'ouest',
+    'la roche-sur-yon':'ouest','fougères':'ouest','fougeres':'ouest',
+    // Île-de-France
+    'paris':'idf','versailles':'idf','créteil':'idf','creteil':'idf',
+    'argenteuil':'idf','montreuil':'idf','colombes':'idf','asnières-sur-seine':'idf',
+    'aulnay-sous-bois':'idf','rueil-malmaison':'idf','saint-denis':'idf',
+    'levallois-perret':'idf','evry':'idf','évry':'idf','cergy':'idf',
+    'ivry-sur-seine':'idf','antony':'idf','meaux':'idf','sarcelles':'idf',
+    'noisy-le-grand':'idf','vitry-sur-seine':'idf',
+    // Est
+    'strasbourg':'est','metz':'est','nancy':'est','mulhouse':'est',
+    'reims':'est','troyes':'est','dijon':'est','besançon':'est','besancon':'est',
+    'montbéliard':'est','montbeliard':'est','colmar':'est','épinal':'est','epinal':'est',
+    // Centre
+    'orléans':'centre','orleans':'centre','tours':'centre','chartres':'centre',
+    'bourges':'centre','châteauroux':'centre','chateauroux':'centre','déols':'centre','deols':'centre',
+    'blois':'centre','poitiers':'centre','futuroscope':'centre',
+    // Sud-Ouest (Aquitaine, Occitanie ouest)
+    'bordeaux':'sud-ouest','toulouse':'sud-ouest','pau':'sud-ouest',
+    'la rochelle':'sud-ouest','limoges':'sud-ouest','agen':'sud-ouest',
+    'périgueux':'sud-ouest','perigueux':'sud-ouest','boulazac':'sud-ouest',
+    'mérignac':'sud-ouest','merignac':'sud-ouest','pessac':'sud-ouest',
+    'narbonne':'sud-ouest','perpignan':'sud-ouest','montpellier':'sud-ouest',
+    'nimes':'sud-ouest','niort':'sud-ouest',
+    // Sud-Est (PACA)
+    'marseille':'sud-est','nice':'sud-est','toulon':'sud-est',
+    'aix-en-provence':'sud-est','aix en provence':'sud-est','cannes':'sud-est',
+    'antibes':'sud-est','avignon':'sud-est','montélimar':'sud-est','montelimar':'sud-est',
+    // Centre-Est (Auvergne-Rhône-Alpes)
+    'lyon':'centre-est','grenoble':'centre-est','saint-etienne':'centre-est',
+    'clermont-ferrand':'centre-est','clermont ferrand':'centre-est',
+    'annecy':'centre-est','chamonix':'centre-est','vénissieux':'centre-est',
+    'venissieux':'centre-est','lons-le-saunier':'centre-est','mâcon':'centre-est','macon':'centre-est',
+  };
+
+  const REGIONS = [
+    { id:'nord',       icon:'🌾', name:'Nord' },
+    { id:'ouest',      icon:'⚓', name:'Ouest' },
+    { id:'est',        icon:'🍇', name:'Est' },
+    { id:'sud-est',    icon:'☀️', name:'Sud-Est' },
+    { id:'sud-ouest',  icon:'🍷', name:'Sud-Ouest' },
+    { id:'normandie',  icon:'🌊', name:'Normandie' },
+    { id:'idf',        icon:'🗼', name:'Île-de-France' },
+    { id:'centre',     icon:'🏰', name:'Centre' },
+    { id:'centre-est', icon:'⛰️', name:'Centre-Est' },
+  ];
+
+  // ===== SUPABASE : Prochain concert dynamique =====
+  const SUPABASE_URL  = 'https://nhxqcavianozskxgfcbt.supabase.co';
+  const SUPABASE_KEY  = 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3';
+  const TWOQ_ETERNELLE_ID = '22222222-2222-2222-2222-222222222222';
+  const TWOQ_HOMMAGE_ID   = '11111111-1111-1111-1111-111111111111';
+
+  // Fallback si la salle n'a pas encore de photo_url dans Supabase
+  const DEFAULT_VENUE_IMAGE = 'https://regisohmyprod-sys.github.io/twoq-pwa/icons/affiche-show.jpg';
+
+  async function loadProchainConcert() {
+    try {
+      if (typeof supabase === 'undefined') return;
+      const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+      const today = new Date().toISOString().split('T')[0];
+      const { data, error } = await sb
+        .from('public_dates_twoq')
+        .select('*')
+        .in('tournee_id', [TWOQ_ETERNELLE_ID, TWOQ_HOMMAGE_ID])
+        .gte('date_concert', today)
+        .order('date_concert', { ascending: true })
+        .limit(1);
+
+      if (error || !data || data.length === 0) {
+        console.log('Prochain concert : aucune date trouvée, fallback statique');
+        return;
+      }
+
+      const d = data[0];
+      // Format date FR
+      const dateObj = new Date(d.date_concert + 'T00:00:00');
+      const mois = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+      const dateFr = `${dateObj.getDate()} ${mois[dateObj.getMonth()]} ${dateObj.getFullYear()}`;
+      const heure = d.heure_show ? ' · ' + d.heure_show.slice(0,5).replace(':','h') : '';
+
+      const venueEl = document.getElementById('nextConcertVenue');
+      const whereEl = document.getElementById('nextConcertWhere');
+      const ctaEl   = document.getElementById('nextConcertCta');
+      const imgEl   = document.getElementById('nextConcertImg');
+
+      if (venueEl) venueEl.textContent = d.nom_salle || 'Arena';
+      if (whereEl) whereEl.textContent = `${d.ville} · ${dateFr}${heure}`;
+
+      // Lien Réserver (priorité au lien_billetterie_principal)
+      const lien = d.lien_billetterie_principal
+        || (d.liens_billetterie && (d.liens_billetterie.ticketmaster || d.liens_billetterie.fnac))
+        || 'https://www.ticketmaster.fr/fr/artiste/the-world-of-queen/idartiste/33538';
+      if (ctaEl) ctaEl.href = lien;
+
+      // Photo de la salle (depuis Supabase directement, fallback affiche)
+      if (imgEl) {
+        const candidate = (d.photo_url && d.photo_url.trim() !== '') ? d.photo_url.trim() : null;
+        if (candidate) {
+          // Test si l'URL est valide AVANT de l'appliquer
+          const probe = new Image();
+          probe.onload = () => { imgEl.style.backgroundImage = `url('${candidate}')`; };
+          probe.onerror = () => { imgEl.style.backgroundImage = `url('${DEFAULT_VENUE_IMAGE}')`; };
+          probe.src = candidate;
+        } else {
+          imgEl.style.backgroundImage = `url('${DEFAULT_VENUE_IMAGE}')`;
+        }
+      }
+    } catch (e) {
+      console.warn('Erreur Supabase prochain concert :', e);
+    }
+  }
+  loadProchainConcert();
+
+  // ===== RECHERCHE DATES par ville (connecté Supabase) =====
+  let _allDates = null;
+  let _searchTimer = null;
+
+  async function loadAllDatesOnce() {
+    if (_allDates) return _allDates;
+    try {
+      if (typeof supabase === 'undefined') return [];
+      const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      const today = new Date().toISOString().split('T')[0];
+      const { data, error } = await sb
+        .from('public_dates_twoq')
+        .select('*')
+        .in('tournee_id', [TWOQ_ETERNELLE_ID, TWOQ_HOMMAGE_ID])
+        .gte('date_concert', today)
+        .order('date_concert', { ascending: true });
+      if (error) { console.warn('Erreur chargement dates :', error); return []; }
+      _allDates = data || [];
+      return _allDates;
+    } catch (e) {
+      console.warn('Erreur Supabase search :', e);
+      return [];
+    }
+  }
+
+  function formatDateDay(dateStr) {
+    const d = new Date(dateStr + 'T00:00:00');
+    const moisCourt = ['JAN','FÉV','MAR','AVR','MAI','JUIN','JUIL','AOÛT','SEP','OCT','NOV','DÉC'];
+    return { num: d.getDate(), mois: moisCourt[d.getMonth()] };
+  }
+
+  function renderSearchResults(list, query) {
+    const box = document.getElementById('datesSearchResults');
+    if (!box) return;
+    if (!list || list.length === 0) {
+      // Pas de résultat → on cherche la date la plus proche
+      const closest = findClosestDate(query || '');
+      if (closest) {
+        const { num, mois } = formatDateDay(closest.date.date_concert);
+        const lien = closest.date.lien_billetterie_principal
+          || (closest.date.liens_billetterie && (closest.date.liens_billetterie.ticketmaster || closest.date.liens_billetterie.fnac))
+          || 'https://www.ticketmaster.fr/fr/artiste/the-world-of-queen/idartiste/33538';
+        const ville = (query || '').charAt(0).toUpperCase() + (query || '').slice(1).toLowerCase();
+        box.innerHTML = `
+          <div class="closest-suggest">
+            <div class="closest-label">Aucune date à <strong>${ville}</strong></div>
+            <div class="closest-tag">📍 DATE LA PLUS PROCHE — ${closest.distance} km</div>
+            <div class="dates-result-item" style="margin-top:14px;">
+              <div class="dates-result-day">
+                <div class="dates-result-num">${num}</div>
+                <div class="dates-result-mois">${mois}</div>
+              </div>
+              <div class="dates-result-info">
+                <div class="dates-result-ville">${closest.date.ville || ''}</div>
+                <div class="dates-result-salle">${closest.date.nom_salle || ''}</div>
+              </div>
+              <a class="dates-result-cta" href="${lien}" target="_blank" rel="noopener">Réserver</a>
+            </div>
+          </div>
+        `;
+      } else {
+        box.innerHTML = '<div class="dates-search-empty">Aucune date trouvée. Essaie une autre ville !</div>';
+      }
+      box.classList.add('active');
+      return;
+    }
+    box.innerHTML = list.slice(0, 8).map(d => {
+      const { num, mois } = formatDateDay(d.date_concert);
+      const statut = (d.statut_public || '').toUpperCase();
+      const lien = d.lien_billetterie_principal
+        || (d.liens_billetterie && (d.liens_billetterie.ticketmaster || d.liens_billetterie.fnac))
+        || 'https://www.ticketmaster.fr/fr/artiste/the-world-of-queen/idartiste/33538';
+      let ctaHtml;
+      if (statut === 'COMPLET') {
+        ctaHtml = `<span class="dates-result-cta complet">COMPLET</span>`;
+      } else if (statut === 'BIENTOT' || statut === 'BIENTÔT' || statut === 'BIENTOT_EN_VENTE') {
+        ctaHtml = `<span class="dates-result-cta bientot">BIENTÔT</span>`;
+      } else {
+        ctaHtml = `<a class="dates-result-cta" href="${lien}" target="_blank" rel="noopener">Réserver</a>`;
+      }
+      return `
+        <div class="dates-result-item">
+          <div class="dates-result-day">
+            <div class="dates-result-num">${num}</div>
+            <div class="dates-result-mois">${mois}</div>
+          </div>
+          <div class="dates-result-info">
+            <div class="dates-result-ville">${d.ville || ''}</div>
+            <div class="dates-result-salle">${d.nom_salle || ''}</div>
+          </div>
+          ${ctaHtml}
+        </div>
+      `;
+    }).join('');
+    box.classList.add('active');
+  }
+
+  function setupSearch() {
+    const input = document.getElementById('datesSearchInput');
+    const box   = document.getElementById('datesSearchResults');
+    if (!input) { console.warn('[Search] Input datesSearchInput introuvable'); return; }
+    console.log('[Search] Setup OK, input trouvé');
+
+    input.addEventListener('input', () => {
+      // Désélectionne toute région quand on tape du texte
+      document.querySelectorAll('.region-btn.active').forEach(b => b.classList.remove('active'));
+      clearTimeout(_searchTimer);
+      const q = input.value.trim().toLowerCase();
+      if (q.length === 0) {
+        box.classList.remove('active');
+        box.innerHTML = '';
+        return;
+      }
+      // Feedback immédiat : "Recherche..."
+      box.innerHTML = '<div class="dates-search-empty">⏳ Recherche en cours...</div>';
+      box.classList.add('active');
+
+      _searchTimer = setTimeout(async () => {
+        const all = await loadAllDatesOnce();
+        console.log(`[Search] "${q}" → ${all.length} dates chargées`);
+        if (all.length === 0) {
+          box.innerHTML = '<div class="dates-search-empty">⚠️ Impossible de charger les dates (vérifie ta connexion)</div>';
+          return;
+        }
+        const filtered = all.filter(d =>
+          (d.ville || '').toLowerCase().includes(q) ||
+          (d.nom_salle || '').toLowerCase().includes(q)
+        );
+        console.log(`[Search] "${q}" → ${filtered.length} résultat(s)`);
+        renderSearchResults(filtered, q);
+      }, 150);
+    });
+    // Précharge les dates dès le focus pour réactivité
+    input.addEventListener('focus', () => { loadAllDatesOnce(); }, { once: true });
+  }
+  setupSearch();
+
+  // ===== FILTRE PAR RÉGION (cliquable) =====
+  function setupRegionFilter() {
+    const toggle = document.getElementById('regionToggle');
+    const grid   = document.getElementById('regionGrid');
+    const input  = document.getElementById('datesSearchInput');
+    const box    = document.getElementById('datesSearchResults');
+    if (!toggle || !grid) return;
+
+    // Génère les boutons régions
+    grid.innerHTML = REGIONS.map(r => `
+      <button type="button" class="region-btn" data-region="${r.id}">
+        <span class="region-btn-icon">${r.icon}</span>
+        <span class="region-btn-name">${r.name}</span>
+      </button>
+    `).join('');
+
+    // Toggle ouvre/ferme la liste
+    toggle.addEventListener('click', () => {
+      grid.classList.toggle('open');
+      toggle.classList.toggle('open');
+    });
+
+    // Click sur une région → filtre les dates
+    grid.querySelectorAll('.region-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const regionId = btn.dataset.region;
+        const wasActive = btn.classList.contains('active');
+        // Reset state
+        grid.querySelectorAll('.region-btn.active').forEach(b => b.classList.remove('active'));
+        if (input) input.value = '';
+
+        if (wasActive) {
+          // Re-clic = désélectionne
+          box.classList.remove('active');
+          box.innerHTML = '';
+          return;
+        }
+        btn.classList.add('active');
+
+        const all = await loadAllDatesOnce();
+        const filtered = all.filter(d => {
+          const cityKey = (d.ville || '').toLowerCase().trim();
+          return CITY_TO_REGION[cityKey] === regionId;
+        });
+        renderSearchResults(filtered, btn.querySelector('.region-btn-name').textContent);
+      });
+    });
+  }
+  setupRegionFilter();
+
+  // ===== LIGHTBOX VIDÉO REELS =====
+  (function() {
+    const lightbox = document.getElementById('videoLightbox');
+    const iframe   = document.getElementById('vlIframe');
+    const captionEl= document.getElementById('vlCaption');
+    const counterEl= document.getElementById('vlCounter');
+    const btnPrev  = document.getElementById('vlPrev');
+    const btnNext  = document.getElementById('vlNext');
+    const btnClose = document.getElementById('vlClose');
+    const cards    = Array.from(document.querySelectorAll('#reelsScroll .reel-card'));
+
+    if (!lightbox || cards.length === 0) return;
+
+    // Détection : on est en local (file://) ?
+    const isFileProtocol = window.location.protocol === 'file:';
+
+    // Référence au cadre vidéo (à cacher en mode file://)
+    const videoFrame = iframe.parentElement; // .vl-frame
+
+    // Créer le fallback et l'insérer JUSTE APRÈS .vl-frame (pas en fin)
+    const fallbackEl = document.createElement('div');
+    fallbackEl.id = 'vlFallback';
+    fallbackEl.style.cssText = `
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      max-height: 80vh;
+      background: #000;
+      border-radius: 16px;
+      border: 1px solid rgba(212,175,55,0.4);
+      padding: 30px 20px;
+    `;
+    videoFrame.parentElement.insertBefore(fallbackEl, videoFrame.nextSibling);
+
+    // Construire la playlist depuis les cartes
+    const playlist = cards.map(card => ({
+      id: card.dataset.videoId,
+      caption: card.querySelector('.reel-caption')?.textContent || ''
+    }));
+    let _vlIndex = 0;
+
+    function buildEmbedUrl(videoId) {
+      return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&playsinline=1&rel=0&modestbranding=1&fs=1&enablejsapi=1`;
+    }
+    function buildYouTubeWatchUrl(videoId) {
+      return `https://www.youtube.com/watch?v=${videoId}`;
+    }
+
+    function openLightbox(index) {
+      _vlIndex = (index + playlist.length) % playlist.length;
+      const v = playlist[_vlIndex];
+
+      if (isFileProtocol) {
+        // Mode local : on cache TOTALEMENT le cadre vidéo et on affiche que le fallback
+        videoFrame.style.display = 'none';
+        fallbackEl.style.display = 'flex';
+        fallbackEl.innerHTML = `
+          <div style="font-size:60px;margin-bottom:20px;">⚠️</div>
+          <div style="color:var(--gold);font-family:var(--serif);font-size:18px;margin-bottom:14px;letter-spacing:2px;">LECTURE LOCALE IMPOSSIBLE</div>
+          <div style="color:var(--cream);font-size:13px;line-height:1.6;padding:0 20px;margin-bottom:24px;">YouTube bloque les vidéos depuis un fichier local.<br>Une fois ton site en ligne, la lecture intégrée fonctionnera.</div>
+          <a href="${buildYouTubeWatchUrl(v.id)}" target="_blank" rel="noopener" style="display:inline-block;background:var(--gold);color:var(--noir);padding:10px 22px;border-radius:999px;font-weight:700;letter-spacing:1px;font-size:13px;text-decoration:none;">▶ Voir sur YouTube</a>
+        `;
+      } else {
+        // Mode en ligne : cadre vidéo affiché, fallback caché
+        videoFrame.style.display = 'block';
+        fallbackEl.style.display = 'none';
+        iframe.src = buildEmbedUrl(v.id);
+      }
+      captionEl.textContent = v.caption;
+      counterEl.textContent = `${_vlIndex + 1} / ${playlist.length}`;
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      iframe.src = '';
+      document.body.style.overflow = '';
+    }
+
+    function navigate(delta) { openLightbox(_vlIndex + delta); }
+
+    cards.forEach((card, i) => {
+      card.addEventListener('click', (e) => {
+        e.preventDefault();
+        openLightbox(i);
+      });
+    });
+
+    btnClose.addEventListener('click', closeLightbox);
+    btnPrev.addEventListener('click', () => navigate(-1));
+    btnNext.addEventListener('click', () => navigate(1));
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape')      closeLightbox();
+      else if (e.key === 'ArrowLeft')  navigate(-1);
+      else if (e.key === 'ArrowRight') navigate(1);
+    });
+
+    if (isFileProtocol) {
+      console.warn('[Lightbox] Mode file:// détecté → embed YouTube désactivé, fallback affiché');
+    } else {
+      console.log(`[Lightbox] ${playlist.length} vidéos chargées (youtube-nocookie)`);
+    }
+  })();
+
+  // ============ NEWSLETTER ============
+  function subscribeNewsletter(form) {
+    const email = form.querySelector('input').value;
+    console.log('[Newsletter] Inscription :', email);
+    form.style.display = 'none';
+    const success = document.getElementById('newsletterSuccess');
+    if (success) success.classList.add('show');
+    // TODO : connecter à Supabase table 'newsletter_subscribers' ou service email
+  }
+
+
+  // ============ DROPDOWN ESPACE PRO ============
+  function toggleDropdown(e) {
+    if (e) e.stopPropagation();
+    const dd = document.getElementById('navDropdown');
+    if (dd) dd.classList.toggle('open');
+  }
+  function closeDropdown() {
+    const dd = document.getElementById('navDropdown');
+    if (dd) dd.classList.remove('open');
+  }
+  document.addEventListener('click', function(e) {
+    const dd = document.getElementById('navDropdown');
+    if (dd && !dd.contains(e.target)) dd.classList.remove('open');
+  });
+
+</script>
+
+</body>
+</html>
