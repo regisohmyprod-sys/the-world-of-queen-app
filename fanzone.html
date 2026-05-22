@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fan Zone — THE WORLD OF QUEEN — L'Éternelle Légende</title>
+<meta name="description" content="L'espace réservé aux fans absolus de Queen — Concours, sondages, communauté, wall of fans et avis." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root {
+    --noir: #0A0A0A; --charcoal: #141414;
+    --gold: #D4AF37; --gold-pale: #F0D77A;
+    --cramoisi: #8B0000; --cream: #F5F1E8; --smoke: #8B8580;
+    --serif: 'Cinzel', serif; --sans: 'Inter', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--noir); color: var(--cream); font-family: var(--sans); min-height: 100vh; }
+  a { color: inherit; text-decoration: none; }
+
+  /* ============ HEADER ============ */
+  .site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(10, 10, 10, 0.96); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(212, 175, 55, 0.15); }
+  .header-inner {
+    position: relative;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60px;
+  }
+  .brand {
+    font-family: var(--serif);
+    color: var(--gold);
+    font-size: 16px;
+    letter-spacing: 3px;
+    font-weight: 600;
+    line-height: 1.1;
+    position: absolute;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .brand small { display: block; font-family: var(--sans); color: var(--cream); font-size: 9px; letter-spacing: 4px; font-weight: 400; margin-top: 2px; opacity: 0.8; }
+  .menu-toggle { display: none; background: transparent; color: var(--gold); border: 1px solid var(--gold); border-radius: 6px; padding: 6px 12px; font-size: 18px; cursor: pointer; }
+  nav.main-nav { display: flex; gap: 22px; align-items: center; }
+  nav.main-nav a { color: var(--cream); font-size: 12px; letter-spacing: 2px; font-weight: 600; text-transform: uppercase; transition: color 0.2s; padding: 6px 0; border-bottom: 2px solid transparent; }
+  nav.main-nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+  nav.main-nav a.pro { border: 1px solid var(--gold); border-radius: 999px; padding: 6px 14px; color: var(--gold); }
+  nav.main-nav a.pro:hover { background: var(--gold); color: var(--noir); }
+  @media (max-width: 980px) {
+    .header-inner { justify-content: space-between; }
+    .brand { position: static; transform: none; }
+    .menu-toggle { display: block; }
+    nav.main-nav { position: absolute; top: 100%; right: 0; background: rgba(10, 10, 10, 0.98); flex-direction: column; gap: 0; padding: 14px 20px; border-radius: 0 0 0 12px; border-left: 1px solid rgba(212, 175, 55, 0.15); border-bottom: 1px solid rgba(212, 175, 55, 0.15); max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    nav.main-nav.open { max-height: 90vh; }
+    nav.main-nav a { padding: 12px 0; width: 100%; border-bottom: 1px solid rgba(212, 175, 55, 0.10); }
+  }
+
+  /* ============ CIEL ÉTOILÉ ============ */
+  .fanzone-page { position: relative; overflow: hidden; background: #000; padding-bottom: 40px; padding-top: 110px; min-height: 100vh; }
+  .fanzone-page::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(212,175,55,0.10) 0%, transparent 60%), radial-gradient(ellipse 80% 70% at 50% 40%, rgba(91,163,245,0.03) 0%, transparent 70%); z-index: 0; pointer-events: none; }
+  .twinkle-stars { position: fixed; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+  .twinkle-star { position: absolute; background: #F0D77A; border-radius: 50%; opacity: 0; animation: twinkle 4s infinite ease-in-out; box-shadow: 0 0 4px #D4AF37, 0 0 8px rgba(240,215,122,0.5); }
+  @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(0.6); } 50% { opacity: 1; transform: scale(1.3); } }
+  .twinkle-star.big { width: 4px; height: 4px; box-shadow: 0 0 8px #D4AF37, 0 0 18px rgba(240,215,122,0.9); }
+  .twinkle-star.medium { width: 2.5px; height: 2.5px; box-shadow: 0 0 5px #D4AF37, 0 0 12px rgba(240,215,122,0.7); }
+  .twinkle-star.small { width: 1.5px; height: 1.5px; }
+
+  /* ============ CONTENU ============ */
+  .fanzone-content { position: relative; z-index: 2; max-width: 760px; margin: 0 auto; padding: 30px 20px; }
+  .section-eyebrow { color: var(--gold); font-size: 11px; letter-spacing: 4px; font-weight: 700; text-transform: uppercase; margin-bottom: 10px; }
+  .section-eyebrow.with-mt { margin-top: 32px; }
+  .section-title { font-family: var(--serif); color: var(--cream); font-size: clamp(32px, 5vw, 44px); margin-bottom: 16px; letter-spacing: 1px; font-weight: 500; }
+  .section-intro { color: var(--cream); font-size: 14px; line-height: 1.6; opacity: 0.85; margin-bottom: 30px; }
+
+  /* ============ CARTE GÉNÉRIQUE ============ */
+  .fan-card { background: linear-gradient(180deg, rgba(20,20,20,0.85), rgba(10,10,10,0.95)); border: 1px solid var(--gold); border-radius: 16px; padding: 22px 20px; margin-bottom: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+  .fan-card-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+  .fan-card-icon { width: 48px; height: 48px; flex-shrink: 0; border-radius: 12px; background: linear-gradient(135deg, var(--gold), #8a7426); display: flex; align-items: center; justify-content: center; font-size: 22px; box-shadow: 0 4px 12px rgba(212,175,55,0.3); }
+  .fan-card-body { flex: 1; min-width: 0; }
+  .fan-card-eyebrow { color: var(--gold); font-size: 11px; letter-spacing: 3px; font-weight: 700; margin-bottom: 4px; text-transform: uppercase; }
+  .fan-card-title { font-family: var(--serif); color: var(--cream); font-size: 20px; font-weight: 500; margin-bottom: 6px; letter-spacing: 0.5px; }
+  .fan-card-text { color: var(--cream); font-size: 13px; line-height: 1.5; opacity: 0.9; margin-bottom: 12px; }
+
+  .lvl-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .lvl-pill { background: rgba(0,0,0,0.4); border: 1px solid rgba(212,175,55,0.4); border-radius: 999px; padding: 5px 14px; font-size: 11px; letter-spacing: 1px; font-weight: 600; color: var(--cream); display: inline-flex; align-items: center; gap: 5px; }
+
+  /* ============ BOUTONS ============ */
+  .btn-primary { display: inline-block; background: var(--gold); color: var(--noir); border: none; border-radius: 999px; padding: 12px 24px; font-size: 13px; letter-spacing: 1.5px; font-weight: 700; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; font-family: inherit; text-decoration: none; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(212,175,55,0.3); }
+  .btn-secondary { display: inline-block; background: transparent; color: var(--gold); border: 1px solid var(--gold); border-radius: 999px; padding: 10px 22px; font-size: 12px; letter-spacing: 1.5px; font-weight: 700; cursor: pointer; transition: background 0.2s, color 0.2s; font-family: inherit; text-decoration: none; }
+  .btn-secondary:hover { background: var(--gold); color: var(--noir); }
+
+  /* ============ CONCOURS ============ */
+  .contest-card { position: relative; }
+  .contest-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--cramoisi); color: #fff; padding: 5px 12px; border-radius: 6px; font-size: 11px; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 12px; }
+  .contest-badge.summer { background: linear-gradient(90deg, #f5a623, #d48a14); color: var(--noir); }
+  .contest-date { color: var(--cream); font-size: 11px; letter-spacing: 1.5px; opacity: 0.75; position: absolute; top: 22px; right: 20px; }
+  .contest-title { font-family: var(--serif); color: var(--cream); font-size: 22px; font-weight: 500; margin: 8px 0 10px; letter-spacing: 0.5px; }
+  .contest-desc { color: var(--cream); font-size: 13px; line-height: 1.6; margin-bottom: 14px; }
+  .contest-desc strong { color: var(--gold); font-weight: 700; }
+  .contest-meta { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid rgba(212,175,55,0.18); flex-wrap: wrap; gap: 10px; }
+  .contest-participants { color: var(--smoke); font-size: 12px; font-style: italic; }
+  .contest-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .contest-rules { color: var(--gold); font-size: 11px; text-decoration: underline; }
+
+  /* ============ CONCERT INTERACTIF ============ */
+  .live-toggle { display: inline-flex; align-items: center; gap: 6px; background: var(--charcoal); border: 1px solid var(--smoke); border-radius: 999px; padding: 6px 14px; font-size: 11px; letter-spacing: 2px; font-weight: 700; color: var(--smoke); margin-bottom: 14px; }
+  .live-toggle .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--smoke); }
+  .live-toggle.on { color: #10b981; border-color: #10b981; }
+  .live-toggle.on .dot { background: #10b981; box-shadow: 0 0 8px #10b981; animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.4); } }
+  .live-card { text-align: center; padding: 24px 18px; }
+  .live-card-title { font-family: var(--serif); color: var(--cream); font-size: 20px; font-weight: 500; margin-bottom: 10px; letter-spacing: 0.5px; }
+  .live-card-text { color: var(--gold-pale); font-size: 13px; font-style: italic; line-height: 1.5; margin-bottom: 16px; }
+  .live-card-cta { background: rgba(212,175,55,0.08); border: 1px dashed rgba(212,175,55,0.4); border-radius: 12px; padding: 14px 18px; color: var(--gold); font-size: 13px; font-weight: 600; line-height: 1.5; }
+
+  /* ============ WALL OF FANS ============ */
+  .wall-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+  .wall-cell { position: relative; aspect-ratio: 1/1; background: linear-gradient(135deg, #1a1a1a, #0a0a0a); border-radius: 10px; overflow: hidden; border: 1px solid rgba(212,175,55,0.15); display: flex; align-items: center; justify-content: center; }
+  .wall-cell img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; transition: transform 0.2s; }
+  .wall-cell img:hover { transform: scale(1.05); }
+  .wall-cell.empty { color: var(--smoke); font-size: 28px; opacity: 0.4; }
+  .wall-cell.top::after { content: 'TOP'; position: absolute; top: 6px; right: 6px; background: var(--gold); color: var(--noir); font-size: 9px; font-weight: 800; letter-spacing: 1px; padding: 2px 6px; border-radius: 4px; }
+  @media (max-width: 500px) { .wall-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ============ TÉMOIGNAGES ============ */
+  .review-bubble { background: rgba(212,175,55,0.04); border: 1px solid rgba(212,175,55,0.15); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
+  .review-stars { color: var(--gold); font-size: 14px; margin-bottom: 6px; }
+  .review-text { color: var(--cream); font-size: 13px; line-height: 1.6; font-style: italic; margin-bottom: 10px; }
+  .review-meta { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .review-author { color: var(--gold-pale); font-size: 12px; font-weight: 600; }
+  .review-location { color: var(--smoke); font-size: 11px; }
+  .review-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; padding-top: 12px; border-top: 1px solid rgba(212,175,55,0.15); margin-top: 4px; }
+
+  /* ============ BACKSTAGE ============ */
+  .backstage-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 14px; scrollbar-width: thin; scrollbar-color: var(--gold) #1a1a1a; }
+  .backstage-scroll::-webkit-scrollbar { height: 6px; }
+  .backstage-scroll::-webkit-scrollbar-track { background: #1a1a1a; border-radius: 3px; }
+  .backstage-scroll::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+  .backstage-card { flex: 0 0 auto; width: 140px; cursor: pointer; }
+  .backstage-thumb { width: 100%; aspect-ratio: 4/5; background: linear-gradient(135deg, #2a2a2a, #0a0a0a); border-radius: 10px; border: 1px solid rgba(212,175,55,0.2); position: relative; overflow: hidden; background-size: cover; background-position: center; }
+  .backstage-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 38px; height: 38px; background: rgba(212,175,55,0.9); color: var(--noir); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+  .backstage-cap { color: var(--cream); font-size: 12px; margin-top: 6px; font-weight: 600; }
+
+  /* ============ COMMUNAUTÉ ACTIONS ============ */
+  .action-link { display: grid; grid-template-columns: 48px 1fr auto; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 12px; border: 1px solid; margin-bottom: 10px; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
+  .action-link:hover { transform: translateX(4px); }
+  .action-link.parrain { background: rgba(255, 100, 80, 0.06); border-color: rgba(255, 100, 80, 0.3); }
+  .action-link.support { background: rgba(91, 163, 245, 0.06); border-color: rgba(91, 163, 245, 0.3); }
+  .action-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; background: rgba(0,0,0,0.4); }
+  .action-text-wrap { min-width: 0; }
+  .action-title { font-size: 14px; font-weight: 700; margin-bottom: 2px; display: flex; align-items: center; gap: 8px; }
+  .action-link.parrain .action-title { color: #ff8a73; }
+  .action-link.support .action-title { color: #6db4f5; }
+  .action-subtitle { color: var(--smoke); font-size: 11px; line-height: 1.4; }
+  .action-arrow { color: var(--gold); font-size: 18px; }
+  .pts-badge { background: rgba(91, 163, 245, 0.2); color: #6db4f5; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; }
+
+  /* ============ SUIVEZ-NOUS ============ */
+  .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+  .social-btn { display: grid; grid-template-columns: 32px 1fr; align-items: center; gap: 10px; background: var(--charcoal); border: 1px solid rgba(212,175,55,0.15); border-radius: 12px; padding: 12px 14px; transition: border-color 0.2s, transform 0.2s; color: var(--cream); font-size: 13px; font-weight: 600; }
+  .social-btn:hover { border-color: var(--gold); transform: translateY(-2px); }
+  .social-icon { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 15px; color: #fff; font-weight: 800; }
+  .social-icon.fb { background: #1877F2; }
+  .social-icon.ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+  .social-icon.yt { background: #FF0000; }
+  .social-icon.site { background: var(--gold); color: var(--noir); }
+
+  /* ============ BOUTIQUE ============ */
+  .shop-card { display: grid; grid-template-columns: 1fr 110px; gap: 18px; align-items: center; }
+  .shop-info { min-width: 0; }
+  .shop-eyebrow { color: var(--gold); font-size: 10px; letter-spacing: 3px; font-weight: 700; margin-bottom: 6px; }
+  .shop-title { font-family: var(--serif); color: var(--cream); font-size: 22px; font-weight: 500; margin-bottom: 6px; letter-spacing: 0.5px; }
+  .shop-text { color: var(--cream); font-size: 12px; opacity: 0.85; font-style: italic; margin-bottom: 14px; line-height: 1.5; }
+  .shop-img { width: 110px; height: 110px; border-radius: 10px; background: linear-gradient(135deg, #2a2a2a, #0a0a0a); display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 38px; border: 1px solid rgba(212,175,55,0.2); background-size: cover; background-position: center; }
+
+  /* ============ CONCOURS PASSÉS ============ */
+  .past-list { display: flex; flex-direction: column; gap: 8px; }
+  .past-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; padding: 12px 14px; background: rgba(20,20,20,0.6); border: 1px solid rgba(212,175,55,0.12); border-radius: 10px; }
+  .past-name { font-size: 13px; font-weight: 600; color: var(--cream); margin-bottom: 3px; }
+  .past-name .gold-em { color: var(--gold); }
+  .past-detail { color: var(--smoke); font-size: 11px; }
+  .past-status { background: transparent; border: 1px solid var(--smoke); color: var(--smoke); padding: 4px 10px; border-radius: 4px; font-size: 9px; letter-spacing: 1.5px; font-weight: 700; }
+
+  /* ============ SÉPARATEUR ============ */
+  .gold-divider { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 30px auto; max-width: 540px; }
+  .gold-divider .line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .gold-divider .crown { color: var(--gold); font-size: 18px; width: 32px; height: 32px; border: 1px solid rgba(212,175,55,0.45); border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(10,10,10,0.6); }
+
+  /* ============ LIGHTBOX PHOTO ============ */
+  .photo-lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); z-index: 9998; display: none; align-items: center; justify-content: center; padding: 20px; }
+  .photo-lightbox.open { display: flex; }
+  .pl-img { max-width: 90vw; max-height: 85vh; border-radius: 14px; border: 1px solid rgba(212,175,55,0.4); box-shadow: 0 30px 80px rgba(0,0,0,0.6); }
+  .pl-close { position: absolute; top: 20px; right: 20px; width: 44px; height: 44px; border-radius: 50%; background: rgba(0,0,0,0.6); border: 1px solid var(--gold); color: var(--gold); font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+  /* ============ FOOTER ============ */
+  footer { background: #050505; border-top: 1px solid rgba(212, 175, 55, 0.15); padding: 50px 20px 24px; margin-top: 30px; position: relative; z-index: 3; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+  .footer-col h5 { color: var(--gold); font-size: 12px; letter-spacing: 4px; font-weight: 700; text-transform: uppercase; margin-bottom: 14px; }
+  .footer-col p, .footer-col a { color: var(--cream); font-size: 13px; line-height: 1.8; opacity: 0.85; display: block; }
+  .footer-col a:hover { color: var(--gold); opacity: 1; }
+  .footer-bottom { border-top: 1px solid rgba(212,175,55,0.1); margin-top: 36px; padding-top: 20px; text-align: center; color: var(--smoke); font-size: 11px; letter-spacing: 1px; }
+  .gold-bottom { color: var(--gold); font-weight: 700; }
+  @media (max-width: 768px) { .footer-inner { grid-template-columns: 1fr 1fr; gap: 26px; } }
+  @media (max-width: 500px) { .footer-inner { grid-template-columns: 1fr; gap: 22px; } .contest-date { position: static; display: block; margin-bottom: 8px; } }
+
+  /* ============ NEWSLETTER BLOCK ============ */
+  .newsletter-block { position: relative; z-index: 3; background: linear-gradient(180deg, #0a0a0a 0%, #050505 100%); border-top: 1px solid rgba(212,175,55,0.15); border-bottom: 1px solid rgba(212,175,55,0.15); padding: 50px 20px; }
+  .newsletter-wrap { max-width: 600px; margin: 0 auto; text-align: center; }
+  .newsletter-eyebrow { color: var(--gold); font-size: 11px; letter-spacing: 5px; font-weight: 700; margin-bottom: 10px; }
+  .newsletter-title { font-family: var(--serif); color: var(--cream); font-size: clamp(24px, 4vw, 32px); font-weight: 500; letter-spacing: 1px; margin-bottom: 8px; }
+  .newsletter-text { color: var(--cream); font-size: 13px; line-height: 1.5; opacity: 0.85; margin-bottom: 22px; }
+  .newsletter-form { display: flex; gap: 10px; max-width: 480px; margin: 0 auto 12px; flex-wrap: wrap; justify-content: center; }
+  .newsletter-form input { flex: 1; min-width: 200px; background: rgba(0,0,0,0.5); border: 1px solid rgba(212,175,55,0.3); color: var(--cream); padding: 12px 18px; border-radius: 999px; font-family: inherit; font-size: 14px; outline: none; transition: border-color 0.2s; }
+  .newsletter-form input:focus { border-color: var(--gold); }
+  .newsletter-form input::placeholder { color: var(--smoke); }
+  .newsletter-form button { background: var(--gold); color: var(--noir); border: none; border-radius: 999px; padding: 12px 24px; font-family: inherit; font-size: 13px; letter-spacing: 1px; font-weight: 700; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+  .newsletter-form button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212,175,55,0.3); }
+  .newsletter-helper { color: var(--smoke); font-size: 11px; font-style: italic; }
+  .newsletter-success { color: #10b981; font-size: 13px; margin-top: 12px; display: none; }
+  .newsletter-success.show { display: block; }
+
+
+  /* ============ DROPDOWN ESPACE PRO ============ */
+  .nav-dropdown { position: relative; }
+  .nav-dropdown-toggle {
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 6px 0;
+    border-bottom: 2px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    user-select: none;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: inherit;
+    transition: border-color 0.2s;
+  }
+  .nav-dropdown-toggle:hover { border-bottom-color: var(--gold); }
+  .nav-dropdown-toggle .chev { font-size: 9px; transition: transform 0.2s; }
+  .nav-dropdown.open .nav-dropdown-toggle .chev { transform: rotate(180deg); }
+  .nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 200px;
+    background: rgba(10,10,10,0.98);
+    border: 1px solid rgba(212,175,55,0.35);
+    border-radius: 12px;
+    padding: 6px;
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    box-shadow: 0 14px 36px rgba(0,0,0,0.7), 0 0 30px rgba(212,175,55,0.1);
+    z-index: 200;
+  }
+  .nav-dropdown.open .nav-dropdown-menu,
+  .nav-dropdown:hover .nav-dropdown-menu { display: flex; }
+  .nav-dropdown-menu a {
+    color: var(--cream) !important;
+    font-size: 11px !important;
+    letter-spacing: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 10px 14px !important;
+    border-radius: 8px;
+    border-bottom: none !important;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+  .nav-dropdown-menu a:hover {
+    background: rgba(212,175,55,0.15);
+    color: var(--gold) !important;
+  }
+  @media (max-width: 980px) {
+    .nav-dropdown { width: 100%; }
+    .nav-dropdown-toggle {
+      width: 100%;
+      justify-content: space-between;
+      padding: 12px 0 !important;
+      border-bottom: 1px solid rgba(212,175,55,0.10) !important;
+    }
+    .nav-dropdown-menu {
+      position: static;
+      background: rgba(0,0,0,0.4);
+      margin: 4px 0 8px;
+      width: 100%;
+      border: none;
+      border-left: 2px solid rgba(212,175,55,0.3);
+      border-radius: 0;
+      padding: 4px 0 4px 14px;
+      box-shadow: none;
+    }
+    .nav-dropdown-menu a {
+      padding: 8px 0 !important;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">
+      THE WORLD OF QUEEN
+      <small>L'ÉTERNELLE LÉGENDE</small>
+    </a>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html" onclick="closeMenu()">LE SHOW</a>
+      <a href="dates.html" onclick="closeMenu()">DATES</a>
+      <a href="artistes.html" onclick="closeMenu()">ARTISTES</a>
+      <a href="fanzone.html" onclick="closeMenu()" style="color:var(--gold);border-bottom-color:var(--gold);">FAN ZONE</a>
+      <a href="medias.html" onclick="closeMenu()">MÉDIAS</a>
+      <a href="moi.html" onclick="closeMenu()">MOI</a>
+      <a href="contact-prod.html" onclick="closeMenu()">CONTACT PROD</a>
+      <div class="nav-dropdown" id="navDropdown">
+        <button type="button" class="nav-dropdown-toggle" onclick="toggleDropdown(event)">ESPACE PRO <span class="chev">▾</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="espace-pro.html" onclick="closeMenu(); closeDropdown();">Espace Pro</a>
+          <a href="espace-presse.html" onclick="closeMenu(); closeDropdown();">Espace Presse</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ PAGE FAN ZONE ============ -->
+<section class="fanzone-page">
+  <div class="twinkle-stars" id="twinkleStars"></div>
+
+  <div class="fanzone-content">
+
+    <!-- HERO -->
+    <div class="section-eyebrow">FAN ZONE</div>
+    <h1 class="section-title">Pour les fans.</h1>
+    <p class="section-intro">Concours, sondages, communauté — l'espace réservé aux fans absolus de Queen.</p>
+
+    <!-- ============ REJOINS LA COMMUNAUTÉ ============ -->
+    <div class="fan-card">
+      <div class="fan-card-header">
+        <div class="fan-card-icon">👑</div>
+        <div class="fan-card-body">
+          <div class="fan-card-eyebrow">REJOINS LA COMMUNAUTÉ</div>
+          <div class="fan-card-title">Deviens fan officiel TWOQ</div>
+          <div class="fan-card-text">Inscris-toi gratuitement et grimpe dans 4 niveaux d'avantages exclusifs : FAN, VIP, OR, PLATINE et participe à tous les avantages FAN TWOQ.</div>
+          <div class="lvl-pills">
+            <span class="lvl-pill">👤 FAN</span>
+            <span class="lvl-pill">⭐ VIP</span>
+            <span class="lvl-pill">🥇 OR</span>
+            <span class="lvl-pill">💎 PLATINE</span>
+          </div>
+          <a href="https://app.theworldofqueen.com" target="_blank" class="btn-primary">M'inscrire gratuitement →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ CONCOURS ANNUEL ============ -->
+    <div class="section-eyebrow with-mt">CONCOURS ANNUEL</div>
+    <div class="fan-card contest-card">
+      <div class="contest-badge">🏆 CHAMPION'S QUEEN</div>
+      <div class="contest-date" id="contestDate1">JUSQU'AU 20 DÉC. 2026</div>
+      <div class="contest-title">Deviens Champion's Queen !</div>
+      <div class="contest-desc">10 questions vrai/faux · Du <strong>1er juin au 20 décembre 2026</strong> · Le <strong>Top 10</strong> remporte chacun <strong>2 places</strong> pour le concert TWOQ de leur ville en 2027/2028.</div>
+      <div class="contest-meta">
+        <div class="contest-participants" id="participants1">— participants</div>
+        <div class="contest-actions">
+          <a href="https://app.theworldofqueen.com" target="_blank" class="btn-primary">Je tente ma chance →</a>
+          <a href="https://app.theworldofqueen.com" target="_blank" class="contest-rules">📜 Règlement du concours</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ CONCOURS ÉTÉ ============ -->
+    <div class="section-eyebrow with-mt">CONCOURS ÉTÉ 2026</div>
+    <div class="fan-card contest-card">
+      <div class="contest-badge summer">🌞 SUMMER CONTEST</div>
+      <div class="contest-date" id="contestDate2">JUSQU'AU 31 AOÛT 2026</div>
+      <div class="contest-title">Devine le titre !</div>
+      <div class="contest-desc">5 extraits audio de <strong>THE WORLD OF QUEEN</strong> à reconnaître · Du <strong>1er juillet au 31 août 2026</strong> · <strong>10 gagnants</strong> · Lots dévoilés très bientôt 🎁</div>
+      <div class="contest-meta">
+        <div class="contest-participants" id="participants2">— participants</div>
+        <div class="contest-actions">
+          <a href="https://app.theworldofqueen.com" target="_blank" class="btn-primary">Je tente ma chance →</a>
+          <a href="https://app.theworldofqueen.com" target="_blank" class="contest-rules">📜 Règlement du concours</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ CONCERT INTERACTIF ============ -->
+    <div class="gold-divider"><span class="line"></span><span class="crown">♕</span><span class="line"></span></div>
+
+    <div class="section-eyebrow">CONCERT INTERACTIF</div>
+    <span class="live-toggle" id="liveToggle"><span class="dot"></span>OFF</span>
+
+    <div class="fan-card live-card">
+      <div class="live-card-title" id="liveTitle">Pas de concert ce soir</div>
+      <div class="live-card-text" id="liveText">🎤 Reviens le jour J pour voter pour la chanson surprise du show !</div>
+      <div class="live-card-cta">✨ <strong>À chaque concert TWOQ</strong>, vote pour la chanson qui sera jouée en bonus surprise sur scène.</div>
+    </div>
+
+    <!-- ============ WALL OF FANS ============ -->
+    <div class="gold-divider"><span class="line"></span><span class="crown">♕</span><span class="line"></span></div>
+
+    <div class="section-eyebrow">WALL OF FANS</div>
+    <div class="fan-card">
+      <div class="fan-card-title" style="margin-bottom: 8px;">Vos plus belles photos</div>
+      <div class="fan-card-text">Partagez vos meilleurs souvenirs <strong style="color:var(--gold);">pendant les concerts</strong> avec <strong style="color:var(--gold);">#TheWorldOfQueen</strong> — les plus belles sont publiées ici.</div>
+      <div class="wall-grid" id="wallGrid">
+        <!-- Photos chargées depuis Supabase OU placeholders -->
+      </div>
+      <div style="text-align:center; margin-top:8px;">
+        <a href="https://app.theworldofqueen.com" target="_blank" class="btn-secondary">📷 Envoyer ma photo</a>
+      </div>
+    </div>
+
+    <!-- ============ TÉMOIGNAGES ============ -->
+    <div class="gold-divider"><span class="line"></span><span class="crown">♕</span><span class="line"></span></div>
+
+    <div class="section-eyebrow">TÉMOIGNAGES</div>
+    <div class="fan-card">
+      <div class="fan-card-title" style="margin-bottom: 16px;">Ce qu'ils en disent</div>
+
+      <div class="review-bubble">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">« Un super hommage à Freddie, j'en ai eu les larmes aux yeux. Vous êtes tous merveilleux. »</div>
+        <div class="review-meta">
+          <span class="review-author">Béatrice G.</span>
+          <span class="review-location">Angers · 2024</span>
+        </div>
+      </div>
+
+      <div class="review-bubble">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">« Sans aucun doute, le meilleur du meilleur des hommages à notre cher Freddy. Quel spectacle, quelle émotion ! »</div>
+        <div class="review-meta">
+          <span class="review-author">Lauren P.</span>
+          <span class="review-location">Dôme de Paris · 2025</span>
+        </div>
+      </div>
+
+      <div class="review-bubble">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">« Vu à Caen, j'ai adoré. Love of My Life, Barcelona magnifique. J'en ai eu des frissons ! »</div>
+        <div class="review-meta">
+          <span class="review-author">Steliahuor</span>
+          <span class="review-location">Caen · 2024</span>
+        </div>
+      </div>
+
+      <div class="review-actions">
+        <a href="https://app.theworldofqueen.com" target="_blank" class="btn-secondary">✨ Voir tous les avis</a>
+        <a href="https://app.theworldofqueen.com" target="_blank" class="btn-secondary">💬 Laisser mon avis</a>
+      </div>
+    </div>
+
+    <!-- ============ VIDÉOS BACKSTAGE ============ -->
+    <div class="gold-divider"><span class="line"></span><span class="crown">♕</span><span class="line"></span></div>
+
+    <div class="section-eyebrow">VIDÉOS BACKSTAGE</div>
+    <div class="fan-card">
+      <div class="fan-card-title" style="margin-bottom: 6px;">Les coulisses !</div>
+      <div class="fan-card-text" style="font-style: italic;">Vis l'envers du décor de la tournée</div>
+      <div class="backstage-scroll" id="backstageScroll"></div>
+    </div>
+
+    <!-- ============ COMMUNAUTÉ ============ -->
+    <div class="gold-divider"><span class="line"></span><span class="crown">♕</span><span class="line"></span></div>
+
+    <div class="section-eyebrow">COMMUNAUTÉ</div>
+    <div class="fan-card">
+      <div class="fan-card-title" style="margin-bottom: 14px;">Rejoins la famille TWOQ</div>
+
+      <a href="https://app.theworldofqueen.com" target="_blank" class="action-link parrain">
+        <div class="action-icon">🤝</div>
+        <div class="action-text-wrap">
+          <div class="action-title">Parraine un ami</div>
+          <div class="action-subtitle">Invite un proche · Gagne des points pour monter en niveau</div>
+        </div>
+        <div class="action-arrow">→</div>
+      </a>
+
+      <a href="https://www.facebook.com/theworldofqueenofficiel" target="_blank" class="action-link support">
+        <div class="action-icon">📣</div>
+        <div class="action-text-wrap">
+          <div class="action-title">Supporte la page TWOQ <span class="pts-badge">+5 pts</span></div>
+          <div class="action-subtitle">Partage notre page Facebook · Aide-nous à grandir</div>
+        </div>
+        <div class="action-arrow">→</div>
+      </a>
+    </div>
+
+    <!-- ============ SUIVEZ-NOUS ============ -->
+    <div class="section-eyebrow with-mt">SUIVEZ-NOUS</div>
+    <div class="social-grid">
+      <a href="https://www.facebook.com/theworldofqueenofficiel" target="_blank" class="social-btn">
+        <span class="social-icon fb">f</span>
+        Facebook
+      </a>
+      <a href="https://www.instagram.com/theworldofqueenofficiel/" target="_blank" class="social-btn">
+        <span class="social-icon ig">📷</span>
+        Instagram
+      </a>
+      <a href="https://www.youtube.com/@theworldofqueenofficiel" target="_blank" class="social-btn">
+        <span class="social-icon yt">▶</span>
+        YouTube
+      </a>
+      <a href="index.html" class="social-btn">
+        <span class="social-icon site">♕</span>
+        Site officiel
+      </a>
+    </div>
+
+    <!-- ============ BOUTIQUE ============ -->
+    <div class="section-eyebrow with-mt">BOUTIQUE</div>
+    <div class="fan-card">
+      <div class="shop-card">
+        <div class="shop-info">
+          <div class="shop-eyebrow">MERCH OFFICIEL</div>
+          <div class="shop-title">La Boutique TWOQ</div>
+          <div class="shop-text">T-shirts, vinyles, posters &amp; souvenirs collectors</div>
+          <a href="https://app.theworldofqueen.com" target="_blank" class="btn-primary">Découvrir →</a>
+        </div>
+        <div class="shop-img" id="shopImg" style="background-image:url('https://regisohmyprod-sys.github.io/twoq-pwa/assets/boutique-tshirt.jpg');">
+          <span id="shopImgFallback" style="display:none;">🛍️</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ CONCOURS PASSÉS ============ -->
+    <div class="gold-divider"><span class="line"></span><span class="crown">♕</span><span class="line"></span></div>
+
+    <div class="section-eyebrow">CONCOURS PASSÉS</div>
+    <div class="fan-card">
+      <div class="fan-card-title" style="margin-bottom: 14px;">Édition précédente</div>
+      <div class="past-list">
+        <div class="past-item">
+          <div>
+            <div class="past-name">🎄 <span class="gold-em">32 places</span> — Tournée Noël 2025-2026</div>
+            <div class="past-detail">32 gagnants tirés au sort sur les dates de la tournée de Noël</div>
+          </div>
+          <div class="past-status">TERMINÉ</div>
+        </div>
+        <div class="past-item">
+          <div>
+            <div class="past-name">Vinyle signé édition limitée</div>
+            <div class="past-detail">🏆 Gagnante : Sophie L. (Lyon)</div>
+          </div>
+          <div class="past-status">TERMINÉ</div>
+        </div>
+        <div class="past-item">
+          <div>
+            <div class="past-name">2 places Brest Arena</div>
+            <div class="past-detail">🏆 Gagnant : Marc D. (Quimper)</div>
+          </div>
+          <div class="past-status">TERMINÉ</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ LIGHTBOX PHOTO ============ -->
+<div class="photo-lightbox" id="photoLightbox">
+  <button class="pl-close" onclick="closePhotoLightbox()" aria-label="Fermer">✕</button>
+  <img class="pl-img" id="plImg" src="" alt="" />
+</div>
+
+<!-- ============ FOOTER ============ -->
+
+<!-- ============ ABONNEZ-VOUS À LA NEWSLETTER ============ -->
+<section class="newsletter-block">
+  <div class="newsletter-wrap">
+    <div class="newsletter-eyebrow">RESTE INFORMÉ</div>
+    <h3 class="newsletter-title">Abonnez-vous à la newsletter</h3>
+    <p class="newsletter-text">Nouvelles dates, coulisses exclusives, concours &amp; promos — directement dans ta boîte mail.</p>
+    <form class="newsletter-form" onsubmit="event.preventDefault(); subscribeNewsletter(this);">
+      <input type="email" placeholder="ton.email@exemple.com" required />
+      <button type="submit">S'abonner →</button>
+    </form>
+    <div class="newsletter-helper">📧 Tu peux te désabonner à tout moment · Aucun spam, promis.</div>
+    <div class="newsletter-success" id="newsletterSuccess">✅ Merci ! Tu es bien inscrit·e à la newsletter TWOQ 🎤</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <h5>THE WORLD OF QUEEN</h5>
+      <p>L'Éternelle Légende — Le show référence en hommage à Queen, produit par Oh My Prod.</p>
+    </div>
+        <div class="footer-col">
+      <h5>Navigation</h5>
+      <a href="index.html">Le Show</a>
+      <a href="dates.html">Dates Tour</a>
+      <a href="artistes.html">Artistes</a>
+      <a href="fanzone.html">Fan Zone</a>
+      <a href="medias.html">Médias</a>
+      <a href="moi.html">Mon Espace</a>
+    </div>
+        <div class="footer-col">
+      <h5>Professionnels</h5>
+      <a href="contact-prod.html">Contact Prod</a>
+      <a href="espace-pro.html">Espace Pro</a>
+      <a href="espace-presse.html">Espace Presse</a>
+      <a href="https://app.theworldofqueen.com" target="_blank">Appli TWOQ ↗</a>
+    </div>
+    <div class="footer-col">
+      <h5>Contact</h5>
+      <p>SAS OH MY PROD</p>
+      <p>Production live</p>
+      <p>contact@ohmyprod.com</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 <span class="gold-bottom">THE WORLD OF QUEEN</span> — Production <span class="gold-bottom">OH MY PROD</span>. Tous droits réservés.
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() { document.getElementById('mainNav').classList.toggle('open'); }
+  function closeMenu() { document.getElementById('mainNav').classList.remove('open'); }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  }
+
+  // ============ Supabase config (mêmes credentials que dates.html) ============
+  const SUPABASE_URL = 'https://nhxqcavianozskxgfcbt.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3';
+  const TWOQ_ETERNELLE_ID = '22222222-2222-2222-2222-222222222222';
+  let _sb = null;
+  function getSupabase() {
+    if (_sb) return _sb;
+    if (typeof supabase === 'undefined') { console.warn('SDK Supabase pas chargé'); return null; }
+    _sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    return _sb;
+  }
+
+  // ============ CIEL ÉTOILÉ ============
+  function generateTwinkleStars() {
+    const bg = document.getElementById('twinkleStars');
+    if (!bg) return;
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < 220; i++) {
+      const star = document.createElement('div');
+      const r = Math.random();
+      let size = 'small';
+      if (r < 0.12) size = 'big';
+      else if (r < 0.40) size = 'medium';
+      star.className = 'twinkle-star ' + size;
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDelay = (Math.random() * 4) + 's';
+      star.style.animationDuration = (2.5 + Math.random() * 3.5) + 's';
+      frag.appendChild(star);
+    }
+    bg.appendChild(frag);
+  }
+
+  // ============ WALL OF FANS — connecté à Supabase ============
+  // Tente de charger depuis une vue publique. Sinon : 6 placeholders.
+  async function loadWallOfFans() {
+    const grid = document.getElementById('wallGrid');
+    if (!grid) return;
+    // Affiche placeholders en attendant
+    grid.innerHTML = renderWallPlaceholders(6);
+
+    const sb = getSupabase();
+    if (!sb) return;
+
+    try {
+      // Essaie d'abord une vue publique 'public_wall_of_fans'
+      const { data, error } = await sb
+        .from('public_wall_of_fans')
+        .select('*')
+        .eq('statut', 'APPROUVE')
+        .order('is_top', { ascending: false })
+        .order('created_at', { ascending: false })
+        .limit(9);
+      if (error) throw error;
+      renderWallPhotos(data || []);
+    } catch (e) {
+      console.warn('[WallOfFans] Vue publique non dispo → fallback statique. Détail :', e.message);
+      // Garde les placeholders affichés
+    }
+  }
+
+  function renderWallPlaceholders(n) {
+    let html = '';
+    const icons = ['👑', '🎹', '🎤', '🎸', '🥁', '🎙️'];
+    for (let i = 0; i < n; i++) {
+      html += `<div class="wall-cell empty">${icons[i % icons.length]}</div>`;
+    }
+    return html;
+  }
+
+  function renderWallPhotos(photos) {
+    const grid = document.getElementById('wallGrid');
+    if (!grid) return;
+    if (photos.length === 0) {
+      grid.innerHTML = renderWallPlaceholders(6);
+      return;
+    }
+    grid.innerHTML = photos.map(p => {
+      const url = p.photo_url || p.url || '';
+      const isTop = p.is_top || p.top === true;
+      if (!url) return `<div class="wall-cell empty">👑</div>`;
+      return `
+        <div class="wall-cell ${isTop ? 'top' : ''}">
+          <img src="${escapeHtml(url)}" alt="Photo de fan" onclick="openPhotoLightbox('${escapeHtml(url)}')" />
+        </div>
+      `;
+    }).join('');
+    // Complète avec des placeholders s'il y en a moins de 6
+    if (photos.length < 6) {
+      grid.innerHTML += renderWallPlaceholders(6 - photos.length);
+    }
+  }
+
+  function openPhotoLightbox(url) {
+    document.getElementById('plImg').src = url;
+    document.getElementById('photoLightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePhotoLightbox() {
+    document.getElementById('photoLightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('photoLightbox').addEventListener('click', e => {
+    if (e.target.id === 'photoLightbox') closePhotoLightbox();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closePhotoLightbox();
+  });
+
+  // ============ CONCERT INTERACTIF — détecte un concert le jour J ============
+  async function checkLiveConcert() {
+    const toggle = document.getElementById('liveToggle');
+    const title  = document.getElementById('liveTitle');
+    const text   = document.getElementById('liveText');
+    const sb = getSupabase();
+    if (!sb) return;
+
+    try {
+      const today = new Date().toISOString().split('T')[0];
+      const { data, error } = await sb
+        .from('public_dates_twoq')
+        .select('*')
+        .eq('date_concert', today)
+        .in('tournee_id', [TWOQ_ETERNELLE_ID, '11111111-1111-1111-1111-111111111111'])
+        .limit(1);
+      if (error) throw error;
+
+      if (data && data.length > 0) {
+        const d = data[0];
+        toggle.classList.add('on');
+        toggle.innerHTML = '<span class="dot"></span>LIVE CE SOIR';
+        title.textContent = `🎵 Concert ce soir à ${d.ville}`;
+        text.innerHTML = `Salle : <strong style="color:var(--gold);">${escapeHtml(d.nom_salle || '')}</strong> — vote pour la chanson surprise !`;
+      }
+    } catch (e) {
+      console.warn('[LiveConcert] Erreur :', e.message);
+    }
+  }
+
+  // ============ NOMBRES DE PARTICIPANTS CONCOURS ============
+  async function loadContestStats() {
+    const sb = getSupabase();
+    if (!sb) return;
+    try {
+      // Essaie d'abord une vue publique pour les stats de concours
+      const { data, error } = await sb
+        .from('public_concours_stats')
+        .select('*');
+      if (error) throw error;
+      if (data && data.length > 0) {
+        data.forEach(c => {
+          if (c.concours === 'CHAMPIONS_QUEEN_2026') {
+            document.getElementById('participants1').textContent = `${c.participants || 0} participants`;
+          } else if (c.concours === 'SUMMER_2026') {
+            document.getElementById('participants2').textContent = `${c.participants || 0} participants`;
+          }
+        });
+      }
+    } catch (e) {
+      console.warn('[ContestStats] Vue publique non dispo. Détail :', e.message);
+    }
+  }
+
+  // ============ BACKSTAGE VIDEOS (placeholders à compléter) ============
+  // ⚠️ POULETTE : remplace les YOUTUBE_ID par les vrais IDs YouTube des coulisses
+  const BACKSTAGE = [
+    { id: 'YOUTUBE_ID_BS1', caption: 'Backstage #1' },
+    { id: 'YOUTUBE_ID_BS2', caption: 'Backstage #2' },
+    { id: 'YOUTUBE_ID_BS3', caption: 'Backstage #3' },
+    { id: 'YOUTUBE_ID_BS4', caption: 'Backstage #4' },
+  ];
+
+  function renderBackstage() {
+    const scroll = document.getElementById('backstageScroll');
+    if (!scroll) return;
+    scroll.innerHTML = BACKSTAGE.map(b => {
+      const isPlaceholder = b.id.startsWith('YOUTUBE_ID');
+      const thumb = isPlaceholder
+        ? ''
+        : `background-image:url('https://img.youtube.com/vi/${b.id}/hqdefault.jpg');`;
+      const href = isPlaceholder ? '#' : `https://www.youtube.com/watch?v=${b.id}`;
+      const tgt = isPlaceholder ? '' : 'target="_blank"';
+      return `
+        <a href="${href}" ${tgt} class="backstage-card" style="text-decoration:none;">
+          <div class="backstage-thumb" style="${thumb}">
+            <div class="backstage-play">▶</div>
+          </div>
+          <div class="backstage-cap">${escapeHtml(b.caption)}</div>
+        </a>
+      `;
+    }).join('');
+  }
+
+  // ============ FALLBACK BOUTIQUE IMAGE ============
+  (function() {
+    const probe = new Image();
+    probe.onerror = () => {
+      const el = document.getElementById('shopImg');
+      const fb = document.getElementById('shopImgFallback');
+      if (el) el.style.backgroundImage = '';
+      if (fb) fb.style.display = 'block';
+    };
+    probe.src = 'https://regisohmyprod-sys.github.io/twoq-pwa/assets/boutique-tshirt.jpg';
+  })();
+
+  // ============ INIT ============
+  generateTwinkleStars();
+  renderBackstage();
+  loadWallOfFans();
+  checkLiveConcert();
+  loadContestStats();
+
+  // ============ NEWSLETTER ============
+  function subscribeNewsletter(form) {
+    const email = form.querySelector('input').value;
+    console.log('[Newsletter] Inscription :', email);
+    form.style.display = 'none';
+    const success = document.getElementById('newsletterSuccess');
+    if (success) success.classList.add('show');
+    // TODO : connecter à Supabase table 'newsletter_subscribers' ou service email
+  }
+
+
+  // ============ DROPDOWN ESPACE PRO ============
+  function toggleDropdown(e) {
+    if (e) e.stopPropagation();
+    const dd = document.getElementById('navDropdown');
+    if (dd) dd.classList.toggle('open');
+  }
+  function closeDropdown() {
+    const dd = document.getElementById('navDropdown');
+    if (dd) dd.classList.remove('open');
+  }
+  document.addEventListener('click', function(e) {
+    const dd = document.getElementById('navDropdown');
+    if (dd && !dd.contains(e.target)) dd.classList.remove('open');
+  });
+
+</script>
+
+</body>
+</html>
