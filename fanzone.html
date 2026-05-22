@@ -661,7 +661,58 @@
   .vote-result-row.winning .vote-result-fill { background: linear-gradient(90deg, #FFD700, var(--gold-pale)); box-shadow: 0 0 8px rgba(212,175,55,0.5); }
   .vote-result-votes { color: var(--smoke); font-size: 11px; margin-left: 6px; }
   .vote-total { color: var(--smoke); font-size: 12px; text-align: center; margin-top: 14px; font-style: italic; }
-  .vote-total strong { color: var(--gold); }
+  /* ============ MODAL PARRAINAGE / PARTAGE FB ============ */
+  .com-modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.92); backdrop-filter: blur(10px); z-index: 9997; display: none; align-items: flex-start; justify-content: center; padding: 40px 16px; overflow-y: auto; }
+  .com-modal-overlay.open { display: flex; animation: fmFadeIn 0.3s ease; }
+  .com-modal { background: linear-gradient(180deg, #1a1a1a, #0a0a0a); border: 1px solid var(--gold); border-radius: 20px; max-width: 540px; width: 100%; padding: 28px 26px 30px; box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 60px rgba(212,175,55,0.18); position: relative; animation: fmSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+  .com-modal.parrain { border-color: #ff8a73; box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 60px rgba(255,138,115,0.18); }
+  .com-modal.fb { border-color: #6db4f5; box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 60px rgba(91,163,245,0.18); }
+
+  .cm-slide { display: none; }
+  .cm-slide.active { display: block; animation: fmSlideIn 0.3s ease; }
+
+  /* PARRAIN INFOS (après vérification email) */
+  .cm-parrain-info { background: linear-gradient(135deg, rgba(255,138,115,0.10), rgba(255,138,115,0.02)); border: 1px solid #ff8a73; border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; display: flex; align-items: center; gap: 14px; }
+  .cm-parrain-avatar { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #ff8a73, #d4543c); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; color: #fff; font-weight: 700; }
+  .cm-parrain-text { flex: 1; min-width: 0; }
+  .cm-parrain-label { color: #ff8a73; font-size: 10px; letter-spacing: 2px; font-weight: 700; text-transform: uppercase; margin-bottom: 2px; }
+  .cm-parrain-name { color: var(--cream); font-size: 16px; font-weight: 700; font-family: var(--serif); margin-bottom: 4px; }
+  .cm-parrain-stats { color: var(--smoke); font-size: 11px; }
+  .cm-parrain-stats strong { color: var(--gold); }
+
+  /* LIEN À COPIER */
+  .cm-share-link-wrap { background: rgba(0,0,0,0.5); border: 2px solid rgba(212,175,55,0.4); border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .cm-share-link { flex: 1; color: var(--gold); font-size: 12px; font-family: monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+  .cm-share-copy-btn { background: var(--gold); color: var(--noir); border: none; padding: 8px 16px; border-radius: 999px; font-size: 11px; letter-spacing: 1px; font-weight: 700; cursor: pointer; transition: transform 0.2s; font-family: inherit; flex-shrink: 0; }
+  .cm-share-copy-btn:hover { transform: translateY(-2px); }
+  .cm-share-copy-btn.copied { background: #10b981; color: #fff; }
+
+  /* BOUTONS DE PARTAGE */
+  .cm-share-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+  @media (max-width: 480px) { .cm-share-buttons { grid-template-columns: 1fr; } }
+  .cm-share-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; border: 1px solid; text-decoration: none; color: var(--cream); }
+  .cm-share-btn:hover { transform: translateY(-2px); }
+  .cm-share-btn.wa { background: linear-gradient(135deg, rgba(37,211,102,0.15), rgba(37,211,102,0.04)); border-color: #25D366; }
+  .cm-share-btn.wa:hover { box-shadow: 0 8px 20px rgba(37,211,102,0.25); }
+  .cm-share-btn.sms { background: linear-gradient(135deg, rgba(91,163,245,0.15), rgba(91,163,245,0.04)); border-color: #6db4f5; }
+  .cm-share-btn.email { background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(212,175,55,0.04)); border-color: var(--gold); }
+  .cm-share-btn.fb { background: linear-gradient(135deg, rgba(24,119,242,0.15), rgba(24,119,242,0.04)); border-color: #1877F2; }
+  .cm-share-icon { font-size: 18px; }
+
+  /* SUCCÈS */
+  .cm-success { text-align: center; padding: 20px 0 10px; }
+  .cm-success-icon { font-size: 56px; margin-bottom: 16px; animation: fmBounce 0.6s ease; }
+  .cm-success-title { font-family: var(--serif); color: var(--cream); font-size: 24px; font-weight: 500; margin-bottom: 12px; letter-spacing: 1px; }
+  .cm-success-text { color: var(--cream); font-size: 14px; line-height: 1.6; margin-bottom: 18px; opacity: 0.9; }
+  .cm-success-text strong { color: var(--gold); }
+  .cm-success-badge { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(212,175,55,0.04)); border: 1px solid var(--gold); border-radius: 999px; padding: 10px 20px; color: var(--gold); font-weight: 700; font-size: 13px; letter-spacing: 1.5px; margin-bottom: 18px; }
+
+  /* FACEBOOK SHARE BUTTON */
+  .cm-fb-big-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 16px; background: #1877F2; color: #fff; border: none; border-radius: 12px; font-family: inherit; font-size: 15px; font-weight: 700; letter-spacing: 0.5px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; margin-bottom: 14px; }
+  .cm-fb-big-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(24,119,242,0.35); }
+  .cm-fb-big-btn.done { background: #10b981; }
+  .cm-fb-icon { font-size: 22px; font-weight: 900; background: #fff; color: #1877F2; width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+  .cm-fb-big-btn.done .cm-fb-icon { color: #10b981; }
 </style>
 </head>
 <body>
@@ -875,23 +926,23 @@
     <div class="fan-card">
       <div class="fan-card-title" style="margin-bottom: 14px;">Rejoins la famille TWOQ</div>
 
-      <a href="https://app.theworldofqueen.com" target="_blank" class="action-link parrain">
+      <button type="button" class="action-link parrain" onclick="openParrainModal()" style="background:rgba(255,100,80,0.06); border-color:rgba(255,100,80,0.3); width:100%; font-family:inherit; text-align:left;">
         <div class="action-icon">🤝</div>
         <div class="action-text-wrap">
           <div class="action-title">Parraine un ami</div>
           <div class="action-subtitle">Invite un proche · Gagne des points pour monter en niveau</div>
         </div>
         <div class="action-arrow">→</div>
-      </a>
+      </button>
 
-      <a href="https://www.facebook.com/theworldofqueenofficiel" target="_blank" class="action-link support">
+      <button type="button" class="action-link support" onclick="openFbShareModal()" style="background:rgba(91, 163, 245, 0.06); border-color:rgba(91, 163, 245, 0.3); width:100%; font-family:inherit; text-align:left;">
         <div class="action-icon">📣</div>
         <div class="action-text-wrap">
           <div class="action-title">Supporte la page TWOQ <span class="pts-badge">+5 pts</span></div>
           <div class="action-subtitle">Partage notre page Facebook · Aide-nous à grandir</div>
         </div>
         <div class="action-arrow">→</div>
-      </a>
+      </button>
     </div>
 
     <!-- ============ SUIVEZ-NOUS ============ -->
@@ -1027,6 +1078,235 @@
 
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  }
+
+  // ============ COMMUNAUTÉ — PARRAINAGE + PARTAGE FB ============
+  let PARRAIN_DATA = null; // { id, prenom, nb_filleuls, points_parrainage }
+  let FB_SHARED = false;
+  const TWOQ_FB_URL = 'https://www.facebook.com/theworldofqueenofficiel';
+  const SITE_URL = 'https://regisohmyprod-sys.github.io/the-world-of-queen-web';
+
+  // === DÉTECTION DU PARRAIN DEPUIS L'URL ===
+  (function detectParrainFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    const parrainId = params.get('parrain');
+    if (parrainId) {
+      try {
+        sessionStorage.setItem('twoq_parrain_id', parrainId);
+        // Récupérer le prénom du parrain pour l'afficher éventuellement
+        fetch(`https://nhxqcavianozskxgfcbt.supabase.co/rest/v1/rpc/get_parrain_prenom`, {
+          method: 'POST',
+          headers: {
+            'apikey': 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+            'Authorization': 'Bearer sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ p_parrain_id: parrainId })
+        }).then(r => r.json()).then(prenom => {
+          if (prenom && typeof prenom === 'string') {
+            sessionStorage.setItem('twoq_parrain_prenom', prenom);
+            console.log('[Parrain] Détecté :', prenom);
+            showParrainWelcome(prenom);
+          }
+        }).catch(e => console.warn('[Parrain]', e));
+      } catch (e) { console.warn(e); }
+    }
+  })();
+
+  function showParrainWelcome(prenom) {
+    // Bannière en haut de la fan card "Rejoins la communauté"
+    const card = document.querySelector('.fan-card');
+    if (!card || card.querySelector('.parrain-welcome')) return;
+    const banner = document.createElement('div');
+    banner.className = 'parrain-welcome';
+    banner.style.cssText = 'background: linear-gradient(135deg, rgba(255,138,115,0.15), rgba(255,138,115,0.04)); border: 1px solid #ff8a73; border-radius: 12px; padding: 12px 16px; margin-bottom: 14px; font-size: 13px; color: var(--cream); line-height: 1.5;';
+    banner.innerHTML = `🎁 <strong style="color:#ff8a73;">${escapeHtml(prenom)}</strong> t'a invité à rejoindre la communauté TWOQ !<br><small style="color:var(--smoke);">Inscris-toi pour lui faire gagner +10 points 💛</small>`;
+    card.insertBefore(banner, card.firstChild);
+  }
+
+  // === MODAL PARRAINAGE ===
+  function openParrainModal() {
+    document.getElementById('parrainModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    pmGoToSlide('email');
+  }
+  function closeParrainModal() {
+    document.getElementById('parrainModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function pmGoToSlide(slideName) {
+    document.querySelectorAll('#parrainModal .cm-slide').forEach(el => el.classList.remove('active'));
+    const target = document.querySelector(`#parrainModal .cm-slide[data-pslide="${slideName}"]`);
+    if (target) target.classList.add('active');
+  }
+
+  async function checkParrainEmail() {
+    const email = document.getElementById('parrainMyEmail').value.trim().toLowerCase();
+    const err = document.getElementById('parrainEmailError');
+    err.classList.remove('show'); err.textContent = '';
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = '⚠️ Email invalide.'; err.classList.add('show'); return; }
+
+    const btn = document.getElementById('parrainEmailBtn');
+    const txt = document.getElementById('parrainEmailText');
+    const loading = document.getElementById('parrainEmailLoading');
+    btn.disabled = true; txt.style.display = 'none'; loading.classList.add('show');
+
+    try {
+      const res = await fetch('https://nhxqcavianozskxgfcbt.supabase.co/rest/v1/rpc/get_parrain_by_email', {
+        method: 'POST',
+        headers: {
+          'apikey': 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+          'Authorization': 'Bearer sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ p_email: email })
+      });
+      if (!res.ok) {
+        const t = await res.text();
+        console.warn('[Parrain Lookup]', res.status, t);
+        err.textContent = '⚠️ Erreur. Réessaie.';
+        err.classList.add('show');
+        btn.disabled = false; txt.style.display = ''; loading.classList.remove('show');
+        return;
+      }
+      const data = await res.json();
+      if (!data || data.length === 0) {
+        err.innerHTML = '⚠️ Cet email n\'est pas inscrit. <a href="#" onclick="event.preventDefault(); closeParrainModal(); openFanModal(); return false;" style="color:#ff8a73; text-decoration:underline;">Inscris-toi d\'abord</a>';
+        err.classList.add('show');
+        btn.disabled = false; txt.style.display = ''; loading.classList.remove('show');
+        return;
+      }
+      PARRAIN_DATA = data[0];
+      // Afficher l'étape 2
+      document.getElementById('parrainAvatar').textContent = (PARRAIN_DATA.prenom || '?').charAt(0).toUpperCase();
+      document.getElementById('parrainName').textContent = PARRAIN_DATA.prenom || 'Toi';
+      document.getElementById('parrainFilleuls').textContent = PARRAIN_DATA.nb_filleuls || 0;
+      document.getElementById('parrainPoints').textContent = PARRAIN_DATA.points_parrainage || 0;
+      const link = `${SITE_URL}/?parrain=${PARRAIN_DATA.id}`;
+      document.getElementById('parrainLink').textContent = link;
+      document.getElementById('parrainLink').dataset.link = link;
+      renderShareButtons(link);
+      pmGoToSlide('share');
+      btn.disabled = false; txt.style.display = ''; loading.classList.remove('show');
+    } catch (e) {
+      console.error('[Parrain Lookup]', e);
+      err.textContent = '⚠️ Problème de connexion.';
+      err.classList.add('show');
+      btn.disabled = false; txt.style.display = ''; loading.classList.remove('show');
+    }
+  }
+
+  function renderShareButtons(link) {
+    const message = `🎤 Rejoins-moi sur The World of Queen, le show hommage à Queen ! Inscris-toi ici : ${link}`;
+    const waUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    const smsUrl = `sms:?&body=${encodeURIComponent(message)}`;
+    const emailUrl = `mailto:?subject=${encodeURIComponent('🎤 Découvre The World of Queen !')}&body=${encodeURIComponent(message + '\n\nÀ très vite !')}`;
+    const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`;
+    document.getElementById('parrainShareBtns').innerHTML = `
+      <a href="${waUrl}" target="_blank" class="cm-share-btn wa"><span class="cm-share-icon">💬</span> WhatsApp</a>
+      <a href="${smsUrl}" class="cm-share-btn sms"><span class="cm-share-icon">📱</span> SMS</a>
+      <a href="${emailUrl}" class="cm-share-btn email"><span class="cm-share-icon">✉️</span> Email</a>
+      <a href="${fbUrl}" target="_blank" class="cm-share-btn fb"><span class="cm-share-icon">f</span> Facebook</a>
+    `;
+  }
+
+  function copyParrainLink() {
+    const link = document.getElementById('parrainLink').dataset.link;
+    if (!link) return;
+    try {
+      navigator.clipboard.writeText(link).then(() => {
+        const btn = document.getElementById('parrainCopyBtn');
+        btn.textContent = '✓ Copié !';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = '📋 Copier';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    } catch (e) {
+      // Fallback : sélectionner le texte
+      const el = document.getElementById('parrainLink');
+      const range = document.createRange();
+      range.selectNode(el);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      document.execCommand('copy');
+    }
+  }
+
+  // === MODAL PARTAGE FACEBOOK ===
+  function openFbShareModal() {
+    document.getElementById('fbShareModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    fbGoToSlide('form');
+    FB_SHARED = false;
+    document.getElementById('fbSubmitBtn').disabled = true;
+    document.getElementById('fbShareBtn').classList.remove('done');
+    document.getElementById('fbShareBtnText').textContent = 'Partager la page Facebook';
+  }
+  function closeFbShareModal() {
+    document.getElementById('fbShareModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function fbGoToSlide(slideName) {
+    document.querySelectorAll('#fbShareModal .cm-slide').forEach(el => el.classList.remove('active'));
+    const target = document.querySelector(`#fbShareModal .cm-slide[data-fslide="${slideName}"]`);
+    if (target) target.classList.add('active');
+  }
+  function openFacebookSharePopup() {
+    const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(TWOQ_FB_URL)}`;
+    window.open(fbUrl, 'fbshare', 'width=600,height=500,location=no,menubar=no,toolbar=no');
+    // Marquer comme partagé après quelques secondes
+    setTimeout(() => {
+      FB_SHARED = true;
+      document.getElementById('fbSubmitBtn').disabled = false;
+      document.getElementById('fbShareBtn').classList.add('done');
+      document.getElementById('fbShareBtnText').textContent = '✓ Partage effectué — valide maintenant';
+    }, 2000);
+  }
+  async function submitFbShare() {
+    const prenom = document.getElementById('fbPrenom').value.trim();
+    const email = document.getElementById('fbEmail').value.trim().toLowerCase();
+    const err = document.getElementById('fbError');
+    err.classList.remove('show'); err.textContent = '';
+
+    if (!prenom) { err.textContent = '⚠️ Indique ton prénom.'; err.classList.add('show'); return; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = '⚠️ Email invalide.'; err.classList.add('show'); return; }
+    if (!FB_SHARED) { err.textContent = '⚠️ Clique d\'abord sur "Partager la page Facebook".'; err.classList.add('show'); return; }
+
+    const btn = document.getElementById('fbSubmitBtn');
+    const txt = document.getElementById('fbSubmitText');
+    const loading = document.getElementById('fbLoading');
+    btn.disabled = true; txt.style.display = 'none'; loading.classList.add('show');
+
+    try {
+      const res = await fetch('https://nhxqcavianozskxgfcbt.supabase.co/rest/v1/fan_partages_fb', {
+        method: 'POST',
+        headers: {
+          'apikey': 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+          'Authorization': 'Bearer sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({ fan_email: email, fan_prenom: prenom })
+      });
+      if (!res.ok) {
+        const t = await res.text();
+        console.warn('[FB Share] HTTP', res.status, t);
+        err.textContent = '⚠️ Erreur. Réessaie.';
+        err.classList.add('show');
+        btn.disabled = false; txt.style.display = ''; loading.classList.remove('show');
+        return;
+      }
+      console.log('[FB Share] OK');
+      document.getElementById('fbSuccessName').textContent = prenom + ' !';
+      fbGoToSlide('success');
+    } catch (e) {
+      console.error('[FB Share]', e);
+      err.textContent = '⚠️ Problème de connexion.';
+      err.classList.add('show');
+      btn.disabled = false; txt.style.display = ''; loading.classList.remove('show');
+    }
   }
 
   // ============ TÉMOIGNAGES ============
@@ -2057,7 +2337,7 @@
           'apikey': 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
           'Authorization': 'Bearer sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
           'Content-Type': 'application/json',
-          'Prefer': 'return=minimal'
+          'Prefer': 'return=representation'
         },
         body: JSON.stringify(payload)
       });
@@ -2082,10 +2362,44 @@
         return;
       }
 
-      // SUCCÈS
-      console.log('[FanInscription] OK :', payload.email);
+      // SUCCÈS — récupérer l'ID du nouveau fan
+      let newFanId = null;
+      try {
+        const newFanData = await res.json();
+        if (newFanData && newFanData.length > 0) {
+          newFanId = newFanData[0].id;
+        }
+      } catch (e) { /* pas grave si on récupère pas l'id */ }
+
+      console.log('[FanInscription] OK :', payload.email, 'id=', newFanId);
       document.getElementById('fmSuccessName').textContent = payload.prenom + ' !';
       fmGoToSlide('success');
+
+      // PARRAINAGE : si un parrain_id est en sessionStorage, créer le lien
+      const parrainId = sessionStorage.getItem('twoq_parrain_id');
+      if (parrainId && newFanId && parrainId !== newFanId) {
+        try {
+          await fetch('https://nhxqcavianozskxgfcbt.supabase.co/rest/v1/parrainages', {
+            method: 'POST',
+            headers: {
+              'apikey': 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+              'Authorization': 'Bearer sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+              'Content-Type': 'application/json',
+              'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify({
+              parrain_id: parrainId,
+              filleul_id: newFanId,
+              source: 'site_web'
+            })
+          });
+          console.log('[Parrainage] Créé : parrain=', parrainId, '→ filleul=', newFanId);
+          // Nettoyer pour éviter de double-créer
+          sessionStorage.removeItem('twoq_parrain_id');
+          sessionStorage.removeItem('twoq_parrain_prenom');
+        } catch(e) { console.warn('[Parrainage]', e); }
+      }
+
       // Si newsletter aussi cochée, on l'insère dans newsletter_subscribers (idempotent)
       if (payload.consentement_newsletter) {
         try {
@@ -3199,6 +3513,160 @@
     <div style="text-align:center; margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(212,175,55,0.18);">
       <button type="button" class="fm-btn fm-btn-primary" onclick="closeAllTemoignagesModal(); openTemoignageModal();">💬 Laisser mon avis</button>
     </div>
+  </div>
+</div>
+
+<!-- ============ MODAL PARRAINAGE ============ -->
+<div class="com-modal-overlay" id="parrainModal" onclick="if(event.target.id==='parrainModal') closeParrainModal()">
+  <div class="com-modal parrain">
+    <button class="qm-close" onclick="closeParrainModal()" aria-label="Fermer" style="border-color:#ff8a73; color:#ff8a73;">✕</button>
+
+    <!-- ÉTAPE 1 : EMAIL DU PARRAIN -->
+    <div class="cm-slide active" data-pslide="email">
+      <div class="fm-header">
+        <div class="fm-header-icon" style="background: linear-gradient(135deg, #ff8a73, #d4543c); font-size: 28px;">🤝</div>
+        <div class="fm-header-eyebrow" style="color:#ff8a73;">PARRAINAGE</div>
+        <div class="fm-header-title">Invite tes proches</div>
+        <div class="fm-header-subtitle">Gagne +10 pts par filleul inscrit</div>
+      </div>
+
+      <p style="color:var(--cream); font-size: 14px; line-height: 1.6; margin-bottom: 16px; text-align: center;">
+        Entre ton email <strong style="color:#ff8a73;">(celui de ton compte fan)</strong> pour générer ton lien de parrainage personnalisé.
+      </p>
+
+      <form id="parrainEmailForm" novalidate onsubmit="event.preventDefault(); checkParrainEmail();">
+        <div class="fm-row">
+          <label class="fm-label" for="parrainMyEmail" style="color:#ff8a73;">Ton email<span class="req">*</span></label>
+          <input class="fm-input" type="email" id="parrainMyEmail" placeholder="ton.email@exemple.com" required />
+        </div>
+        <div class="fm-error" id="parrainEmailError"></div>
+        <div class="fm-footer">
+          <span></span>
+          <button type="submit" class="fm-btn fm-btn-primary" id="parrainEmailBtn" style="background:#ff8a73;">
+            <span id="parrainEmailText">Continuer →</span>
+            <span class="fm-loading" id="parrainEmailLoading"><span class="fm-spinner"></span> Vérification...</span>
+          </button>
+        </div>
+      </form>
+
+      <p style="color:var(--smoke); font-size: 12px; margin-top: 14px; text-align: center; font-style: italic;">
+        Pas encore inscrit ? <a href="#" onclick="event.preventDefault(); closeParrainModal(); openFanModal(); return false;" style="color:#ff8a73; font-weight:600; text-decoration:underline;">Crée ton compte gratuitement</a>
+      </p>
+    </div>
+
+    <!-- ÉTAPE 2 : LIEN À PARTAGER -->
+    <div class="cm-slide" data-pslide="share">
+      <div class="fm-header">
+        <div class="fm-header-icon" style="background: linear-gradient(135deg, #ff8a73, #d4543c); font-size: 28px;">🤝</div>
+        <div class="fm-header-eyebrow" style="color:#ff8a73;">TON LIEN</div>
+        <div class="fm-header-title">Partage ton lien</div>
+      </div>
+
+      <div class="cm-parrain-info">
+        <div class="cm-parrain-avatar" id="parrainAvatar">?</div>
+        <div class="cm-parrain-text">
+          <div class="cm-parrain-label">Salut</div>
+          <div class="cm-parrain-name" id="parrainName">—</div>
+          <div class="cm-parrain-stats">
+            <strong id="parrainFilleuls">0</strong> filleul(s) · 
+            <strong id="parrainPoints">0</strong> pts de parrainage
+          </div>
+        </div>
+      </div>
+
+      <p style="color:var(--cream); font-size: 13px; line-height: 1.6; margin-bottom: 14px;">
+        Voici <strong style="color:var(--gold);">ton lien unique</strong>. Chaque ami qui s'inscrira via ce lien te rapportera <strong style="color:#ff8a73;">+10 points</strong>.
+      </p>
+
+      <div class="cm-share-link-wrap">
+        <span class="cm-share-link" id="parrainLink">https://...</span>
+        <button type="button" class="cm-share-copy-btn" id="parrainCopyBtn" onclick="copyParrainLink()">📋 Copier</button>
+      </div>
+
+      <p style="color:var(--gold); font-size: 11px; letter-spacing: 2px; font-weight: 700; margin-bottom: 10px; text-transform: uppercase;">Ou partage directement :</p>
+
+      <div class="cm-share-buttons" id="parrainShareBtns">
+        <!-- généré en JS -->
+      </div>
+
+      <p style="color:var(--smoke); font-size: 11px; text-align: center; font-style: italic;">
+        💡 Tes points sont créés automatiquement quand ton ami valide son inscription.
+      </p>
+
+      <div class="fm-footer" style="margin-top:14px;">
+        <button type="button" class="fm-btn fm-btn-ghost" onclick="closeParrainModal()" style="border-color:#ff8a73; color:#ff8a73;">Fermer</button>
+        <span></span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ MODAL PARTAGE FACEBOOK ============ -->
+<div class="com-modal-overlay" id="fbShareModal" onclick="if(event.target.id==='fbShareModal') closeFbShareModal()">
+  <div class="com-modal fb">
+    <button class="qm-close" onclick="closeFbShareModal()" aria-label="Fermer" style="border-color:#6db4f5; color:#6db4f5;">✕</button>
+
+    <!-- ÉTAPE 1 : FORM -->
+    <div class="cm-slide active" data-fslide="form">
+      <div class="fm-header">
+        <div class="fm-header-icon" style="background: linear-gradient(135deg, #6db4f5, #1877F2); font-size: 28px;">📣</div>
+        <div class="fm-header-eyebrow" style="color:#6db4f5;">SUPPORTE LA PAGE</div>
+        <div class="fm-header-title">Aide-nous à grandir</div>
+        <div class="fm-header-subtitle">+5 points pour ton compte fan</div>
+      </div>
+
+      <p style="color:var(--cream); font-size: 14px; line-height: 1.6; margin-bottom: 16px; text-align: center;">
+        Partage notre page Facebook avec tes amis et fais découvrir <strong style="color:#6db4f5;">The World of Queen</strong> à la France entière 💛
+      </p>
+
+      <form id="fbForm" novalidate onsubmit="event.preventDefault(); submitFbShare();">
+        <div class="fm-row two">
+          <div>
+            <label class="fm-label" for="fbPrenom" style="color:#6db4f5;">Prénom<span class="req">*</span></label>
+            <input class="fm-input" type="text" id="fbPrenom" placeholder="Marie" required />
+          </div>
+          <div>
+            <label class="fm-label" for="fbEmail" style="color:#6db4f5;">Email<span class="req">*</span></label>
+            <input class="fm-input" type="email" id="fbEmail" placeholder="marie@..." required />
+          </div>
+        </div>
+
+        <button type="button" class="cm-fb-big-btn" id="fbShareBtn" onclick="openFacebookSharePopup()">
+          <span class="cm-fb-icon">f</span>
+          <span id="fbShareBtnText">Partager la page Facebook</span>
+        </button>
+
+        <p style="color:var(--smoke); font-size: 12px; text-align: center; font-style: italic; margin-bottom: 14px;">
+          💡 Clique sur le bouton ci-dessus pour ouvrir Facebook. Une fois le partage effectué, reviens ici et valide.
+        </p>
+
+        <div class="fm-error" id="fbError"></div>
+
+        <div class="fm-footer">
+          <span></span>
+          <button type="submit" class="fm-btn fm-btn-primary" id="fbSubmitBtn" style="background:#6db4f5;" disabled>
+            <span id="fbSubmitText">✓ J'ai partagé</span>
+            <span class="fm-loading" id="fbLoading"><span class="fm-spinner"></span> Envoi...</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ÉTAPE 2 : SUCCÈS -->
+    <div class="cm-slide" data-fslide="success">
+      <div class="cm-success">
+        <div class="cm-success-icon">🎉</div>
+        <div class="cm-success-title">Merci <span id="fbSuccessName">!</span></div>
+        <div class="cm-success-badge" style="background: linear-gradient(135deg, rgba(91,163,245,0.15), rgba(91,163,245,0.04)); border-color: #6db4f5; color: #6db4f5;">+5 POINTS CRÉÉS</div>
+        <p class="cm-success-text">Ton partage est enregistré. Tes <strong>5 points</strong> seront ajoutés à ton compte fan TWOQ.</p>
+        <p style="color:var(--smoke); font-size: 12px; margin: 14px 0; font-style: italic;">
+          💛 Chaque partage compte ! Continue de nous soutenir.
+        </p>
+        <button type="button" class="fm-btn fm-btn-primary" onclick="closeFbShareModal()" style="background:#6db4f5;">Fermer</button>
+      </div>
+    </div>
+
   </div>
 </div>
 
