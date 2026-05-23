@@ -559,6 +559,461 @@
   .signup-success-text strong { color: var(--gold); }
 
   /* ============ FIN MODAL INSCRIPTION ============ */
+
+  /* ============ MODAL CONNEXION + PROFIL CONNECTÉ ============ */
+
+  /* Bouton "Se connecter" outline (à côté de Créer un compte) */
+  .moi-hero-cta-alt {
+    background: transparent !important;
+    border: 1px solid var(--gold) !important;
+    border-left: 1px solid var(--gold) !important;
+    color: var(--gold) !important;
+    animation: none !important;
+  }
+  .moi-hero-cta-alt::before { color: var(--gold) !important; }
+  .moi-hero-cta-alt:hover {
+    background: var(--gold) !important;
+    color: var(--noir) !important;
+  }
+  .moi-hero-cta-alt:hover::before { color: var(--noir) !important; }
+
+  /* Modal Connexion */
+  .login-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(10px);
+    display: none;
+    align-items: center; justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+  }
+  .login-overlay.open { display: flex; }
+  .login-card {
+    background: linear-gradient(180deg, #141414, #0a0a0a);
+    border: 1px solid var(--gold);
+    border-radius: 22px;
+    max-width: 460px;
+    width: 100%;
+    padding: 36px 30px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(212,175,55,0.15);
+    position: relative;
+    text-align: center;
+  }
+  .login-close {
+    position: absolute; top: 14px; right: 14px;
+    background: rgba(0,0,0,0.5); border: 1px solid rgba(212,175,55,0.3);
+    color: var(--gold); width: 34px; height: 34px;
+    border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    font-family: inherit;
+  }
+  .login-eyebrow {
+    color: var(--gold); font-size: 11px;
+    letter-spacing: 4px; font-weight: 700;
+    margin-bottom: 8px; text-transform: uppercase;
+  }
+  .login-title {
+    font-family: var(--serif); color: var(--cream);
+    font-size: 26px; font-weight: 500;
+    letter-spacing: 1px; margin-bottom: 6px;
+  }
+  .login-subtitle {
+    color: var(--gold-pale); font-size: 12px;
+    margin-bottom: 22px;
+    text-transform: uppercase; letter-spacing: 2px;
+  }
+  .login-input {
+    width: 100%; background: rgba(0,0,0,0.6);
+    border: 1px solid rgba(212,175,55,0.3);
+    color: var(--cream); padding: 14px 18px;
+    border-radius: 12px; font-family: inherit;
+    font-size: 14px; outline: none;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .login-input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(212,175,55,0.12);
+  }
+  .login-err {
+    color: #ff6b6b; font-size: 12px;
+    padding: 10px 14px; background: rgba(255,107,107,0.08);
+    border: 1px solid rgba(255,107,107,0.3);
+    border-radius: 8px; margin-bottom: 12px;
+    display: none;
+  }
+  .login-err.show { display: block; }
+  .login-submit {
+    width: 100%;
+    background: linear-gradient(135deg, var(--gold), #b8941d);
+    color: var(--noir); border: none;
+    padding: 14px 20px; border-radius: 999px;
+    font-family: inherit; font-size: 13px;
+    font-weight: 800; letter-spacing: 2px;
+    text-transform: uppercase; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 12px 28px rgba(212,175,55,0.3);
+  }
+  .login-submit:hover { transform: translateY(-2px); }
+  .login-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+  .login-signup-link {
+    margin-top: 16px;
+    color: var(--smoke); font-size: 12px;
+  }
+  .login-signup-link a {
+    color: var(--gold); text-decoration: none;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .login-signup-link a:hover { text-decoration: underline; }
+
+  /* ============ ESPACE CONNECTÉ ============ */
+  .connected-zone { display: none; }
+  .connected-zone.active { display: block; }
+
+  /* Header profil */
+  .profile-header {
+    text-align: center;
+    padding: 30px 20px 24px;
+  }
+  .profile-avatar-wrap {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 14px;
+  }
+  .profile-avatar {
+    width: 92px; height: 92px;
+    border-radius: 50%;
+    border: 3px solid var(--gold);
+    background: linear-gradient(135deg, var(--charcoal), #1a1a1a);
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.5), 0 0 30px rgba(212,175,55,0.25);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold-pale); font-size: 32px;
+    font-family: var(--serif); font-weight: 600;
+    overflow: hidden;
+  }
+  .profile-avatar-edit {
+    position: absolute; bottom: 2px; right: 2px;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--gold); color: var(--noir);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    cursor: pointer;
+    border: 2px solid var(--noir);
+  }
+  .profile-name {
+    font-family: var(--serif); color: var(--cream);
+    font-size: 24px; font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .profile-level {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--gold); font-size: 11px;
+    letter-spacing: 3px; font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  /* Bandeau billetterie exclusive (OR/PLATINE) */
+  .exclusive-banner {
+    max-width: 620px; margin: 0 auto 22px;
+    background: linear-gradient(135deg, rgba(212,175,55,0.18), rgba(139,0,0,0.08));
+    border: 1px solid var(--gold);
+    border-radius: 14px;
+    padding: 14px 18px;
+    display: flex; align-items: center; gap: 14px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .exclusive-banner:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(212,175,55,0.18); }
+  .exclusive-banner-icon { font-size: 22px; }
+  .exclusive-banner-content { flex: 1; }
+  .exclusive-banner-title {
+    color: var(--gold); font-size: 11px;
+    letter-spacing: 2px; font-weight: 800;
+    text-transform: uppercase; margin-bottom: 3px;
+  }
+  .exclusive-banner-text {
+    color: var(--cream); font-size: 12px;
+    line-height: 1.5;
+  }
+  .exclusive-banner-text strong { color: var(--gold-pale); }
+  .exclusive-banner-note {
+    color: var(--smoke); font-size: 10px; font-style: italic;
+    margin-top: 3px;
+  }
+  .exclusive-banner-arrow {
+    color: var(--gold); font-size: 18px;
+  }
+
+  /* MON STATUT — 4 niveaux + progression */
+  .my-status {
+    max-width: 620px; margin: 0 auto 22px;
+    background: rgba(20,20,20,0.7);
+    border: 1px solid rgba(212,175,55,0.18);
+    border-radius: 16px;
+    padding: 20px 18px;
+  }
+  .my-status-header {
+    color: var(--gold); font-size: 10px;
+    letter-spacing: 3px; font-weight: 800;
+    margin-bottom: 14px; text-transform: uppercase;
+  }
+  .levels-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .level-cell {
+    position: relative;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(212,175,55,0.18);
+    border-radius: 10px;
+    padding: 12px 6px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  .level-cell.current {
+    background: rgba(212,175,55,0.12);
+    border-color: var(--gold);
+    box-shadow: 0 0 24px rgba(212,175,55,0.2);
+  }
+  .level-cell-here {
+    position: absolute;
+    top: -10px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold); color: var(--noir);
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 9px; letter-spacing: 1.5px;
+    font-weight: 800;
+    box-shadow: 0 4px 10px rgba(212,175,55,0.4);
+  }
+  .level-cell-icon { font-size: 22px; margin-bottom: 4px; }
+  .level-cell-label {
+    color: var(--cream); font-size: 10px;
+    letter-spacing: 1.5px; font-weight: 800;
+    text-transform: uppercase;
+  }
+  .level-cell.current .level-cell-label { color: var(--gold); }
+
+  .progress-info {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 8px;
+    font-size: 13px;
+  }
+  .progress-info-pts { color: var(--gold); font-weight: 800; }
+  .progress-info-next { color: var(--cream); font-size: 11px; }
+  .progress-info-next strong { color: var(--gold); }
+  .progress-bar-bg {
+    background: rgba(255,255,255,0.06);
+    border-radius: 999px;
+    overflow: hidden;
+    height: 8px;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-pale), var(--gold));
+    border-radius: 999px;
+    transition: width 0.6s ease-out;
+    box-shadow: 0 0 12px rgba(212,175,55,0.5);
+  }
+  .levels-info-btn {
+    width: 100%; margin-top: 14px;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(212,175,55,0.3);
+    color: var(--cream);
+    padding: 10px;
+    border-radius: 10px;
+    font-family: inherit; font-size: 11px;
+    letter-spacing: 1.5px; font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .levels-info-btn:hover {
+    background: rgba(212,175,55,0.1);
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
+  /* Accordéons (notifications, avantages, etc.) */
+  .accordion-block {
+    max-width: 620px; margin: 0 auto 14px;
+  }
+  .accordion-eyebrow {
+    color: var(--gold); font-size: 10px;
+    letter-spacing: 3px; font-weight: 800;
+    margin-bottom: 8px; text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .accordion-badge {
+    background: var(--cramoisi); color: #fff;
+    padding: 2px 8px; border-radius: 999px;
+    font-size: 9px; letter-spacing: 0.5px;
+  }
+  .accordion {
+    background: rgba(20,20,20,0.7);
+    border: 1px solid rgba(212,175,55,0.18);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .accordion:hover { border-color: rgba(212,175,55,0.4); }
+  .accordion-head {
+    display: flex; align-items: center;
+    padding: 14px 18px;
+    cursor: pointer;
+    gap: 12px;
+  }
+  .accordion-head-icon { font-size: 20px; }
+  .accordion-head-content { flex: 1; }
+  .accordion-head-title {
+    color: var(--cream); font-size: 14px;
+    font-weight: 700;
+  }
+  .accordion-head-sub {
+    color: var(--smoke); font-size: 11px;
+    margin-top: 2px;
+  }
+  .accordion-head-chev {
+    color: var(--gold); font-size: 14px;
+    transition: transform 0.3s;
+  }
+  .accordion.open .accordion-head-chev { transform: rotate(180deg); }
+  .accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    padding: 0 18px;
+  }
+  .accordion.open .accordion-body {
+    max-height: 600px;
+    padding: 0 18px 16px;
+  }
+
+  /* Listes dans accordéons */
+  .notif-item, .benefit-item {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(212,175,55,0.1);
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .notif-item:last-child, .benefit-item:last-child { border-bottom: none; }
+  .notif-item-icon, .benefit-item-icon {
+    color: var(--gold); font-size: 14px;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .benefit-item-icon.locked { color: var(--smoke); }
+  .notif-item-text, .benefit-item-text {
+    color: var(--cream); font-size: 12px;
+    line-height: 1.5;
+  }
+  .benefit-item-text.locked { color: var(--smoke); }
+  .notif-item-time { color: var(--smoke); font-size: 10px; margin-top: 3px; }
+
+  /* Concours */
+  .my-contest-card {
+    background: rgba(20,20,20,0.7);
+    border: 1px solid rgba(212,175,55,0.2);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .my-contest-icon {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; flex-shrink: 0;
+  }
+  .my-contest-content { flex: 1; }
+  .my-contest-title {
+    color: var(--gold); font-size: 13px;
+    font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .my-contest-info {
+    color: var(--smoke); font-size: 11px;
+    margin-top: 3px;
+  }
+  .my-contest-status {
+    color: #10b981; font-size: 10px;
+    letter-spacing: 1.5px; font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  /* Mes dates favorites */
+  .favs-empty {
+    text-align: center;
+    padding: 24px 20px;
+    background: rgba(20,20,20,0.5);
+    border: 1px dashed rgba(212,175,55,0.2);
+    border-radius: 14px;
+  }
+  .favs-empty-icon { font-size: 32px; margin-bottom: 8px; }
+  .favs-empty-text {
+    color: var(--smoke); font-size: 13px;
+    font-style: italic;
+  }
+
+  /* Section L'APP — liens (notifications, messages, partager, etc) */
+  .app-links-block {
+    max-width: 620px; margin: 28px auto 14px;
+  }
+  .app-link-row {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 18px;
+    background: rgba(20,20,20,0.5);
+    border: 1px solid rgba(212,175,55,0.1);
+    border-radius: 12px;
+    color: var(--cream);
+    cursor: pointer; text-decoration: none;
+    margin-bottom: 8px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .app-link-row:hover {
+    background: rgba(212,175,55,0.06);
+    border-color: rgba(212,175,55,0.3);
+  }
+  .app-link-icon {
+    width: 32px; height: 32px;
+    color: var(--gold); font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .app-link-label { flex: 1; font-size: 13px; }
+  .app-link-arrow { color: var(--gold); font-size: 14px; }
+
+  /* Bouton se déconnecter */
+  .logout-btn {
+    display: block;
+    max-width: 620px;
+    margin: 24px auto 30px;
+    width: 100%;
+    padding: 14px;
+    background: transparent;
+    border: 1px solid rgba(255, 80, 80, 0.4);
+    border-radius: 12px;
+    color: #ff5050;
+    font-family: inherit;
+    font-size: 13px; letter-spacing: 2px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-align: center;
+    transition: background 0.2s, color 0.2s;
+  }
+  .logout-btn:hover {
+    background: rgba(255, 80, 80, 0.1);
+    color: #ff7070;
+    border-color: #ff5050;
+  }
+  /* ============ FIN PROFIL CONNECTÉ ============ */
 </style>
 </head>
 <body>
@@ -596,13 +1051,19 @@
 
   <div class="moi-content">
 
+    <!-- ============ ZONE NON-CONNECTÉE ============ -->
+    <div id="visitorZone">
+
     <!-- HERO -->
-    <div class="moi-hero">
+    <div class="moi-hero" id="moiHero">
       <div class="moi-hero-icon">?</div>
       <h1>Bienvenue</h1>
       <div class="moi-hero-sub">CONNECTE-TOI POUR DÉBLOQUER</div>
-      <button type="button" class="moi-hero-cta" onclick="openSignupModal()">Créer un compte gratuit</button>
-      <div class="moi-hero-or">ou <a href="https://app.theworldofqueen.com" target="_blank">se connecter dans l'app</a></div>
+      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-bottom: 12px;">
+        <button type="button" class="moi-hero-cta" onclick="openSignupModal()">Créer un compte gratuit</button>
+        <button type="button" class="moi-hero-cta moi-hero-cta-alt" onclick="openLoginModal()">Se connecter</button>
+      </div>
+      <div class="moi-hero-or">Inscription en 30 secondes · Aucun spam</div>
     </div>
 
     <!-- PROGRAMME DE FIDÉLITÉ -->
@@ -755,11 +1216,14 @@
       </a>
     </div>
 
+    </div>
+    <!-- ============ FIN ZONE NON-CONNECTÉE ============ -->
+
   </div>
 </section>
 
 <!-- ABONNEZ-VOUS -->
-<section class="newsletter-block">
+<section class="newsletter-block" id="newsletterSection">
   <div class="newsletter-wrap">
     <div class="newsletter-eyebrow">RESTE INFORMÉ</div>
     <h3 class="newsletter-title">Abonnez-vous à la newsletter</h3>
@@ -1214,6 +1678,541 @@
       closeSignupModal();
     }
   });
+</script>
+
+<!-- ============ MODAL CONNEXION ============ -->
+<div class="login-overlay" id="loginOverlay" onclick="if(event.target===this)closeLoginModal()">
+  <div class="login-card">
+    <button class="login-close" onclick="closeLoginModal()" aria-label="Fermer">✕</button>
+    <div class="login-eyebrow">CONNEXION</div>
+    <h2 class="login-title">Bon retour !</h2>
+    <div class="login-subtitle">TAPE TON EMAIL POUR TE RECONNECTER</div>
+
+    <input class="login-input" type="email" id="loginEmail" placeholder="ton.email@exemple.com" required />
+    <div class="login-err" id="loginErr"></div>
+
+    <button type="button" class="login-submit" id="loginBtn" onclick="submitLogin()">
+      <span id="loginBtnText">Se connecter →</span>
+      <span id="loginBtnLoading" style="display:none;">⏳ Vérification...</span>
+    </button>
+
+    <div class="login-signup-link">
+      Pas encore de compte ? <a onclick="closeLoginModal(); setTimeout(openSignupModal, 200);">S'inscrire</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ZONE CONNECTÉE — Affichage du profil ============ -->
+<section class="connected-zone" id="connectedZone">
+  <!-- HEADER PROFIL -->
+  <div class="profile-header">
+    <div class="profile-avatar-wrap">
+      <div class="profile-avatar" id="profileAvatar">👤</div>
+      <div class="profile-avatar-edit" title="Changer ta photo (bientôt disponible)">📷</div>
+    </div>
+    <div class="profile-name" id="profileName">Bonjour !</div>
+    <div class="profile-level" id="profileLevel">FAN TWOQ 👤</div>
+  </div>
+
+  <!-- BANDEAU BILLETTERIE EXCLUSIVE (OR/PLATINE seulement) -->
+  <div class="exclusive-banner" id="exclusiveBanner" style="display:none;" onclick="goToDatesPage()">
+    <div class="exclusive-banner-icon">🎟️</div>
+    <div class="exclusive-banner-content">
+      <div class="exclusive-banner-title">Billetterie exclusive</div>
+      <div class="exclusive-banner-text">Réservée membres <strong>🥇 OR · Tarifs réduits -10%</strong></div>
+      <div class="exclusive-banner-note">* Disponible sur ~90% des dates de tournée</div>
+    </div>
+    <div class="exclusive-banner-arrow">→</div>
+  </div>
+
+  <!-- MON STATUT -->
+  <div class="my-status">
+    <div class="my-status-header">Mon statut</div>
+    <div class="levels-bar" id="levelsBar">
+      <!-- Généré en JS -->
+    </div>
+    <div class="progress-info">
+      <span class="progress-info-pts" id="progressPts">0/100 pts</span>
+      <span class="progress-info-next" id="progressNext"></span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+    </div>
+    <button type="button" class="levels-info-btn" onclick="toggleLevels()">ⓘ En savoir plus sur les niveaux</button>
+  </div>
+
+  <!-- MES NOTIFICATIONS -->
+  <div class="accordion-block">
+    <div class="accordion-eyebrow">🔔 Mes notifications</div>
+    <div class="accordion" id="accNotifs" onclick="toggleAccordion('accNotifs')">
+      <div class="accordion-head">
+        <div class="accordion-head-icon">📬</div>
+        <div class="accordion-head-content">
+          <div class="accordion-head-title"><span id="notifsCount">0</span> notification(s)</div>
+          <div class="accordion-head-sub">Clique pour déplier la liste</div>
+        </div>
+        <div class="accordion-head-chev">▼</div>
+      </div>
+      <div class="accordion-body" id="notifsList">
+        <div style="text-align:center; padding:20px 0; color:var(--smoke); font-size:12px; font-style:italic;">
+          Aucune notification pour le moment.<br>
+          📲 Active les notifications dans l'app TWOQ pour recevoir les alertes.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AVANTAGES DE TON COMPTE -->
+  <div class="accordion-block">
+    <div class="accordion-eyebrow">✨ Avantages de ton compte</div>
+    <div class="accordion" id="accBenefits" onclick="toggleAccordion('accBenefits')">
+      <div class="accordion-head">
+        <div class="accordion-head-icon">✨</div>
+        <div class="accordion-head-content">
+          <div class="accordion-head-title"><span id="benefitsCount">0 / 16</span> avantages débloqués</div>
+          <div class="accordion-head-sub" id="benefitsSub">Niveau actuel</div>
+        </div>
+        <div class="accordion-head-chev">▼</div>
+      </div>
+      <div class="accordion-body" id="benefitsList">
+        <!-- Généré en JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- MES CONCOURS -->
+  <div class="accordion-block">
+    <div class="accordion-eyebrow">🏆 Mes concours <span class="accordion-badge" id="contestsCount">0</span></div>
+    <div id="myContestsList">
+      <div style="text-align:center; padding:24px; color:var(--smoke); font-size:13px; font-style:italic; background:rgba(20,20,20,0.5); border:1px dashed rgba(212,175,55,0.2); border-radius:14px;">
+        🏆 Tu n'as participé à aucun concours pour l'instant.<br>
+        <a href="fanzone.html" style="color:var(--gold); text-decoration:none; font-weight:700;">Explore la Fan Zone →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MES DATES FAVORITES -->
+  <div class="accordion-block">
+    <div class="accordion-eyebrow">❤️ Mes dates favorites</div>
+    <div id="myFavoritesList">
+      <div class="favs-empty">
+        <div class="favs-empty-icon">💔</div>
+        <div class="favs-empty-text">Aucune date favorite pour l'instant</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOUTIQUE -->
+  <div class="accordion-block" style="margin-top: 28px;">
+    <div class="accordion-eyebrow">🛍️ Boutique</div>
+    <a href="boutique.html" class="app-link-row" style="display:flex;">
+      <div class="app-link-icon">🛒</div>
+      <div class="app-link-label">
+        <div style="color:var(--gold); font-weight:700; margin-bottom:2px;">MERCH OFFICIEL</div>
+        <div style="color:var(--smoke); font-size:11px;">T-shirts, vinyles, posters &amp; souvenirs</div>
+      </div>
+      <div class="app-link-arrow">→</div>
+    </a>
+  </div>
+
+  <!-- SECTION L'APP -->
+  <div class="app-links-block">
+    <div class="accordion-eyebrow">L'app</div>
+    <div class="app-link-row" onclick="alert('🔔 Notifications : disponibles dans l\\'app TWOQ mobile.\\n\\nTélécharge l\\'app sur app.theworldofqueen.com'); ">
+      <div class="app-link-icon">🔔</div>
+      <div class="app-link-label">Notifications</div>
+      <div class="app-link-arrow">→</div>
+    </div>
+    <a href="contact-prod.html" class="app-link-row">
+      <div class="app-link-icon">💬</div>
+      <div class="app-link-label">Mes messages</div>
+      <div class="app-link-arrow">→</div>
+    </a>
+    <div class="app-link-row" onclick="shareWebsite()">
+      <div class="app-link-icon">🔗</div>
+      <div class="app-link-label">Partager le site</div>
+      <div class="app-link-arrow">→</div>
+    </div>
+    <a href="contact-prod.html" class="app-link-row">
+      <div class="app-link-icon">✉️</div>
+      <div class="app-link-label">Contact</div>
+      <div class="app-link-arrow">→</div>
+    </a>
+    <a href="https://app.theworldofqueen.com" target="_blank" class="app-link-row">
+      <div class="app-link-icon">📱</div>
+      <div class="app-link-label">App mobile officielle</div>
+      <div class="app-link-arrow">↗</div>
+    </a>
+    <div class="app-link-row" onclick="alert('🤝 Nos partenaires :\\n\\n• MAG Events\\n• Coulisses Events\\n• Oh My Prod!');">
+      <div class="app-link-icon">👥</div>
+      <div class="app-link-label">Nos partenaires</div>
+      <div class="app-link-arrow">→</div>
+    </div>
+    <div class="app-link-row" onclick="alert('THE WORLD OF QUEEN — L\\'Éternelle Légende\\n\\nLe plus grand tribute show Queen en France.\\n\\nProduit par Oh My Prod!\\n© 2026');">
+      <div class="app-link-icon">ⓘ</div>
+      <div class="app-link-label">À propos</div>
+      <div class="app-link-arrow">→</div>
+    </div>
+  </div>
+
+  <button type="button" class="logout-btn" onclick="logout()">→] Se déconnecter</button>
+</section>
+
+<script>
+  // ============ SYSTÈME CONNEXION + PROFIL CONNECTÉ ============
+  const SUPA_URL_L = 'https://nhxqcavianozskxgfcbt.supabase.co';
+  const SUPA_KEY_L = 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3';
+  const STORAGE_KEY = 'twoq_fan';
+  let _currentFan = null;
+
+  // ===== NIVEAUX (identique à l'app TWOQ) =====
+  const FAN_LEVELS = [
+    {
+      key: 'fan',
+      label: 'FAN',
+      color: '#888888',
+      icon: '👤',
+      desc: 'Inscription email',
+      condition: (fan) => !fan?.profil_complete,
+      benefits: ['Mes dates favorites', 'Notifications avant chaque show', 'Accès Fan Zone']
+    },
+    {
+      key: 'vip',
+      label: 'VIP',
+      color: '#D4AF37',
+      icon: '⭐',
+      desc: 'Profil 100% complet',
+      condition: (fan) => fan?.profil_complete && (fan?.fan_score || 0) < 70,
+      benefits: [
+        'Tous les avantages FAN',
+        'Jeux concours exclusifs',
+        'Message d\'anniversaire 🎂',
+        '+1 chance bonus dans les concours'
+      ]
+    },
+    {
+      key: 'or',
+      label: 'OR',
+      color: '#FFD700',
+      icon: '🥇',
+      desc: 'Score 70-89',
+      condition: (fan) => fan?.profil_complete && (fan?.fan_score || 0) >= 70 && (fan?.fan_score || 0) < 90,
+      benefits: [
+        'Tous les avantages VIP',
+        'Tarifs réduits <strong>-10%</strong> sur ~90% des dates',
+        'Pré-réservation 48h avant',
+        '+2 chances bonus dans les concours',
+        '1 place / an à gagner',
+        '🎟️ Billetterie exclusive OR/PLATINE'
+      ]
+    },
+    {
+      key: 'platine',
+      label: 'PLATINE',
+      color: '#E5E4E2',
+      icon: '💎',
+      desc: 'Score 90+ (Légende)',
+      condition: (fan) => fan?.profil_complete && (fan?.fan_score || 0) >= 90,
+      benefits: [
+        'Tous les avantages OR',
+        'Tarifs réduits <strong>-10%</strong> sur ~90% des dates',
+        '2 places à gagner par an',
+        '1 pass\'ta journée par an (pour 2 personnes)',
+        'Rencontre artistes garantie',
+        'Mention "Légende TWOQ"'
+      ]
+    }
+  ];
+
+  function getFanLevel(fan) {
+    if (!fan) return FAN_LEVELS[0];
+    for (const lvl of FAN_LEVELS) {
+      if (lvl.condition(fan)) return lvl;
+    }
+    return FAN_LEVELS[0];
+  }
+
+  // ===== Modal Connexion =====
+  function openLoginModal() {
+    document.getElementById('loginOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('loginEmail').focus(), 100);
+  }
+  function closeLoginModal() {
+    document.getElementById('loginOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+    document.getElementById('loginErr').classList.remove('show');
+  }
+
+  async function submitLogin() {
+    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+    const err = document.getElementById('loginErr');
+    err.classList.remove('show'); err.textContent = '';
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      err.textContent = '⚠️ Email invalide.';
+      err.classList.add('show'); return;
+    }
+
+    const btn = document.getElementById('loginBtn');
+    const btnText = document.getElementById('loginBtnText');
+    const btnLoading = document.getElementById('loginBtnLoading');
+    btn.disabled = true; btnText.style.display = 'none'; btnLoading.style.display = 'inline-block';
+
+    try {
+      const res = await fetch(SUPA_URL_L + '/rest/v1/fans?email=eq.' + encodeURIComponent(email) + '&select=*', {
+        headers: {
+          'apikey': SUPA_KEY_L,
+          'Authorization': 'Bearer ' + SUPA_KEY_L
+        }
+      });
+      if (!res.ok) {
+        err.textContent = '⚠️ Erreur réseau, réessaie.';
+        err.classList.add('show');
+      } else {
+        const data = await res.json();
+        if (!data || data.length === 0) {
+          err.textContent = '⚠️ Aucun compte trouvé pour cet email. Crée ton compte d\'abord !';
+          err.classList.add('show');
+        } else {
+          // Succès !
+          _currentFan = data[0];
+          localStorage.setItem(STORAGE_KEY, JSON.stringify({ id: _currentFan.id, email: _currentFan.email }));
+          closeLoginModal();
+          renderConnectedZone();
+        }
+      }
+    } catch (e) {
+      console.warn('[Login]', e);
+      err.textContent = '⚠️ Problème de connexion.';
+      err.classList.add('show');
+    }
+    btn.disabled = false; btnText.style.display = 'inline-block'; btnLoading.style.display = 'none';
+  }
+
+  // ===== Vérification connexion au chargement =====
+  async function checkLoginStatus() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return; // Pas connecté → mode visiteur
+    try {
+      const { email } = JSON.parse(saved);
+      if (!email) return;
+      // Recharge les données fraîches depuis Supabase
+      const res = await fetch(SUPA_URL_L + '/rest/v1/fans?email=eq.' + encodeURIComponent(email) + '&select=*', {
+        headers: {
+          'apikey': SUPA_KEY_L,
+          'Authorization': 'Bearer ' + SUPA_KEY_L
+        }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.length > 0) {
+          _currentFan = data[0];
+          renderConnectedZone();
+        } else {
+          // Compte supprimé → on déconnecte
+          localStorage.removeItem(STORAGE_KEY);
+        }
+      }
+    } catch (e) {
+      console.warn('[CheckLogin]', e);
+    }
+  }
+
+  // ===== Affichage de la zone connectée =====
+  function renderConnectedZone() {
+    if (!_currentFan) return;
+
+    // Masquer la zone visiteur + la newsletter
+    const visitor = document.getElementById('visitorZone');
+    if (visitor) visitor.style.display = 'none';
+    const news = document.getElementById('newsletterSection');
+    if (news) news.style.display = 'none';
+
+    // Afficher la zone connectée
+    document.getElementById('connectedZone').classList.add('active');
+
+    const fan = _currentFan;
+    const level = getFanLevel(fan);
+
+    // Header
+    const prenom = fan.prenom || 'Fan';
+    document.getElementById('profileName').textContent = 'Bonjour ' + prenom + ' !';
+    document.getElementById('profileLevel').innerHTML = 'FAN TWOQ ' + level.label + ' ' + level.icon;
+
+    // Avatar : photo réelle si présente, sinon initiale
+    const avatar = document.getElementById('profileAvatar');
+    if (fan.avatar_url) {
+      avatar.style.backgroundImage = 'url(' + fan.avatar_url + ')';
+      avatar.textContent = '';
+    } else {
+      avatar.textContent = (prenom[0] || '?').toUpperCase();
+    }
+
+    // Bandeau billetterie (OR ou PLATINE)
+    if (level.key === 'or' || level.key === 'platine') {
+      document.getElementById('exclusiveBanner').style.display = 'flex';
+    }
+
+    // Statut + barre 4 niveaux
+    renderLevelsBar(level);
+    renderProgress(fan, level);
+    renderBenefitsAccordion(level);
+    loadMyContests(fan.email);
+    loadMyFavorites(fan);
+  }
+
+  function renderLevelsBar(currentLevel) {
+    const bar = document.getElementById('levelsBar');
+    bar.innerHTML = FAN_LEVELS.map(lvl => {
+      const isCurrent = lvl.key === currentLevel.key;
+      return `
+        <div class="level-cell ${isCurrent ? 'current' : ''}">
+          ${isCurrent ? '<div class="level-cell-here">ICI</div>' : ''}
+          <div class="level-cell-icon">${lvl.icon}</div>
+          <div class="level-cell-label">${lvl.label}</div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function renderProgress(fan, currentLevel) {
+    const score = fan.fan_score || 0;
+    document.getElementById('progressPts').textContent = score + '/100 pts';
+
+    // Trouve le niveau suivant
+    const order = ['fan', 'vip', 'or', 'platine'];
+    const currentIdx = order.indexOf(currentLevel.key);
+    let nextLabel = null, nextThreshold = 100, currentThreshold = 0;
+
+    if (currentLevel.key === 'fan') {
+      // FAN → VIP : compléter le profil
+      document.getElementById('progressNext').innerHTML = '🎁 <strong>Complète ton profil</strong> pour devenir VIP';
+      // Barre = % de complétude profil approximative
+      let completeness = 50;
+      if (fan.profil_complete) completeness = 100;
+      else {
+        if (fan.date_naissance) completeness += 17;
+        if (fan.genre) completeness += 17;
+        if (fan.concerts_vus) completeness += 16;
+      }
+      document.getElementById('progressFill').style.width = Math.min(100, completeness) + '%';
+      return;
+    }
+    if (currentLevel.key === 'vip') {
+      nextLabel = 'OR'; nextThreshold = 70; currentThreshold = 0;
+    } else if (currentLevel.key === 'or') {
+      nextLabel = 'PLATINE'; nextThreshold = 90; currentThreshold = 70;
+    } else {
+      // PLATINE
+      document.getElementById('progressNext').innerHTML = '👑 <strong>Tu es au sommet !</strong>';
+      document.getElementById('progressFill').style.width = '100%';
+      return;
+    }
+
+    const ptsRemaining = nextThreshold - score;
+    const ptsRange = nextThreshold - currentThreshold;
+    const ptsProgress = score - currentThreshold;
+    const pctProgress = Math.max(2, Math.min(100, (ptsProgress / ptsRange) * 100));
+
+    document.getElementById('progressFill').style.width = pctProgress + '%';
+    document.getElementById('progressNext').innerHTML = '🎯 Plus que <strong>' + ptsRemaining + ' pts</strong> pour devenir ' + nextLabel;
+  }
+
+  function renderBenefitsAccordion(currentLevel) {
+    // Compte les avantages débloqués vs totaux
+    let totalBenefits = 0;
+    let unlockedBenefits = 0;
+    let html = '';
+
+    FAN_LEVELS.forEach(lvl => {
+      lvl.benefits.forEach(b => {
+        totalBenefits++;
+        const isUnlocked = FAN_LEVELS.findIndex(l => l.key === lvl.key) <= FAN_LEVELS.findIndex(l => l.key === currentLevel.key);
+        if (isUnlocked) unlockedBenefits++;
+        html += `
+          <div class="benefit-item">
+            <span class="benefit-item-icon ${isUnlocked ? '' : 'locked'}">${isUnlocked ? '✓' : '🔒'}</span>
+            <div class="benefit-item-text ${isUnlocked ? '' : 'locked'}">
+              <strong style="color:${isUnlocked ? 'var(--gold)' : 'var(--smoke)'};">[${lvl.label}]</strong> ${b}
+            </div>
+          </div>
+        `;
+      });
+    });
+
+    document.getElementById('benefitsCount').textContent = unlockedBenefits + ' / ' + totalBenefits;
+    document.getElementById('benefitsSub').textContent = 'Niveau ' + currentLevel.label + ' ' + currentLevel.icon + ' · ' + (totalBenefits - unlockedBenefits) + ' encore à débloquer';
+    document.getElementById('benefitsList').innerHTML = html;
+  }
+
+  async function loadMyContests(email) {
+    if (!email) return;
+    try {
+      const res = await fetch(SUPA_URL_L + '/rest/v1/concours_participations?email=eq.' + encodeURIComponent(email) + '&select=*,concours_jeux(nom)&order=created_at.desc&limit=5', {
+        headers: { 'apikey': SUPA_KEY_L, 'Authorization': 'Bearer ' + SUPA_KEY_L }
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      const count = (data || []).length;
+      document.getElementById('contestsCount').textContent = count;
+      if (count === 0) return;
+      const list = document.getElementById('myContestsList');
+      list.innerHTML = data.map(p => {
+        const name = (p.concours_jeux && p.concours_jeux.nom) ? p.concours_jeux.nom : 'Concours';
+        const score = p.score != null ? p.score + '/10' : '';
+        return `
+          <div class="my-contest-card">
+            <div class="my-contest-icon">🏆</div>
+            <div class="my-contest-content">
+              <div class="my-contest-title">${name}</div>
+              <div class="my-contest-info">${score}${score ? ' · ' : ''}Participation enregistrée</div>
+            </div>
+            <div class="my-contest-status">En cours</div>
+          </div>
+        `;
+      }).join('');
+    } catch (e) { console.warn('[Contests]', e); }
+  }
+
+  async function loadMyFavorites(fan) {
+    const favList = document.getElementById('myFavoritesList');
+    const favs = fan.favoris || [];
+    if (!Array.isArray(favs) || favs.length === 0) return; // Garde l'état vide
+    // Si favoris, on les affiche
+    favList.innerHTML = '<div style="text-align:center; padding:20px; color:var(--gold);">❤️ ' + favs.length + ' date(s) favorite(s). Voir dans l\'app TWOQ pour le détail.</div>';
+  }
+
+  function toggleAccordion(id) {
+    document.getElementById(id).classList.toggle('open');
+  }
+
+  function goToDatesPage() {
+    window.location.href = 'dates.html';
+  }
+
+  function shareWebsite() {
+    if (navigator.share) {
+      navigator.share({
+        title: 'THE WORLD OF QUEEN',
+        text: 'Découvre le plus grand tribute Queen en France 👑',
+        url: 'https://www.theworldofqueen.com'
+      });
+    } else {
+      navigator.clipboard.writeText('https://www.theworldofqueen.com');
+      alert('🔗 Lien du site copié dans le presse-papier !');
+    }
+  }
+
+  function logout() {
+    if (confirm('Tu es sûr·e de vouloir te déconnecter ?')) {
+      localStorage.removeItem(STORAGE_KEY);
+      window.location.reload();
+    }
+  }
+
+  // ===== INIT au chargement =====
+  checkLoginStatus();
 </script>
 
 </body>
