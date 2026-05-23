@@ -477,12 +477,12 @@
         <div class="request-desc">Marques, sponsors, opérations co-brandées, dotations concours.</div>
         <div class="request-meta">→ Partenariat</div>
       </div>
-      <div class="request-card" onclick="selectRequestType('technique')">
+      <a href="espace-pro.html" class="request-card" style="text-decoration:none; color:inherit;">
         <div class="request-icon prod">🎚️</div>
         <div class="request-title">Technique &amp; Rider</div>
         <div class="request-desc">Fiches techniques, riders, plans de scène, contacts régie son &amp; lumière.</div>
-        <div class="request-meta">→ Technique</div>
-      </div>
+        <div class="request-meta">→ Espace Pro</div>
+      </a>
     </div>
 
     <!-- FORMULAIRE -->
@@ -547,21 +547,21 @@
         <div class="info-icon">✉️</div>
         <div class="info-label">EMAIL</div>
         <div class="info-value">
-          <a href="#" class="hidden-email" data-user="regis.ohmyprod" data-domain="gmail.com" onclick="revealEmail(event, this)">📩 Cliquer pour afficher</a>
+          <a href="#" class="hidden-email" data-user="regis.ohmyprod" data-domain="gmail.com" onclick="revealEmail(event, this)">📩 Nous écrire</a>
         </div>
       </div>
       <div class="info-card">
         <div class="info-icon">🎤</div>
         <div class="info-label">BOOKING</div>
         <div class="info-value">
-          <a href="#" class="hidden-email" data-user="regis.ohmyprod" data-domain="gmail.com" data-subject="Demande de Booking TWOQ" onclick="revealEmail(event, this)">📩 Cliquer pour afficher</a>
+          <a href="#" class="hidden-email" data-user="regis.ohmyprod" data-domain="gmail.com" data-subject="Demande de Booking TWOQ" onclick="revealEmail(event, this)">📩 Nous écrire</a>
         </div>
       </div>
       <div class="info-card">
         <div class="info-icon">📰</div>
         <div class="info-label">PRESSE</div>
         <div class="info-value">
-          <a href="#" class="hidden-email" data-user="regis.ohmyprod" data-domain="gmail.com" data-subject="Demande Presse TWOQ" onclick="revealEmail(event, this)">📩 Cliquer pour afficher</a>
+          <a href="#" class="hidden-email" data-user="regis.ohmyprod" data-domain="gmail.com" data-subject="Demande Presse TWOQ" onclick="revealEmail(event, this)">📩 Nous écrire</a>
         </div>
       </div>
     </div>
@@ -628,7 +628,7 @@
   function toggleMenu() { document.getElementById('mainNav').classList.toggle('open'); }
   function closeMenu() { document.getElementById('mainNav').classList.remove('open'); }
 
-  // Anti-bot : assemble l'email dynamiquement au clic + ouvre le client mail
+  // Anti-bot : assemble l'email dynamiquement au clic + ouvre directement le client mail
   function revealEmail(event, el) {
     event.preventDefault();
     const user = el.getAttribute('data-user') || '';
@@ -636,24 +636,8 @@
     const subject = el.getAttribute('data-subject') || '';
     if (!user || !domain) return;
     const email = user + '@' + domain;
-    // Si déjà révélé : ouvrir le mail
-    if (el.dataset.revealed === '1') {
-      window.location.href = 'mailto:' + email + (subject ? '?subject=' + encodeURIComponent(subject) : '');
-      return;
-    }
-    // Sinon : afficher l'email
-    el.textContent = email;
-    el.dataset.revealed = '1';
-    el.style.fontWeight = '700';
-    el.style.color = 'var(--gold)';
-    // Petite indication
-    const note = document.createElement('div');
-    note.textContent = '↻ Re-cliquer pour ouvrir ton client mail';
-    note.style.fontSize = '10px';
-    note.style.color = 'var(--smoke)';
-    note.style.fontStyle = 'italic';
-    note.style.marginTop = '4px';
-    el.parentElement.appendChild(note);
+    // Ouvre directement le client mail du visiteur avec sujet pré-rempli
+    window.location.href = 'mailto:' + email + (subject ? '?subject=' + encodeURIComponent(subject) : '');
   }
 
   function selectRequestType(type) {
