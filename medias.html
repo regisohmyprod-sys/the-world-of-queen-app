@@ -240,19 +240,38 @@
   .video-source .src-name { color: var(--gold); font-weight: 600; }
 
   .btn-secondary {
-    display: inline-block; margin: 6px auto 0;
+    display: inline-flex; align-items: center; gap: 10px;
+    margin: 6px auto 0;
     color: var(--gold);
-    border: 1px solid var(--gold);
-    border-radius: 999px;
-    padding: 10px 24px;
-    font-size: 12px; letter-spacing: 2px; font-weight: 700;
-    background: transparent; cursor: pointer;
-    transition: background 0.2s, color 0.2s, transform 0.2s;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-left: 4px solid var(--gold);
+    border-radius: 0;
+    padding: 10px 22px;
+    font-size: 11px; letter-spacing: 3px; font-weight: 800;
+    text-transform: uppercase;
+    background: var(--noir);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
     font-family: inherit;
+    animation: royalEcarlate 1.5s ease-in-out infinite;
+  }
+  .btn-secondary::before {
+    content: '♕'; font-size: 12px; line-height: 1; color: var(--gold);
+    transition: color 0.3s;
+  }
+  @keyframes royalEcarlate {
+    0%, 100% { background: var(--noir); box-shadow: inset 0 0 0 rgba(139, 0, 0, 0); }
+    50% { background: linear-gradient(90deg, var(--noir) 0%, rgba(139, 0, 0, 0.85) 50%, var(--noir) 100%); box-shadow: inset 0 0 20px rgba(139, 0, 0, 0.5), 0 0 16px rgba(139, 0, 0, 0.3); }
   }
   .btn-secondary:hover {
-    background: var(--gold); color: var(--noir); transform: translateY(-2px);
+    background: var(--gold); color: var(--noir);
+    border-color: var(--gold);
+    transform: translateX(4px);
+    animation: none;
   }
+  .btn-secondary:hover::before { color: var(--noir); }
   .btn-wrap { text-align: center; margin: 20px 0 12px; }
 
   /* ============ GALERIE PHOTOS ============ */
@@ -465,8 +484,30 @@
   .newsletter-form input { flex: 1; min-width: 200px; background: rgba(0,0,0,0.5); border: 1px solid rgba(212,175,55,0.3); color: var(--cream); padding: 12px 18px; border-radius: 999px; font-family: inherit; font-size: 14px; outline: none; transition: border-color 0.2s; }
   .newsletter-form input:focus { border-color: var(--gold); }
   .newsletter-form input::placeholder { color: var(--smoke); }
-  .newsletter-form button { background: var(--gold); color: var(--noir); border: none; border-radius: 999px; padding: 12px 24px; font-family: inherit; font-size: 13px; letter-spacing: 1px; font-weight: 700; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
-  .newsletter-form button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212,175,55,0.3); }
+  .newsletter-form button {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--noir); color: var(--gold);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-left: 4px solid var(--gold);
+    border-radius: 0;
+    padding: 12px 22px;
+    font-family: inherit; font-size: 12px;
+    letter-spacing: 3px; font-weight: 800;
+    cursor: pointer; text-transform: uppercase;
+    position: relative;
+    transition: all 0.3s;
+    animation: royalEcarlate 1.5s ease-in-out infinite;
+  }
+  .newsletter-form button::before {
+    content: '♕'; font-size: 14px; line-height: 1; color: var(--gold);
+    transition: color 0.3s;
+  }
+  .newsletter-form button:hover {
+    background: var(--gold); color: var(--noir);
+    border-color: var(--gold); transform: translateX(4px);
+    animation: none;
+  }
+  .newsletter-form button:hover::before { color: var(--noir); }
   .newsletter-helper { color: var(--smoke); font-size: 11px; font-style: italic; }
   .newsletter-success { color: #10b981; font-size: 13px; margin-top: 12px; display: none; }
   .newsletter-success.show { display: block; }
@@ -644,7 +685,7 @@
     <div class="section-eyebrow">VIDÉOS</div>
     <h2 class="section-subtitle">À voir et revoir.</h2>
     <div class="video-list" id="videoList"></div>
-    <div class="btn-wrap"><button type="button" class="btn-secondary" id="btnMoreVideos">Voir toutes les vidéos →</button></div>
+    <div class="btn-wrap"><button type="button" class="btn-secondary" id="btnMoreVideos">Voir toutes les vidéos</button></div>
 
     <!-- SÉPARATEUR -->
     <div class="gold-divider"><span class="line"></span><span class="crown">♕</span><span class="line"></span></div>
@@ -695,7 +736,7 @@
     <p class="newsletter-text">Nouvelles dates, coulisses exclusives, concours &amp; promos — directement dans ta boîte mail.</p>
     <form class="newsletter-form" onsubmit="event.preventDefault(); subscribeNewsletter(this);">
       <input type="email" placeholder="ton.email@exemple.com" required />
-      <button type="submit">S'abonner →</button>
+      <button type="submit">S'abonner</button>
     </form>
     <div class="newsletter-helper">📧 Tu peux te désabonner à tout moment · Aucun spam, promis.</div>
     <div class="newsletter-success" id="newsletterSuccess">✅ Merci ! Tu es bien inscrit·e à la newsletter TWOQ 🎤</div>
@@ -835,7 +876,7 @@
       row.addEventListener('click', () => openVideoLightbox('video', parseInt(row.dataset.index, 10)));
     });
     btn.textContent = _videosShown < VIDEOS.length
-      ? `Voir toutes les vidéos (${VIDEOS.length - _videosShown} de plus) →`
+      ? `Voir toutes les vidéos (${VIDEOS.length - _videosShown} de plus)`
       : '← Réduire la liste';
   }
   document.getElementById('btnMoreVideos').addEventListener('click', () => {

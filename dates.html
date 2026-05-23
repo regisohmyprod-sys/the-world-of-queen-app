@@ -316,9 +316,10 @@
   .promo-banner {
     max-width: 900px;
     margin: 0 auto 26px;
-    background: linear-gradient(135deg, rgba(212,175,55,0.12), rgba(212,175,55,0.04));
-    border: 1px solid var(--gold);
-    border-radius: 12px;
+    background: var(--noir);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-left: 4px solid var(--gold);
+    border-radius: 0;
     padding: 14px 18px;
     display: grid;
     grid-template-columns: auto 1fr;
@@ -326,14 +327,40 @@
     align-items: center;
     text-align: left;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    animation: royalEcarlate 1.5s ease-in-out infinite;
   }
   .promo-banner-inline {
     margin: 30px auto 30px;
-    background: linear-gradient(135deg, rgba(212,175,55,0.18), rgba(212,175,55,0.06));
-    box-shadow: 0 8px 24px rgba(212,175,55,0.12);
   }
-  .promo-banner:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(212,175,55,0.15); }
+  .promo-banner:hover {
+    background: var(--gold) !important;
+    animation: none;
+    transform: translateX(4px);
+  }
+  .promo-banner:hover .promo-banner-title,
+  .promo-banner:hover .promo-banner-text,
+  .promo-banner:hover .promo-banner-link { color: var(--noir); }
+  .promo-banner:hover .promo-banner-icon {
+    background: var(--noir);
+    color: var(--gold);
+  }
+  .promo-banner:hover .promo-banner-title .pct {
+    background: var(--noir);
+    color: var(--gold);
+  }
+  @keyframes royalEcarlate {
+    0%, 100% {
+      background: var(--noir);
+      box-shadow: inset 0 0 0 rgba(139, 0, 0, 0);
+    }
+    50% {
+      background: linear-gradient(90deg, var(--noir) 0%, rgba(139, 0, 0, 0.85) 50%, var(--noir) 100%);
+      box-shadow: inset 0 0 20px rgba(139, 0, 0, 0.5), 0 0 16px rgba(139, 0, 0, 0.3);
+    }
+  }
   .promo-banner-icon {
     background: var(--gold);
     color: var(--noir);
@@ -343,15 +370,21 @@
     font-size: 18px;
     font-weight: 800;
     flex-shrink: 0;
+    transition: all 0.3s;
+    position: relative;
+    z-index: 2;
   }
   .promo-banner-content {
     display: flex; flex-direction: column; gap: 2px;
+    position: relative;
+    z-index: 2;
   }
   .promo-banner-title {
     color: var(--gold);
     font-size: 13px;
     font-weight: 700;
     letter-spacing: 1px;
+    transition: color 0.3s;
   }
   .promo-banner-title .pct {
     background: var(--gold);
@@ -361,17 +394,20 @@
     margin-left: 6px;
     font-size: 11px;
     font-weight: 800;
+    transition: all 0.3s;
   }
   .promo-banner-text {
     color: var(--cream);
     font-size: 12px;
     line-height: 1.5;
+    transition: color 0.3s;
   }
   .promo-banner-link {
     color: var(--gold-pale);
     font-size: 11px;
     margin-top: 4px;
     display: inline-block;
+    transition: color 0.3s;
   }
 
   /* ============ RECHERCHE ============ */
@@ -533,8 +569,8 @@
     background: linear-gradient(135deg, rgba(212,175,55,0.18), rgba(212,175,55,0.05));
     border: 1px solid rgba(212,175,55,0.45);
     border-radius: 10px;
-    padding: 10px 6px;
-    text-align: center;
+    padding: 10px 12px;
+    text-align: left;
     min-width: 60px;
   }
   .date-num {
@@ -543,6 +579,7 @@
     font-size: 26px;
     font-weight: 700;
     line-height: 1;
+    text-align: left;
   }
   .date-mois {
     color: var(--cream);
@@ -550,6 +587,7 @@
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-top: 3px;
+    text-align: left;
   }
   .date-info { min-width: 0; }
   .date-ville {
@@ -690,36 +728,36 @@
     flex-direction: column;
     gap: 10px;
   }
-  /* Style "ticket mini" pour les liens billetterie dans la popup */
+  /* Liens billetterie popup → royal écarlate */
   .modal-cta {
     display: flex;
     align-items: center;
     gap: 12px;
     padding: 14px 22px;
-    background: linear-gradient(90deg, rgba(20,20,20,0.95), rgba(30,25,15,0.95));
-    border: 1px dashed rgba(212,175,55,0.4);
+    background: var(--noir);
+    border: 1px solid rgba(212, 175, 55, 0.4);
     border-left: 4px solid var(--gold);
-    border-right: 4px solid var(--gold);
-    border-radius: 4px;
-    color: var(--cream);
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    transition: all 0.25s;
+    border-radius: 0;
+    color: var(--gold);
+    font-weight: 800;
+    letter-spacing: 2px;
     text-decoration: none;
     text-transform: uppercase;
-    font-size: 13px;
+    font-size: 12px;
     position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    animation: royalEcarlate 1.5s ease-in-out infinite;
   }
   .modal-cta:hover {
-    background: linear-gradient(90deg, rgba(212,175,55,0.18), rgba(212,175,55,0.06));
+    background: var(--gold);
+    color: var(--noir);
     border-color: var(--gold);
-    border-left-color: var(--gold);
-    border-right-color: var(--gold);
     transform: translateX(6px);
-    box-shadow: 0 6px 20px rgba(212,175,55,0.15);
+    animation: none;
   }
   .modal-cta-icon { font-size: 22px; }
-  .modal-cta-arrow { margin-left: auto; color: var(--gold); transition: transform 0.25s; }
+  .modal-cta-arrow { margin-left: auto; transition: transform 0.25s; }
   .modal-cta:hover .modal-cta-arrow { transform: translateX(4px); }
   .modal-empty { color: var(--smoke); font-style: italic; text-align: center; padding: 20px; }
 
@@ -780,8 +818,42 @@
   .newsletter-form input { flex: 1; min-width: 200px; background: rgba(0,0,0,0.5); border: 1px solid rgba(212,175,55,0.3); color: var(--cream); padding: 12px 18px; border-radius: 999px; font-family: inherit; font-size: 14px; outline: none; transition: border-color 0.2s; }
   .newsletter-form input:focus { border-color: var(--gold); }
   .newsletter-form input::placeholder { color: var(--smoke); }
-  .newsletter-form button { background: var(--gold); color: var(--noir); border: none; border-radius: 999px; padding: 12px 24px; font-family: inherit; font-size: 13px; letter-spacing: 1px; font-weight: 700; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
-  .newsletter-form button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212,175,55,0.3); }
+  .newsletter-form button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--noir);
+    color: var(--gold);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-left: 4px solid var(--gold);
+    border-radius: 0;
+    padding: 12px 22px;
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 3px;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    animation: royalEcarlate 1.5s ease-in-out infinite;
+  }
+  .newsletter-form button::before {
+    content: '♕';
+    font-size: 14px;
+    line-height: 1;
+    color: var(--gold);
+    transition: color 0.3s;
+  }
+  .newsletter-form button:hover {
+    background: var(--gold);
+    color: var(--noir);
+    border-color: var(--gold);
+    transform: translateX(4px);
+    animation: none;
+  }
+  .newsletter-form button:hover::before { color: var(--noir); }
   .newsletter-helper { color: var(--smoke); font-size: 11px; font-style: italic; }
   .newsletter-success { color: #10b981; font-size: 13px; margin-top: 12px; display: none; }
   .newsletter-success.show { display: block; }
@@ -1026,7 +1098,7 @@
     <p class="newsletter-text">Nouvelles dates, coulisses exclusives, concours &amp; promos — directement dans ta boîte mail.</p>
     <form class="newsletter-form" onsubmit="event.preventDefault(); subscribeNewsletter(this);">
       <input type="email" placeholder="ton.email@exemple.com" required />
-      <button type="submit">S'abonner →</button>
+      <button type="submit">S'abonner</button>
     </form>
     <div class="newsletter-helper">📧 Tu peux te désabonner à tout moment · Aucun spam, promis.</div>
     <div class="newsletter-success" id="newsletterSuccess">✅ Merci ! Tu es bien inscrit·e à la newsletter TWOQ 🎤</div>

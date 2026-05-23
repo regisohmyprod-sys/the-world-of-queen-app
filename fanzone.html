@@ -90,10 +90,48 @@
   .lvl-pill { background: rgba(0,0,0,0.4); border: 1px solid rgba(212,175,55,0.4); border-radius: 999px; padding: 5px 14px; font-size: 11px; letter-spacing: 1px; font-weight: 600; color: var(--cream); display: inline-flex; align-items: center; gap: 5px; }
 
   /* ============ BOUTONS ============ */
-  .btn-primary { display: inline-block; background: var(--gold); color: var(--noir); border: none; border-radius: 999px; padding: 12px 24px; font-size: 13px; letter-spacing: 1.5px; font-weight: 700; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; font-family: inherit; text-decoration: none; }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(212,175,55,0.3); }
-  .btn-secondary { display: inline-block; background: transparent; color: var(--gold); border: 1px solid var(--gold); border-radius: 999px; padding: 10px 22px; font-size: 12px; letter-spacing: 1.5px; font-weight: 700; cursor: pointer; transition: background 0.2s, color 0.2s; font-family: inherit; text-decoration: none; }
-  .btn-secondary:hover { background: var(--gold); color: var(--noir); }
+  /* ============ BOUTONS ROYAL ÉCARLATE ♕ ============ */
+  .btn-primary, .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    padding: 12px 22px;
+    border-radius: 0;
+    font-size: 12px;
+    letter-spacing: 3px;
+    font-weight: 800;
+    cursor: pointer;
+    background: var(--noir);
+    color: var(--gold);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-left: 4px solid var(--gold);
+    font-family: inherit;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    animation: royalEcarlate 1.5s ease-in-out infinite;
+  }
+  .btn-primary::before, .btn-secondary::before {
+    content: '♕';
+    font-size: 13px;
+    line-height: 1;
+    color: var(--gold);
+    transition: color 0.3s;
+  }
+  @keyframes royalEcarlate {
+    0%, 100% { background: var(--noir); box-shadow: inset 0 0 0 rgba(139, 0, 0, 0); }
+    50% { background: linear-gradient(90deg, var(--noir) 0%, rgba(139, 0, 0, 0.85) 50%, var(--noir) 100%); box-shadow: inset 0 0 20px rgba(139, 0, 0, 0.5), 0 0 16px rgba(139, 0, 0, 0.3); }
+  }
+  .btn-primary:hover, .btn-secondary:hover {
+    background: var(--gold);
+    color: var(--noir);
+    border-color: var(--gold);
+    transform: translateX(4px);
+    animation: none;
+  }
+  .btn-primary:hover::before, .btn-secondary:hover::before { color: var(--noir); }
 
   /* ============ CONCOURS ============ */
   .contest-card { position: relative; }
@@ -219,8 +257,32 @@
   .newsletter-form input { flex: 1; min-width: 200px; background: rgba(0,0,0,0.5); border: 1px solid rgba(212,175,55,0.3); color: var(--cream); padding: 12px 18px; border-radius: 999px; font-family: inherit; font-size: 14px; outline: none; transition: border-color 0.2s; }
   .newsletter-form input:focus { border-color: var(--gold); }
   .newsletter-form input::placeholder { color: var(--smoke); }
-  .newsletter-form button { background: var(--gold); color: var(--noir); border: none; border-radius: 999px; padding: 12px 24px; font-family: inherit; font-size: 13px; letter-spacing: 1px; font-weight: 700; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
-  .newsletter-form button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212,175,55,0.3); }
+  .newsletter-form button {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--noir); color: var(--gold);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-left: 4px solid var(--gold);
+    border-radius: 0;
+    padding: 12px 22px;
+    font-family: inherit; font-size: 12px;
+    letter-spacing: 3px; font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+    position: relative;
+    transition: all 0.3s;
+    animation: royalEcarlate 1.5s ease-in-out infinite;
+  }
+  .newsletter-form button::before {
+    content: '♕'; font-size: 14px; line-height: 1; color: var(--gold);
+    transition: color 0.3s;
+  }
+  .newsletter-form button:hover {
+    background: var(--gold); color: var(--noir);
+    border-color: var(--gold);
+    transform: translateX(4px);
+    animation: none;
+  }
+  .newsletter-form button:hover::before { color: var(--noir); }
   .newsletter-helper { color: var(--smoke); font-size: 11px; font-style: italic; }
   .newsletter-success { color: #10b981; font-size: 13px; margin-top: 12px; display: none; }
   .newsletter-success.show { display: block; }
@@ -797,7 +859,7 @@
             <span class="lvl-pill">🥇 OR</span>
             <span class="lvl-pill">💎 PLATINE</span>
           </div>
-          <button type="button" class="btn-primary" onclick="openFanModal()">M'inscrire gratuitement →</button>
+          <button type="button" class="btn-primary" onclick="openFanModal()">M'inscrire gratuitement</button>
         </div>
       </div>
     </div>
@@ -812,7 +874,7 @@
       <div class="contest-meta">
         <div class="contest-participants" id="participants1">— participants</div>
         <div class="contest-actions">
-          <button type="button" class="btn-primary" onclick="openQuizModal('quizz-champions-queen')">Je tente ma chance →</button>
+          <button type="button" class="btn-primary" onclick="openQuizModal('quizz-champions-queen')">Je tente ma chance</button>
           <a href="https://regisohmyprod-sys.github.io/twoq-pwa/docs/reglement-concours.pdf" target="_blank" class="contest-rules">📜 Règlement du concours</a>
         </div>
       </div>
@@ -828,7 +890,7 @@
       <div class="contest-meta">
         <div class="contest-participants" id="participants2">— participants</div>
         <div class="contest-actions">
-          <button type="button" class="btn-primary" id="summerBtn" onclick="handleSummerClick()">Je tente ma chance →</button>
+          <button type="button" class="btn-primary" id="summerBtn" onclick="handleSummerClick()">Je tente ma chance</button>
           <a href="https://regisohmyprod-sys.github.io/twoq-pwa/docs/reglement-concours.pdf" target="_blank" class="contest-rules">📜 Règlement du concours</a>
         </div>
       </div>
@@ -996,7 +1058,7 @@
           <div class="shop-eyebrow">MERCH OFFICIEL</div>
           <div class="shop-title">La Boutique TWOQ</div>
           <div class="shop-text">T-shirts, vinyles, posters &amp; souvenirs collectors</div>
-          <a href="https://app.theworldofqueen.com" target="_blank" class="btn-primary">Découvrir →</a>
+          <a href="https://app.theworldofqueen.com" target="_blank" class="btn-primary">Découvrir</a>
         </div>
         <div class="shop-img" id="shopImg" style="background-image:url('https://regisohmyprod-sys.github.io/twoq-pwa/assets/boutique-tshirt.jpg');">
           <span id="shopImgFallback" style="display:none;">🛍️</span>
@@ -1054,7 +1116,7 @@
     <p class="newsletter-text">Nouvelles dates, coulisses exclusives, concours &amp; promos — directement dans ta boîte mail.</p>
     <form class="newsletter-form" onsubmit="event.preventDefault(); subscribeNewsletter(this);">
       <input type="email" placeholder="ton.email@exemple.com" required />
-      <button type="submit">S'abonner →</button>
+      <button type="submit">S'abonner</button>
     </form>
     <div class="newsletter-helper">📧 Tu peux te désabonner à tout moment · Aucun spam, promis.</div>
     <div class="newsletter-success" id="newsletterSuccess">✅ Merci ! Tu es bien inscrit·e à la newsletter TWOQ 🎤</div>
@@ -1737,7 +1799,7 @@
         btn.style.cursor = 'pointer';
         btn.dataset.status = 'not-yet';
       } else {
-        btn.innerHTML = 'Je tente ma chance →';
+        btn.innerHTML = 'Je tente ma chance';
         btn.style.opacity = '1';
         btn.dataset.status = 'active';
       }
