@@ -94,12 +94,12 @@
   .btn-primary, .btn-secondary {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
     text-decoration: none;
-    padding: 10px 16px;
+    padding: 10px 12px;
     border-radius: 0;
-    font-size: 11px;
-    letter-spacing: 2px;
+    font-size: 10px;
+    letter-spacing: 1.5px;
     font-weight: 800;
     cursor: pointer;
     background: var(--noir);
@@ -115,7 +115,7 @@
   }
   .btn-primary::before, .btn-secondary::before {
     content: '♕';
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1;
     color: var(--gold);
     transition: color 0.3s;
@@ -1074,7 +1074,7 @@
           <div class="shop-eyebrow">MERCH OFFICIEL</div>
           <div class="shop-title">La Boutique TWOQ</div>
           <div class="shop-text">T-shirts, vinyles, posters &amp; souvenirs collectors</div>
-          <a href="https://app.theworldofqueen.com" target="_blank" class="btn-primary">Découvrir</a>
+          <a href="boutique.html" class="btn-primary">Découvrir</a>
         </div>
         <div class="shop-img" id="shopImg" style="background-image:url('https://regisohmyprod-sys.github.io/twoq-pwa/assets/boutique-tshirt.jpg');">
           <span id="shopImgFallback" style="display:none;">🛍️</span>
@@ -1413,17 +1413,31 @@
   let TEMO_RATING = 0;
 
   // Charge les témoignages validés au load de la page
+  // ============ HELPER: fetch avec timeout ============
+  async function fetchWithTimeout(url, options = {}, timeoutMs = 8000) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+    try {
+      const res = await fetch(url, { ...options, signal: ctrl.signal });
+      clearTimeout(timer);
+      return res;
+    } catch (e) {
+      clearTimeout(timer);
+      throw e;
+    }
+  }
+
   async function loadTemoignages() {
     const container = document.getElementById('temoignagesList');
     if (!container) return;
     try {
-      const res = await fetch(`https://nhxqcavianozskxgfcbt.supabase.co/rest/v1/public_temoignages_fans?select=*&order=created_at.desc&limit=4`, {
+      const res = await fetchWithTimeout(`https://nhxqcavianozskxgfcbt.supabase.co/rest/v1/public_temoignages_fans?select=*&order=created_at.desc&limit=4`, {
         headers: {
           'apikey': 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
           'Authorization': 'Bearer sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3'
         }
-      });
-      if (!res.ok) { console.warn('[Temoignages] HTTP', res.status); return; }
+      }, 8000);
+      if (!res.ok) { console.warn('[Temoignages] HTTP', res.status); showTemoignagesError(container); return; }
       const data = await res.json();
       if (!data || data.length === 0) { console.log('[Temoignages] Aucun témoignage validé — fallback statique conservé'); return; }
       // Remplacer le contenu par les vrais témoignages
@@ -1444,7 +1458,20 @@
           </div>
         `;
       }).join('');
-    } catch (e) { console.warn('[Temoignages]', e); }
+    } catch (e) {
+      console.warn('[Temoignages]', e);
+      showTemoignagesError(container);
+    }
+  }
+
+  function showTemoignagesError(container) {
+    container.innerHTML = `
+      <div style="grid-column: 1/-1; text-align:center; padding: 30px 20px; color: var(--smoke); font-style: italic;">
+        ⚠️ Impossible de charger les avis pour le moment.
+        <br>
+        <button onclick="loadTemoignages()" style="margin-top:14px; background:var(--noir); color:var(--gold); border:1px solid var(--gold); padding:8px 18px; border-radius:999px; cursor:pointer; font-family:inherit; font-size:11px; letter-spacing:2px; font-weight:700;">🔄 RÉESSAYER</button>
+      </div>
+    `;
   }
 
   // ===== MODAL LAISSER UN AVIS =====
@@ -2576,12 +2603,15 @@
     if (!sb) return;
 
     try {
-      // La vue publique public_wall_of_fans ne contient QUE les photos validées (statut validee ou mise_en_avant)
-      // Les photos mise_en_avant (TOP) sont remontées en premier via l'ORDER BY de la vue
-      const { data, error } = await sb
+      // Timeout 8s : si Supabase ne répond pas, fallback placeholders
+      const queryPromise = sb
         .from('public_wall_of_fans')
         .select('*')
         .limit(9);
+      const timeoutPromise = new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Timeout 8s')), 8000)
+      );
+      const { data, error } = await Promise.race([queryPromise, timeoutPromise]);
       if (error) throw error;
       renderWallPhotos(data || []);
     } catch (e) {
@@ -2868,12 +2898,12 @@
     const container = document.getElementById('backstageContainer');
     if (!container) return;
     try {
-      const res = await fetch(`https://nhxqcavianozskxgfcbt.supabase.co/rest/v1/videos_backstage?select=*&publie=eq.true&order=ordre_affichage.asc,created_at.desc&limit=20`, {
+      const res = await fetchWithTimeout(`https://nhxqcavianozskxgfcbt.supabase.co/rest/v1/videos_backstage?select=*&publie=eq.true&order=ordre_affichage.asc,created_at.desc&limit=20`, {
         headers: {
           'apikey': 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
           'Authorization': 'Bearer sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3'
         }
-      });
+      }, 8000);
       if (!res.ok) { console.warn('[Backstage] HTTP', res.status); return; }
       const data = await res.json();
       if (!data || data.length === 0) {
