@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BOUTIQUE — THE WORLD OF QUEEN</title>
+<meta name="description" content="La boutique officielle de The World of Queen — t-shirts, sweats, mugs, accessoires collector du show." />
+<meta property="og:title" content="BOUTIQUE OFFICIELLE — THE WORLD OF QUEEN" />
+<meta property="og:description" content="T-shirts, sweats, mugs et collector officiels TWOQ" />
+<meta property="og:type" content="website" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<link rel="icon" href="https://regisohmyprod-sys.github.io/twoq-pwa/icons/icon-192.png" type="image/png" />
+
+<style>
+  :root {
+    --noir: #0A0A0A;
+    --charcoal: #141414;
+    --gold: #D4AF37;
+    --gold-pale: #F0D77A;
+    --cramoisi: #8B0000;
+    --cream: #F5F1E8;
+    --smoke: #8B8580;
+    --serif: 'Cinzel', serif;
+    --sans: 'Inter', sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--noir); color: var(--cream); font-family: var(--sans); overflow-x: hidden; }
+  body { min-height: 100vh; position: relative; }
+
+  .twinkle-stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+  .twinkle-star { position: absolute; background: #fff; border-radius: 50%; animation: twinkle linear infinite; }
+  @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(0.5); } 50% { opacity: 0.9; transform: scale(1.1); } }
+
+  /* HEADER */
+  header.main-header { position: sticky; top: 0; z-index: 100; background: rgba(10, 10, 10, 0.92); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(212, 175, 55, 0.18); }
+  .header-inner { max-width: 1280px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: center; position: relative; }
+  .brand { position: absolute; left: 24px; top: 50%; transform: translateY(-50%); font-family: var(--serif); font-size: 17px; font-weight: 600; color: var(--gold); text-decoration: none; letter-spacing: 1.5px; transition: filter 0.3s, text-shadow 0.3s; }
+  .brand:hover { filter: brightness(1.2); text-shadow: 0 0 20px rgba(212, 175, 55, 0.7); }
+  .brand small { display: block; font-size: 9px; letter-spacing: 2px; color: var(--gold-pale); font-weight: 400; margin-top: 1px; }
+  nav.main-nav { display: flex; gap: 22px; align-items: center; }
+  nav.main-nav a { color: var(--cream); text-decoration: none; font-size: 11px; letter-spacing: 2px; font-weight: 600; padding: 6px 2px; transition: color 0.2s; border-bottom: 1px solid transparent; }
+  nav.main-nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+  .nav-dropdown { position: relative; display: inline-block; }
+  .nav-dropdown-toggle { background: none; border: 1px solid var(--gold); cursor: pointer; color: var(--gold-pale); padding: 6px 12px; border-radius: 999px; font-family: var(--sans); font-size: 11px; letter-spacing: 2px; font-weight: 600; transition: background 0.2s, color 0.2s; display: inline-flex; align-items: center; gap: 4px; }
+  .nav-dropdown-toggle:hover, .nav-dropdown.open .nav-dropdown-toggle { background: var(--gold); color: var(--noir); }
+  .nav-dropdown-toggle .chev { transition: transform 0.2s; font-size: 10px; }
+  .nav-dropdown.open .nav-dropdown-toggle .chev { transform: rotate(180deg); }
+  .nav-dropdown-menu { position: absolute; top: calc(100% + 8px); right: 0; background: rgba(10, 10, 10, 0.98); backdrop-filter: blur(20px); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 12px; min-width: 180px; padding: 8px 0; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: opacity 0.2s, transform 0.2s, visibility 0.2s; z-index: 102; }
+  .nav-dropdown.open .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .nav-dropdown-menu a { display: block; padding: 10px 16px; color: var(--cream); text-decoration: none; font-size: 12px; letter-spacing: 1.5px; font-weight: 500; border: none; border-radius: 0; transition: background 0.2s, color 0.2s; }
+  .nav-dropdown-menu a:hover { background: rgba(212, 175, 55, 0.1); color: var(--gold); border: none; }
+  .menu-toggle { display: none; background: none; border: none; color: var(--gold); cursor: pointer; font-size: 24px; padding: 4px 8px; }
+  @media (max-width: 1100px) {
+    .header-inner { padding: 14px 16px; }
+    nav.main-nav { position: fixed; top: 60px; left: 0; right: 0; flex-direction: column; gap: 0; background: rgba(10, 10, 10, 0.96); backdrop-filter: blur(20px); padding: 20px; border-bottom: 1px solid rgba(212, 175, 55, 0.2); max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+    nav.main-nav.open { max-height: 90vh; overflow-y: auto; }
+    nav.main-nav a { width: 100%; padding: 14px 8px; border-bottom: 1px solid rgba(212, 175, 55, 0.08); text-align: center; font-size: 13px; }
+    .nav-dropdown { width: 100%; }
+    .nav-dropdown-toggle { width: 100%; justify-content: center; margin-top: 10px; }
+    .nav-dropdown-menu { position: static; opacity: 1; visibility: visible; transform: none; background: rgba(212,175,55,0.06); border: none; margin-top: 8px; }
+    .menu-toggle { display: block; }
+    .header-inner { justify-content: space-between; }
+    .brand { position: static; transform: none; }
+  }
+
+  /* HERO */
+  .hero { min-height: 65vh; display: flex; align-items: center; justify-content: center; padding: 60px 20px; position: relative; text-align: center; }
+  .hero-content { position: relative; z-index: 2; max-width: 760px; }
+  .hero-bag { font-size: 90px; margin-bottom: 14px; animation: bagBounce 3s ease-in-out infinite; display: inline-block; filter: drop-shadow(0 10px 20px rgba(212,175,55,0.3)); }
+  @keyframes bagBounce { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-14px) rotate(3deg); } }
+  .hero-eyebrow { color: var(--gold); font-size: 11px; letter-spacing: 6px; font-weight: 700; margin-bottom: 14px; text-transform: uppercase; }
+  .hero-title { font-family: var(--serif); font-size: clamp(36px, 7vw, 64px); font-weight: 600; color: var(--cream); letter-spacing: 2px; margin-bottom: 18px; line-height: 1.1; text-shadow: 0 0 40px rgba(212, 175, 55, 0.25); }
+  .hero-title .gold { color: var(--gold); }
+  .hero-subtitle { color: var(--gold-pale); font-size: 16px; line-height: 1.6; max-width: 600px; margin: 0 auto 30px; font-style: italic; }
+
+  /* CTA principal */
+  .cta-main { display: inline-flex; align-items: center; gap: 12px; background: linear-gradient(135deg, var(--gold), #b8941d); color: var(--noir); border: none; padding: 20px 38px; border-radius: 999px; font-family: var(--sans); font-size: 16px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 14px 40px rgba(212,175,55,0.35), inset 0 1px 0 rgba(255,255,255,0.25); position: relative; overflow: hidden; }
+  .cta-main::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); transition: left 0.6s; }
+  .cta-main:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 20px 50px rgba(212,175,55,0.5), inset 0 1px 0 rgba(255,255,255,0.3); }
+  .cta-main:hover::before { left: 100%; }
+  .cta-arrow { font-size: 22px; transition: transform 0.3s; }
+  .cta-main:hover .cta-arrow { transform: translateX(6px); }
+  .cta-helper { margin-top: 18px; color: var(--smoke); font-size: 12px; letter-spacing: 1px; }
+  .cta-helper strong { color: var(--gold); }
+
+  /* CATÉGORIES */
+  .categories-section { padding: 30px 20px 60px; position: relative; z-index: 2; }
+  .section-eyebrow { text-align: center; color: var(--gold); font-size: 11px; letter-spacing: 6px; font-weight: 700; margin-bottom: 12px; text-transform: uppercase; }
+  .section-title { text-align: center; font-family: var(--serif); font-size: clamp(28px, 4.5vw, 40px); font-weight: 500; color: var(--cream); letter-spacing: 1.5px; margin-bottom: 14px; }
+  .section-intro { text-align: center; max-width: 600px; margin: 0 auto 36px; color: var(--gold-pale); font-style: italic; font-size: 14px; line-height: 1.6; }
+
+  .categories-grid { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 640px) { .categories-grid { grid-template-columns: 1fr; } }
+  .category-card { position: relative; padding: 50px 30px; background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(212,175,55,0.02)); border: 1px solid rgba(212,175,55,0.3); border-radius: 20px; text-align: center; text-decoration: none; color: var(--cream); overflow: hidden; transition: all 0.3s; display: block; }
+  .category-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(212,175,55,0.08), transparent 70%); opacity: 0; transition: opacity 0.4s; }
+  .category-card:hover { border-color: var(--gold); transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 40px rgba(212,175,55,0.12); }
+  .category-card:hover::before { opacity: 1; }
+  .category-icon { font-size: 56px; margin-bottom: 16px; position: relative; z-index: 2; }
+  .category-title { font-family: var(--serif); color: var(--gold); font-size: 22px; font-weight: 500; letter-spacing: 2px; margin-bottom: 8px; position: relative; z-index: 2; }
+  .category-desc { color: var(--cream); font-size: 13px; line-height: 1.5; position: relative; z-index: 2; }
+  .category-arrow { margin-top: 16px; color: var(--gold); font-size: 12px; letter-spacing: 2px; font-weight: 700; position: relative; z-index: 2; transition: transform 0.3s; }
+  .category-card:hover .category-arrow { transform: translateX(6px); }
+
+  /* AVANTAGES */
+  .perks-section { padding: 50px 20px; background: linear-gradient(180deg, transparent, rgba(212,175,55,0.04), transparent); position: relative; z-index: 2; }
+  .perks-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+  .perk-card { text-align: center; padding: 26px 18px; background: rgba(20,20,20,0.6); border: 1px solid rgba(212,175,55,0.15); border-radius: 16px; transition: border-color 0.3s, transform 0.3s; }
+  .perk-card:hover { border-color: rgba(212,175,55,0.4); transform: translateY(-4px); }
+  .perk-icon { font-size: 38px; color: var(--gold); margin-bottom: 12px; }
+  .perk-title { font-family: var(--serif); color: var(--gold); font-size: 16px; font-weight: 500; margin-bottom: 8px; letter-spacing: 1px; }
+  .perk-text { color: var(--cream); font-size: 13px; line-height: 1.5; }
+
+  /* INFOS PRATIQUES */
+  .info-banner { max-width: 900px; margin: 50px auto 30px; padding: 30px; background: linear-gradient(135deg, rgba(139,0,0,0.06), rgba(212,175,55,0.04)); border: 1px solid rgba(212,175,55,0.2); border-radius: 20px; text-align: center; position: relative; z-index: 2; }
+  .info-banner-icon { font-size: 36px; color: var(--gold); margin-bottom: 10px; }
+  .info-banner-title { font-family: var(--serif); color: var(--gold); font-size: 18px; font-weight: 500; letter-spacing: 1px; margin-bottom: 10px; }
+  .info-banner-text { color: var(--cream); font-size: 14px; line-height: 1.7; }
+  .info-banner-text strong { color: var(--gold); }
+  .info-banner-text a { color: var(--gold); text-decoration: none; font-weight: 600; border-bottom: 1px solid rgba(212,175,55,0.5); }
+  .info-banner-text a:hover { border-bottom-color: var(--gold); }
+
+  .cta-bottom { text-align: center; padding: 50px 20px; position: relative; z-index: 2; }
+
+  /* FOOTER */
+  footer { background: #060606; border-top: 1px solid rgba(212,175,55,0.18); padding: 36px 20px 24px; margin-top: 30px; position: relative; z-index: 2; }
+  .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
+  .footer-brand { font-family: var(--serif); color: var(--gold); font-size: 16px; letter-spacing: 2px; }
+  .footer-socials { display: flex; gap: 14px; }
+  .footer-social-link { width: 38px; height: 38px; border-radius: 50%; background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.3); display: flex; align-items: center; justify-content: center; color: var(--gold); text-decoration: none; transition: background 0.2s, transform 0.2s; }
+  .footer-social-link:hover { background: var(--gold); color: var(--noir); transform: translateY(-3px); }
+  .footer-social-link svg { width: 16px; height: 16px; }
+  .footer-links { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; font-size: 11px; letter-spacing: 1.5px; }
+  .footer-links a { color: var(--smoke); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { color: var(--smoke); font-size: 10px; margin-top: 8px; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="main-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand">
+      THE WORLD OF QUEEN
+      <small>L'ÉTERNELLE LÉGENDE</small>
+    </a>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">☰</button>
+    <nav class="main-nav" id="mainNav">
+      <a href="index.html" onclick="closeMenu()">LE SHOW</a>
+      <a href="dates.html" onclick="closeMenu()">DATES</a>
+      <a href="artistes.html" onclick="closeMenu()">ARTISTES</a>
+      <a href="fanzone.html" onclick="closeMenu()">FAN ZONE</a>
+      <a href="medias.html" onclick="closeMenu()">MÉDIAS</a>
+      <a href="boutique.html" onclick="closeMenu()" style="color:var(--gold); border-bottom-color:var(--gold);">🛍️ BOUTIQUE</a>
+      <a href="moi.html" onclick="closeMenu()">MOI</a>
+      <a href="contact-prod.html" onclick="closeMenu()">CONTACT PROD</a>
+      <div class="nav-dropdown" id="navDropdown">
+        <button type="button" class="nav-dropdown-toggle" onclick="toggleDropdown(event)">ESPACE PRO <span class="chev">▾</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="espace-pro.html" onclick="closeMenu(); closeDropdown();">Espace Pro</a>
+          <a href="espace-presse.html" onclick="closeMenu(); closeDropdown();">Espace Presse</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="twinkle-stars" id="twinkleStars"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-bag">🛍️</div>
+    <div class="hero-eyebrow">BOUTIQUE OFFICIELLE</div>
+    <h1 class="hero-title">Porte la <span class="gold">légende</span></h1>
+    <p class="hero-subtitle">T-shirts, sweats, mugs, accessoires collector — l'esprit Queen et l'univers du show à porter au quotidien.</p>
+
+    <a href="https://theworldofqueen.fanavenue.com/" target="_blank" rel="noopener" class="cta-main">
+      <span>🛒</span>
+      <span>Accéder à la boutique</span>
+      <span class="cta-arrow">→</span>
+    </a>
+
+    <div class="cta-helper">
+      🔒 Paiement sécurisé · 🚚 Livraison 48/72h · ↩️ Satisfait ou remboursé
+    </div>
+  </div>
+</section>
+
+<!-- CATÉGORIES -->
+<section class="categories-section">
+  <div class="section-eyebrow">EXPLORE PAR CATÉGORIE</div>
+  <h2 class="section-title">Trouve ton style</h2>
+  <p class="section-intro">Du t-shirt collector à l'accessoire indispensable, il y en a pour tous les fans de Queen.</p>
+
+  <div class="categories-grid">
+
+    <a href="https://theworldofqueen.fanavenue.com/121-vetements" target="_blank" rel="noopener" class="category-card">
+      <div class="category-icon">👕</div>
+      <div class="category-title">VÊTEMENTS</div>
+      <div class="category-desc">T-shirts, sweats à capuche, hauts officiels TWOQ — coton biologique, design exclusif.</div>
+      <div class="category-arrow">VOIR LA COLLECTION →</div>
+    </a>
+
+    <a href="https://theworldofqueen.fanavenue.com/114-accessoires" target="_blank" rel="noopener" class="category-card">
+      <div class="category-icon">🎁</div>
+      <div class="category-title">ACCESSOIRES</div>
+      <div class="category-desc">Mugs, magnets, stylos et autres collector — les petits objets qui font les grands souvenirs.</div>
+      <div class="category-arrow">VOIR LA COLLECTION →</div>
+    </a>
+
+  </div>
+</section>
+
+<!-- AVANTAGES -->
+<section class="perks-section">
+  <div class="section-eyebrow">LES + OFFICIELS</div>
+  <h2 class="section-title">Pourquoi acheter ici ?</h2>
+  <p class="section-intro">La boutique officielle TWOQ, gérée par Fan Avenue — partenaire merchandising depuis 2001.</p>
+
+  <div class="perks-grid">
+
+    <div class="perk-card">
+      <div class="perk-icon">✨</div>
+      <div class="perk-title">100% officiel</div>
+      <div class="perk-text">Produits exclusifs validés par l'équipe TWOQ et Fred Caramia.</div>
+    </div>
+
+    <div class="perk-card">
+      <div class="perk-icon">🚚</div>
+      <div class="perk-title">Livraison 48/72h</div>
+      <div class="perk-text">Colis expédié sous 24h ouvrées partout en France et UE.</div>
+    </div>
+
+    <div class="perk-card">
+      <div class="perk-icon">🔒</div>
+      <div class="perk-title">Paiement sécurisé</div>
+      <div class="perk-text">CB, PayPal, chèque ou virement bancaire — au choix.</div>
+    </div>
+
+    <div class="perk-card">
+      <div class="perk-icon">↩️</div>
+      <div class="perk-title">Satisfait ou remboursé</div>
+      <div class="perk-text">Pas satisfait ? On te rembourse intégralement, sans question.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- INFOS PRATIQUES -->
+<div class="info-banner">
+  <div class="info-banner-icon">📞</div>
+  <div class="info-banner-title">Une question sur ta commande ?</div>
+  <p class="info-banner-text">
+    Le service clients Fan Avenue est joignable<br>
+    <strong>du lundi au vendredi, 9h-12h et 14h-18h</strong><br>
+    📞 <a href="tel:0558585200">05 58 58 52 00</a> · 📧 <a href="https://theworldofqueen.fanavenue.com/nous-contacter" target="_blank">Formulaire de contact</a>
+  </p>
+</div>
+
+<!-- CTA BOTTOM -->
+<div class="cta-bottom">
+  <a href="https://theworldofqueen.fanavenue.com/" target="_blank" rel="noopener" class="cta-main">
+    <span>🛍️</span>
+    <span>Découvrir tous les produits</span>
+    <span class="cta-arrow">→</span>
+  </a>
+  <div class="cta-helper" style="margin-top: 14px;">
+    Édité par <strong>Fan Avenue</strong> — partenaire merchandising depuis 2001
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">THE WORLD OF QUEEN</div>
+    <div class="footer-socials">
+      <a class="footer-social-link" href="https://www.facebook.com/theworldofqueenofficiel" target="_blank" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H8v-2.9h2.4V9.8c0-2.4 1.4-3.7 3.5-3.7 1 0 2.1.2 2.1.2v2.3h-1.2c-1.2 0-1.5.7-1.5 1.5v1.8H16l-.4 2.9h-2.2v7A10 10 0 0 0 22 12z"/></svg>
+      </a>
+      <a class="footer-social-link" href="https://www.instagram.com/theworldofqueenofficiel/" target="_blank" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg>
+      </a>
+      <a class="footer-social-link" href="https://www.youtube.com/@theworldofqueen" target="_blank" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.1s-.2-1.5-.9-2.2c-.9-.9-1.8-.9-2.2-1C16.4 3.6 12 3.6 12 3.6s-4.4 0-7.9.3c-.4 0-1.4 0-2.2 1C1.2 5.6 1 7.1 1 7.1S.8 9 .8 10.8v1.4C.8 14 1 16 1 16s.2 1.5.9 2.2c.9.9 2.1.9 2.6 1C6.5 19.4 12 19.5 12 19.5s4.4 0 7.9-.3c.4 0 1.4 0 2.2-1 .7-.7.9-2.2.9-2.2s.2-1.9.2-3.8v-1.4C23.2 9 23 7.1 23 7.1zM9.7 14.5V8.4l5.7 3-5.7 3.1z"/></svg>
+      </a>
+      <a class="footer-social-link" href="https://www.tiktok.com/@theworldofqueenofficiel" target="_blank" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 6.7c-1.5-.4-2.7-1.6-3-3.2h-3.1v12.4c0 1.5-1.2 2.7-2.7 2.7s-2.7-1.2-2.7-2.7 1.2-2.7 2.7-2.7c.3 0 .6 0 .8.1V10c-.3 0-.5-.1-.8-.1-3.3 0-5.9 2.6-5.9 5.9s2.6 5.9 5.9 5.9 5.9-2.6 5.9-5.9V9.3c1.2.8 2.7 1.3 4.2 1.3V7.5c-.5 0-1 0-1.3-.1z"/></svg>
+      </a>
+    </div>
+    <div class="footer-links">
+      <a href="contact-prod.html">CONTACT PROD</a>
+      <a href="espace-pro.html">ESPACE PRO</a>
+      <a href="espace-presse.html">ESPACE PRESSE</a>
+      <a href="mailto:contact@theworldofqueen.com">✉️ Nous écrire</a>
+    </div>
+    <p class="footer-copy">© THE WORLD OF QUEEN — Produit par Oh My Prod · MAG Events · Coulisses Events</p>
+  </div>
+</footer>
+
+<script>
+  (function spawnStars() {
+    const container = document.getElementById('twinkleStars');
+    if (!container) return;
+    for (let i = 0; i < 180; i++) {
+      const s = document.createElement('div');
+      s.className = 'twinkle-star';
+      const size = Math.random() * 2 + 0.5;
+      s.style.width = size + 'px';
+      s.style.height = size + 'px';
+      s.style.left = (Math.random() * 100) + '%';
+      s.style.top = (Math.random() * 100) + '%';
+      s.style.animationDuration = (3 + Math.random() * 5) + 's';
+      s.style.animationDelay = (Math.random() * 5) + 's';
+      container.appendChild(s);
+    }
+  })();
+  function toggleMenu() { document.getElementById('mainNav').classList.toggle('open'); }
+  function closeMenu() { document.getElementById('mainNav').classList.remove('open'); }
+  function toggleDropdown(e) { e.stopPropagation(); document.getElementById('navDropdown').classList.toggle('open'); }
+  function closeDropdown() { document.getElementById('navDropdown').classList.remove('open'); }
+  document.addEventListener('click', function(e) {
+    const dd = document.getElementById('navDropdown');
+    if (dd && !dd.contains(e.target)) closeDropdown();
+  });
+</script>
+
+</body>
+</html>
