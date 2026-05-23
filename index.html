@@ -1610,17 +1610,44 @@
     font-weight: 700;
     margin-bottom: 18px;
   }
-  .pitch-reviews-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 14px;
+  /* ============ CAROUSEL TÉMOIGNAGES ============ */
+  .pitch-reviews-carousel {
+    position: relative;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%);
+  }
+  .pitch-reviews-track {
+    display: flex;
+    gap: 16px;
+    animation: scrollLeft 50s linear infinite;
+    will-change: transform;
+    width: max-content;
+  }
+  .pitch-reviews-carousel:hover .pitch-reviews-track,
+  .pitch-reviews-carousel.paused .pitch-reviews-track {
+    animation-play-state: paused;
+  }
+  @keyframes scrollLeft {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
   }
   .pitch-review-bubble {
     background: rgba(212,175,55,0.04);
     border: 1px solid rgba(212,175,55,0.15);
     border-radius: 12px;
-    padding: 16px;
+    padding: 18px;
     text-align: center;
+    flex: 0 0 280px;
+    min-height: 170px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .pitch-review-bubble:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
   }
   .pitch-review-stars {
     color: var(--gold);
@@ -1633,7 +1660,7 @@
     font-size: 13px;
     line-height: 1.6;
     font-style: italic;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     text-align: center;
   }
   .pitch-review-author {
@@ -1641,6 +1668,39 @@
     font-size: 12px;
     font-weight: 600;
     text-align: center;
+  }
+  .pitch-review-location {
+    color: var(--smoke);
+    font-size: 10px;
+    margin-top: 3px;
+    text-align: center;
+  }
+
+  /* Bouton pause */
+  .pitch-reviews-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+  }
+  .pitch-reviews-pause-btn {
+    background: rgba(212,175,55,0.1);
+    border: 1px solid rgba(212,175,55,0.3);
+    color: var(--gold);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: background 0.2s, transform 0.2s;
+    font-family: inherit;
+  }
+  .pitch-reviews-pause-btn:hover {
+    background: var(--gold);
+    color: var(--noir);
+    transform: scale(1.1);
   }
   .pitch-tagline {
     text-align: center;
@@ -2180,37 +2240,37 @@
 
     <div class="pitch-reviews">
       <div class="pitch-reviews-label">★ &nbsp;ILS ONT VU LE SHOW&nbsp; ★</div>
-      <div class="pitch-reviews-grid">
-        <div class="pitch-review-bubble">
-          <div class="pitch-review-stars">★★★★★</div>
-          <div class="pitch-review-text">« Un super hommage à Freddie, j'en ai eu les larmes aux yeux. Vous êtes tous merveilleux. »</div>
-          <div class="pitch-review-author">— Béatrice C.</div>
+
+      <div class="pitch-reviews-carousel" id="reviewsCarousel">
+        <div class="pitch-reviews-track" id="reviewsTrack">
+          <!-- Fallback statique au cas où Supabase ne répond pas -->
+          <div class="pitch-review-bubble">
+            <div class="pitch-review-stars">★★★★★</div>
+            <div class="pitch-review-text">« Un super hommage à Freddie, j'en ai eu les larmes aux yeux. Vous êtes tous merveilleux. »</div>
+            <div class="pitch-review-author">— Béatrice G.</div>
+            <div class="pitch-review-location">Angers</div>
+          </div>
+          <div class="pitch-review-bubble">
+            <div class="pitch-review-stars">★★★★★</div>
+            <div class="pitch-review-text">« Sans aucun doute, le meilleur du meilleur des hommages à notre cher Freddy. Quel spectacle, quelle émotion ! »</div>
+            <div class="pitch-review-author">— Lauren P.</div>
+            <div class="pitch-review-location">Dôme de Paris</div>
+          </div>
+          <div class="pitch-review-bubble">
+            <div class="pitch-review-stars">★★★★★</div>
+            <div class="pitch-review-text">« Fan absolue, je vous garantis que ce sont les meilleurs et que Freddie est là à chaque concert ! »</div>
+            <div class="pitch-review-author">— Mag 06</div>
+          </div>
+          <div class="pitch-review-bubble">
+            <div class="pitch-review-stars">★★★★★</div>
+            <div class="pitch-review-text">« Si les fans veulent vraiment du spectacle et entendre le sosie vocal de Freddie, y a pas photo : c'est The World Of Queen qu'il faut aller voir ! »</div>
+            <div class="pitch-review-author">— Chris67</div>
+          </div>
         </div>
-        <div class="pitch-review-bubble">
-          <div class="pitch-review-stars">★★★★★</div>
-          <div class="pitch-review-text">« Sans aucun doute, le meilleur du meilleur des hommages à notre cher Freddy. Quel spectacle, quelle émotion, quelle ambiance. Merciii ! »</div>
-          <div class="pitch-review-author">— Lauren P.</div>
-        </div>
-        <div class="pitch-review-bubble">
-          <div class="pitch-review-stars">★★★★★</div>
-          <div class="pitch-review-text">« Fan absolue, je vous garantis que ce sont les meilleurs et que Freddie est là à chaque concert ! »</div>
-          <div class="pitch-review-author">— Mag 06</div>
-        </div>
-        <div class="pitch-review-bubble">
-          <div class="pitch-review-stars">★★★★★</div>
-          <div class="pitch-review-text">« Si les fans veulent vraiment du spectacle et entendre le sosie vocal de Freddie, y a pas photo : c'est The World Of Queen qu'il faut aller voir. Vous êtes les meilleurs ! »</div>
-          <div class="pitch-review-author">— Chris67</div>
-        </div>
-        <div class="pitch-review-bubble">
-          <div class="pitch-review-stars">★★★★★</div>
-          <div class="pitch-review-text">« C'est tout simplement époustouflant… Un show grandiose et une précision millimétrée. »</div>
-          <div class="pitch-review-author">— Philinath</div>
-        </div>
-        <div class="pitch-review-bubble">
-          <div class="pitch-review-stars">★★★★★</div>
-          <div class="pitch-review-text">« Magnifique spectacle et quel duo avec la soprano ! Brillantissime !!! »</div>
-          <div class="pitch-review-author">— Decoptatines</div>
-        </div>
+      </div>
+
+      <div class="pitch-reviews-controls">
+        <button type="button" class="pitch-reviews-pause-btn" id="reviewsPauseBtn" onclick="toggleReviewsPause()" aria-label="Pause/Lecture" title="Mettre en pause">⏸</button>
       </div>
     </div>
 
@@ -3229,6 +3289,80 @@
     }
     bg.appendChild(frag);
   })();
+
+  // ============ CAROUSEL TÉMOIGNAGES DEPUIS SUPABASE ============
+  function escapeHtmlReview(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = String(text);
+    return div.innerHTML;
+  }
+
+  function buildReviewBubble(t) {
+    const stars = '★'.repeat(Math.max(1, Math.min(5, t.note || 5)));
+    const author = `— ${escapeHtmlReview(t.prenom || '')}${t.initiale_nom ? ' ' + escapeHtmlReview(t.initiale_nom) + '.' : ''}`;
+    const location = t.ville_concert ? `<div class="pitch-review-location">${escapeHtmlReview(t.ville_concert)}</div>` : '';
+    return `
+      <div class="pitch-review-bubble">
+        <div class="pitch-review-stars">${stars}</div>
+        <div class="pitch-review-text">« ${escapeHtmlReview(t.texte || '')} »</div>
+        <div class="pitch-review-author">${author}</div>
+        ${location}
+      </div>
+    `;
+  }
+
+  async function loadReviewsCarousel() {
+    const track = document.getElementById('reviewsTrack');
+    if (!track) return;
+    try {
+      const res = await fetch(`https://nhxqcavianozskxgfcbt.supabase.co/rest/v1/public_temoignages_fans?select=*&order=created_at.desc&limit=20`, {
+        headers: {
+          'apikey': 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+          'Authorization': 'Bearer sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3'
+        }
+      });
+      if (!res.ok) { console.warn('[Reviews] HTTP', res.status); return; }
+      const data = await res.json();
+      if (!data || data.length === 0) {
+        console.log('[Reviews] Aucun témoignage validé — fallback statique conservé');
+        return;
+      }
+      // Construit le HTML des bulles
+      const bubbles = data.map(t => buildReviewBubble(t)).join('');
+      // On duplique le contenu pour permettre la boucle infinie fluide
+      track.innerHTML = bubbles + bubbles;
+
+      // Ajuste la durée d'animation en fonction du nombre de bulles
+      // ~5-6 secondes par bulle pour un défilement confortable
+      const totalDuration = Math.max(30, data.length * 5);
+      track.style.animationDuration = totalDuration + 's';
+
+      console.log('[Reviews]', data.length, 'témoignages chargés dans le carousel');
+    } catch (e) {
+      console.warn('[Reviews]', e);
+    }
+  }
+
+  // Bouton pause/lecture
+  let reviewsPaused = false;
+  function toggleReviewsPause() {
+    const carousel = document.getElementById('reviewsCarousel');
+    const btn = document.getElementById('reviewsPauseBtn');
+    reviewsPaused = !reviewsPaused;
+    if (reviewsPaused) {
+      carousel.classList.add('paused');
+      btn.textContent = '▶';
+      btn.title = 'Reprendre la lecture';
+    } else {
+      carousel.classList.remove('paused');
+      btn.textContent = '⏸';
+      btn.title = 'Mettre en pause';
+    }
+  }
+
+  // Chargement automatique
+  loadReviewsCarousel();
 
 </script>
 
