@@ -338,19 +338,22 @@
 
 
 
+
+
   /* ============ 🎨 CHARTE TYPOGRAPHIQUE UNIFIÉE (toutes pages) ============ */
+  /* IMPORTANT: ne s'applique PAS au header (.site-header) */
+
   /* H1 — Titres principaux de page (tous variants) */
   .hero-title, .page-title,
-  .moi-hero h1, .ct-hero h1, .boutique-hero h1, .medias-hero h1, .presse-hero h1, .contact-hero h1,
+  main .moi-hero h1, .ct-hero h1, .boutique-hero h1, .medias-hero h1, .presse-hero h1, .contact-hero h1,
   .dates-hero-h1, .ct-hero-h1,
-  .hero h1, .hero-eyebrow + h1 {
+  section.hero h1, .hero-eyebrow + h1, .hero-content h1 {
     font-size: clamp(36px, 5.5vw, 52px) !important;
     line-height: 1.1 !important;
     letter-spacing: 2px !important;
   }
-  /* H2 — Titres de section */
-  .section-title, .newsletter-title, .boutique-title, .category-title,
-  h2:not(.signup-title):not(.login-title):not(.levels-detail-title):not(.profile-name) {
+  /* H2 — Titres de section (hors header) */
+  body .section-title, body .newsletter-title, body .boutique-title, body .category-title {
     font-size: clamp(26px, 4vw, 36px) !important;
     line-height: 1.15 !important;
     letter-spacing: 1px !important;
@@ -371,10 +374,10 @@
     line-height: 1.3 !important;
     letter-spacing: 0.5px !important;
   }
-  /* Eyebrows */
-  .section-eyebrow, .shop-eyebrow, .live-card-eyebrow,
+  /* Eyebrows (hors header/nav) */
+  main .section-eyebrow, .shop-eyebrow, .live-card-eyebrow,
   .reels-eyebrow, .accordion-eyebrow, .boutique-eyebrow,
-  .category-eyebrow, .perk-eyebrow, .hero-eyebrow,
+  .category-eyebrow, .perk-eyebrow, main .hero-eyebrow,
   .ct-hero-eyebrow, .moi-hero-sub, .presse-eyebrow {
     font-size: 11px !important;
     letter-spacing: 4px !important;
@@ -386,6 +389,22 @@
   .category-text, .perk-text, .request-text {
     font-size: 14px !important;
     line-height: 1.65 !important;
+  }
+
+  /* PROTECTION DU HEADER : tailles fixes pour le logo */
+  .site-header .brand {
+    font-size: 16px !important;
+    letter-spacing: 2.5px !important;
+    line-height: 1.2 !important;
+  }
+  .site-header .brand small {
+    font-size: 9px !important;
+    letter-spacing: 3px !important;
+    line-height: 1.2 !important;
+  }
+  .site-header .main-nav a {
+    font-size: 12px !important;
+    letter-spacing: 1.5px !important;
   }
   /* ============ FIN CHARTE TYPOGRAPHIQUE ============ */
 
@@ -610,23 +629,77 @@
     document.getElementById('contactForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  function submitContactForm() {
+  async function submitContactForm() {
     const form = document.getElementById('contactForm');
     const success = document.getElementById('formSuccess');
+    const submitBtn = form.querySelector('.form-submit');
+    const btnLabel = submitBtn.textContent;
+
+    const nom = document.getElementById('ctName').value.trim();
+    const email = document.getElementById('ctEmail').value.trim().toLowerCase();
+    const message = document.getElementById('ctMessage').value.trim();
+
+    // Validations
+    if (!nom) { alert('⚠️ Indique ton nom.'); return; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('⚠️ Email invalide.'); return; }
+    if (!message || message.length < 10) { alert('⚠️ Écris ton message (10 caractères minimum).'); return; }
+
     const payload = {
-      nom: document.getElementById('ctName').value,
-      societe: document.getElementById('ctOrg').value,
-      email: document.getElementById('ctEmail').value,
-      telephone: document.getElementById('ctPhone').value,
-      type: document.getElementById('ctType').value,
-      sujet: document.getElementById('ctSubject').value,
-      message: document.getElementById('ctMessage').value,
+      nom: nom,
+      societe: document.getElementById('ctOrg').value.trim() || null,
+      email: email,
+      telephone: document.getElementById('ctPhone').value.trim() || null,
+      type_demande: document.getElementById('ctType').value || null,
+      sujet: document.getElementById('ctSubject').value.trim() || null,
+      message: message,
+      source: 'site_web_contact_prod'
     };
-    console.log('[ContactForm]', payload);
-    // TODO : connecter à Supabase table 'contact_demandes' ou à un service mail (Resend, EmailJS, etc.)
-    form.style.display = 'none';
-    success.classList.add('show');
-    success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    // Bouton en mode "envoi"
+    submitBtn.disabled = true;
+    submitBtn.textContent = '⏳ Envoi en cours...';
+
+    try {
+      const ctrl = new AbortController();
+      const timeoutId = setTimeout(() => ctrl.abort(), 10000);
+
+      const res = await fetch('https://nhxqcavianozskxgfcbt.supabase.co/rest/v1/contact_demandes', {
+        method: 'POST',
+        headers: {
+          'apikey': 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+          'Authorization': 'Bearer sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3',
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(payload),
+        signal: ctrl.signal
+      });
+      clearTimeout(timeoutId);
+
+      if (!res.ok) {
+        const errText = await res.text();
+        console.warn('[ContactForm] HTTP', res.status, errText);
+        alert('⚠️ Erreur lors de l\'envoi. Réessaie ou écris-nous directement à regis.ohmyprod@gmail.com');
+        submitBtn.disabled = false;
+        submitBtn.textContent = btnLabel;
+        return;
+      }
+
+      console.log('[ContactForm] ✅ Demande envoyée à Supabase');
+      form.style.display = 'none';
+      success.classList.add('show');
+      success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    } catch (e) {
+      console.warn('[ContactForm] Erreur:', e.message);
+      if (e.name === 'AbortError') {
+        alert('⚠️ Le serveur ne répond pas. Réessaie dans quelques instants ou écris-nous à regis.ohmyprod@gmail.com');
+      } else {
+        alert('⚠️ Problème de connexion. Vérifie ton réseau et réessaie.');
+      }
+      submitBtn.disabled = false;
+      submitBtn.textContent = btnLabel;
+    }
   }
 
   async function subscribeNewsletter(form) {
