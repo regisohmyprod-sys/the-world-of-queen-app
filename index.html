@@ -339,7 +339,56 @@
     flex-wrap: wrap;
     margin-top: 36px;
   }
-  .btn-primary, .btn-secondary {
+  /* ============ BOUTON ROYAL — Couronne ♕ + passage écarlate doux ============ */
+  .btn-primary, .btn-royal {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 0;
+    font-size: 11px;
+    letter-spacing: 4px;
+    font-weight: 800;
+    cursor: pointer;
+    background: linear-gradient(90deg, var(--noir) 0%, var(--noir) 100%);
+    color: var(--gold);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-left: 4px solid var(--gold);
+    font-family: var(--sans);
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    animation: royalEcarlate 5s ease-in-out infinite;
+  }
+  .btn-primary::before, .btn-royal::before {
+    content: '♕';
+    font-size: 14px;
+    line-height: 1;
+    color: var(--gold);
+    transition: color 0.3s;
+  }
+  @keyframes royalEcarlate {
+    0%, 100% {
+      background: linear-gradient(90deg, var(--noir) 0%, var(--noir) 100%);
+    }
+    50% {
+      background: linear-gradient(90deg, var(--noir) 0%, rgba(139, 0, 0, 0.20) 45%, rgba(139, 0, 0, 0.30) 55%, var(--noir) 100%);
+    }
+  }
+  .btn-primary:hover, .btn-royal:hover {
+    background: var(--gold);
+    color: var(--noir);
+    border-color: var(--gold);
+    transform: translateX(4px);
+    animation: none;
+  }
+  .btn-primary:hover::before, .btn-royal:hover::before {
+    color: var(--noir);
+  }
+
+  .btn-secondary {
     display: inline-block;
     text-decoration: none;
     padding: 14px 32px;
@@ -350,15 +399,6 @@
     cursor: pointer;
     transition: all 0.2s;
     border: 1px solid;
-  }
-  .btn-primary {
-    background: var(--gold);
-    color: var(--noir);
-    border-color: var(--gold);
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
-  }
-  .btn-primary:hover { background: var(--gold-pale); box-shadow: 0 0 40px rgba(212, 175, 55, 0.6); }
-  .btn-secondary {
     background: transparent;
     color: var(--cream);
     border-color: rgba(212, 175, 55, 0.5);
@@ -872,25 +912,44 @@
   .app-cta-btn {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-pale) 100%);
-    color: #0a0a0a;
-    padding: 16px 32px;
-    border-radius: 50px;
-    font-weight: 800;
-    letter-spacing: 2px;
-    font-size: 13px;
-    text-transform: uppercase;
+    gap: 12px;
     text-decoration: none;
-    box-shadow: 0 12px 30px rgba(212,175,55,0.4);
-    transition: transform 0.2s, box-shadow 0.2s;
+    padding: 14px 28px;
+    border-radius: 0;
+    font-size: 13px;
+    letter-spacing: 3px;
+    font-weight: 800;
+    cursor: pointer;
+    background: var(--noir);
+    color: var(--gold);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-left: 4px solid var(--gold);
+    font-family: var(--sans);
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    animation: royalEcarlate 5s ease-in-out infinite;
+  }
+  .app-cta-btn::before {
+    content: '♕';
+    font-size: 16px;
+    line-height: 1;
+    color: var(--gold);
+    transition: color 0.3s;
   }
   .app-cta-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 16px 40px rgba(212,175,55,0.55);
+    background: var(--gold);
+    color: var(--noir);
+    border-color: var(--gold);
+    transform: translateX(4px);
+    animation: none;
+  }
+  .app-cta-btn:hover::before {
+    color: var(--noir);
   }
   .app-cta-btn-arrow {
-    transition: transform 0.2s;
+    transition: transform 0.3s;
   }
   .app-cta-btn:hover .app-cta-btn-arrow { transform: translateX(4px); }
 
@@ -1977,8 +2036,42 @@
   .newsletter-form input { flex: 1; min-width: 200px; background: rgba(0,0,0,0.5); border: 1px solid rgba(212,175,55,0.3); color: var(--cream); padding: 12px 18px; border-radius: 999px; font-family: inherit; font-size: 14px; outline: none; transition: border-color 0.2s; }
   .newsletter-form input:focus { border-color: var(--gold); }
   .newsletter-form input::placeholder { color: var(--smoke); }
-  .newsletter-form button { background: var(--gold); color: var(--noir); border: none; border-radius: 999px; padding: 12px 24px; font-family: inherit; font-size: 13px; letter-spacing: 1px; font-weight: 700; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
-  .newsletter-form button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(212,175,55,0.3); }
+  .newsletter-form button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--noir);
+    color: var(--gold);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-left: 4px solid var(--gold);
+    border-radius: 0;
+    padding: 12px 22px;
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 3px;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    animation: royalEcarlate 5s ease-in-out infinite;
+  }
+  .newsletter-form button::before {
+    content: '♕';
+    font-size: 14px;
+    line-height: 1;
+    color: var(--gold);
+    transition: color 0.3s;
+  }
+  .newsletter-form button:hover {
+    background: var(--gold);
+    color: var(--noir);
+    border-color: var(--gold);
+    transform: translateX(4px);
+    animation: none;
+  }
+  .newsletter-form button:hover::before { color: var(--noir); }
   .newsletter-helper { color: var(--smoke); font-size: 11px; font-style: italic; }
   .newsletter-success { color: #10b981; font-size: 13px; margin-top: 12px; display: none; }
   .newsletter-success.show { display: block; }
@@ -2567,7 +2660,7 @@
     <p class="newsletter-text">Nouvelles dates, coulisses exclusives, concours &amp; promos — directement dans ta boîte mail.</p>
     <form class="newsletter-form" onsubmit="event.preventDefault(); subscribeNewsletter(this);">
       <input type="email" placeholder="ton.email@exemple.com" required />
-      <button type="submit">S'abonner →</button>
+      <button type="submit">S'abonner</button>
     </form>
     <div class="newsletter-helper">📧 Tu peux te désabonner à tout moment · Aucun spam, promis.</div>
     <div class="newsletter-success" id="newsletterSuccess">✅ Merci ! Tu es bien inscrit·e à la newsletter TWOQ 🎤</div>
