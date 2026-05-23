@@ -1349,6 +1349,162 @@
   </div>
 </section>
 
+<!-- ============ ZONE CONNECTÉE — Affichage du profil ============ -->
+<section class="connected-zone" id="connectedZone">
+  <!-- HEADER PROFIL -->
+  <div class="profile-header">
+    <div class="profile-avatar-wrap">
+      <div class="profile-avatar" id="profileAvatar">👤</div>
+      <div class="profile-avatar-edit" title="Changer ta photo (bientôt disponible)">📷</div>
+    </div>
+    <div class="profile-name" id="profileName">Bonjour !</div>
+    <div class="profile-level" id="profileLevel">FAN TWOQ 👤</div>
+  </div>
+
+  <!-- BANDEAU BILLETTERIE EXCLUSIVE (OR/PLATINE seulement) -->
+  <div class="exclusive-banner" id="exclusiveBanner" style="display:none;" onclick="goToDatesPage()">
+    <div class="exclusive-banner-icon">🎟️</div>
+    <div class="exclusive-banner-content">
+      <div class="exclusive-banner-title">Billetterie exclusive</div>
+      <div class="exclusive-banner-text">Réservée membres <strong>🥇 OR · Tarifs réduits -10%</strong></div>
+      <div class="exclusive-banner-note">* Disponible sur ~90% des dates de tournée</div>
+    </div>
+    <div class="exclusive-banner-arrow">→</div>
+  </div>
+
+  <!-- MON STATUT -->
+  <div class="my-status">
+    <div class="my-status-header">Mon statut</div>
+    <div class="levels-bar" id="levelsBar">
+      <!-- Généré en JS -->
+    </div>
+    <div class="progress-info">
+      <span class="progress-info-pts" id="progressPts">0/100 pts</span>
+      <span class="progress-info-next" id="progressNext"></span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+    </div>
+    <button type="button" class="levels-info-btn" onclick="openLevelsDetail()">ⓘ En savoir plus sur les niveaux</button>
+  </div>
+
+  <!-- MES NOTIFICATIONS -->
+  <div class="accordion-block">
+    <div class="accordion-eyebrow">🔔 Mes notifications</div>
+    <div class="accordion" id="accNotifs" onclick="toggleAccordion('accNotifs')">
+      <div class="accordion-head">
+        <div class="accordion-head-icon">📬</div>
+        <div class="accordion-head-content">
+          <div class="accordion-head-title"><span id="notifsCount">0</span> notification(s)</div>
+          <div class="accordion-head-sub">Clique pour déplier la liste</div>
+        </div>
+        <div class="accordion-head-chev">▼</div>
+      </div>
+      <div class="accordion-body" id="notifsList">
+        <div style="text-align:center; padding:20px 0; color:var(--smoke); font-size:12px; font-style:italic;">
+          Aucune notification pour le moment.<br>
+          📲 Active les notifications dans l'app TWOQ pour recevoir les alertes.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AVANTAGES DE TON COMPTE -->
+  <div class="accordion-block">
+    <div class="accordion-eyebrow">✨ Avantages de ton compte</div>
+    <div class="accordion" id="accBenefits" onclick="toggleAccordion('accBenefits')">
+      <div class="accordion-head">
+        <div class="accordion-head-icon">✨</div>
+        <div class="accordion-head-content">
+          <div class="accordion-head-title"><span id="benefitsCount">0 / 16</span> avantages débloqués</div>
+          <div class="accordion-head-sub" id="benefitsSub">Niveau actuel</div>
+        </div>
+        <div class="accordion-head-chev">▼</div>
+      </div>
+      <div class="accordion-body" id="benefitsList">
+        <!-- Généré en JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- MES CONCOURS -->
+  <div class="accordion-block">
+    <div class="accordion-eyebrow">🏆 Mes concours <span class="accordion-badge" id="contestsCount">0</span></div>
+    <div id="myContestsList">
+      <div style="text-align:center; padding:24px; color:var(--smoke); font-size:13px; font-style:italic; background:rgba(20,20,20,0.5); border:1px dashed rgba(212,175,55,0.2); border-radius:14px;">
+        🏆 Tu n'as participé à aucun concours pour l'instant.<br>
+        <a href="fanzone.html" style="color:var(--gold); text-decoration:none; font-weight:700;">Explore la Fan Zone →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MES DATES FAVORITES -->
+  <div class="accordion-block">
+    <div class="accordion-eyebrow">❤️ Mes dates favorites</div>
+    <div id="myFavoritesList">
+      <div class="favs-empty">
+        <div class="favs-empty-icon">💔</div>
+        <div class="favs-empty-text">Aucune date favorite pour l'instant</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOUTIQUE -->
+  <div class="accordion-block" style="margin-top: 28px;">
+    <div class="accordion-eyebrow">🛍️ Boutique</div>
+    <a href="boutique.html" class="app-link-row" style="display:flex;">
+      <div class="app-link-icon">🛒</div>
+      <div class="app-link-label">
+        <div style="color:var(--gold); font-weight:700; margin-bottom:2px;">MERCH OFFICIEL</div>
+        <div style="color:var(--smoke); font-size:11px;">T-shirts, vinyles, posters &amp; souvenirs</div>
+      </div>
+      <div class="app-link-arrow">→</div>
+    </a>
+  </div>
+
+  <!-- SECTION L'APP -->
+  <div class="app-links-block">
+    <div class="accordion-eyebrow">L'app</div>
+    <div class="app-link-row" onclick="alert('🔔 Notifications : disponibles dans l\\'app TWOQ mobile.\\n\\nTélécharge l\\'app sur app.theworldofqueen.com'); ">
+      <div class="app-link-icon">🔔</div>
+      <div class="app-link-label">Notifications</div>
+      <div class="app-link-arrow">→</div>
+    </div>
+    <a href="contact-prod.html" class="app-link-row">
+      <div class="app-link-icon">💬</div>
+      <div class="app-link-label">Mes messages</div>
+      <div class="app-link-arrow">→</div>
+    </a>
+    <div class="app-link-row" onclick="shareWebsite()">
+      <div class="app-link-icon">🔗</div>
+      <div class="app-link-label">Partager le site</div>
+      <div class="app-link-arrow">→</div>
+    </div>
+    <a href="contact-prod.html" class="app-link-row">
+      <div class="app-link-icon">✉️</div>
+      <div class="app-link-label">Contact</div>
+      <div class="app-link-arrow">→</div>
+    </a>
+    <a href="https://app.theworldofqueen.com" target="_blank" class="app-link-row">
+      <div class="app-link-icon">📱</div>
+      <div class="app-link-label">App mobile officielle</div>
+      <div class="app-link-arrow">↗</div>
+    </a>
+    <div class="app-link-row" onclick="alert('🤝 Nos partenaires :\\n\\n• MAG Events\\n• Coulisses Events\\n• Oh My Prod!');">
+      <div class="app-link-icon">👥</div>
+      <div class="app-link-label">Nos partenaires</div>
+      <div class="app-link-arrow">→</div>
+    </div>
+    <div class="app-link-row" onclick="alert('THE WORLD OF QUEEN — L\\'Éternelle Légende\\n\\nLe plus grand tribute show Queen en France.\\n\\nProduit par Oh My Prod!\\n© 2026');">
+      <div class="app-link-icon">ⓘ</div>
+      <div class="app-link-label">À propos</div>
+      <div class="app-link-arrow">→</div>
+    </div>
+  </div>
+
+  <button type="button" class="logout-btn" onclick="logout()">→] Se déconnecter</button>
+</section>
+
 <!-- ABONNEZ-VOUS -->
 <section class="newsletter-block" id="newsletterSection">
   <div class="newsletter-wrap">
@@ -1831,161 +1987,7 @@
   </div>
 </div>
 
-<!-- ============ ZONE CONNECTÉE — Affichage du profil ============ -->
-<section class="connected-zone" id="connectedZone">
-  <!-- HEADER PROFIL -->
-  <div class="profile-header">
-    <div class="profile-avatar-wrap">
-      <div class="profile-avatar" id="profileAvatar">👤</div>
-      <div class="profile-avatar-edit" title="Changer ta photo (bientôt disponible)">📷</div>
-    </div>
-    <div class="profile-name" id="profileName">Bonjour !</div>
-    <div class="profile-level" id="profileLevel">FAN TWOQ 👤</div>
-  </div>
 
-  <!-- BANDEAU BILLETTERIE EXCLUSIVE (OR/PLATINE seulement) -->
-  <div class="exclusive-banner" id="exclusiveBanner" style="display:none;" onclick="goToDatesPage()">
-    <div class="exclusive-banner-icon">🎟️</div>
-    <div class="exclusive-banner-content">
-      <div class="exclusive-banner-title">Billetterie exclusive</div>
-      <div class="exclusive-banner-text">Réservée membres <strong>🥇 OR · Tarifs réduits -10%</strong></div>
-      <div class="exclusive-banner-note">* Disponible sur ~90% des dates de tournée</div>
-    </div>
-    <div class="exclusive-banner-arrow">→</div>
-  </div>
-
-  <!-- MON STATUT -->
-  <div class="my-status">
-    <div class="my-status-header">Mon statut</div>
-    <div class="levels-bar" id="levelsBar">
-      <!-- Généré en JS -->
-    </div>
-    <div class="progress-info">
-      <span class="progress-info-pts" id="progressPts">0/100 pts</span>
-      <span class="progress-info-next" id="progressNext"></span>
-    </div>
-    <div class="progress-bar-bg">
-      <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
-    </div>
-    <button type="button" class="levels-info-btn" onclick="openLevelsDetail()">ⓘ En savoir plus sur les niveaux</button>
-  </div>
-
-  <!-- MES NOTIFICATIONS -->
-  <div class="accordion-block">
-    <div class="accordion-eyebrow">🔔 Mes notifications</div>
-    <div class="accordion" id="accNotifs" onclick="toggleAccordion('accNotifs')">
-      <div class="accordion-head">
-        <div class="accordion-head-icon">📬</div>
-        <div class="accordion-head-content">
-          <div class="accordion-head-title"><span id="notifsCount">0</span> notification(s)</div>
-          <div class="accordion-head-sub">Clique pour déplier la liste</div>
-        </div>
-        <div class="accordion-head-chev">▼</div>
-      </div>
-      <div class="accordion-body" id="notifsList">
-        <div style="text-align:center; padding:20px 0; color:var(--smoke); font-size:12px; font-style:italic;">
-          Aucune notification pour le moment.<br>
-          📲 Active les notifications dans l'app TWOQ pour recevoir les alertes.
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- AVANTAGES DE TON COMPTE -->
-  <div class="accordion-block">
-    <div class="accordion-eyebrow">✨ Avantages de ton compte</div>
-    <div class="accordion" id="accBenefits" onclick="toggleAccordion('accBenefits')">
-      <div class="accordion-head">
-        <div class="accordion-head-icon">✨</div>
-        <div class="accordion-head-content">
-          <div class="accordion-head-title"><span id="benefitsCount">0 / 16</span> avantages débloqués</div>
-          <div class="accordion-head-sub" id="benefitsSub">Niveau actuel</div>
-        </div>
-        <div class="accordion-head-chev">▼</div>
-      </div>
-      <div class="accordion-body" id="benefitsList">
-        <!-- Généré en JS -->
-      </div>
-    </div>
-  </div>
-
-  <!-- MES CONCOURS -->
-  <div class="accordion-block">
-    <div class="accordion-eyebrow">🏆 Mes concours <span class="accordion-badge" id="contestsCount">0</span></div>
-    <div id="myContestsList">
-      <div style="text-align:center; padding:24px; color:var(--smoke); font-size:13px; font-style:italic; background:rgba(20,20,20,0.5); border:1px dashed rgba(212,175,55,0.2); border-radius:14px;">
-        🏆 Tu n'as participé à aucun concours pour l'instant.<br>
-        <a href="fanzone.html" style="color:var(--gold); text-decoration:none; font-weight:700;">Explore la Fan Zone →</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- MES DATES FAVORITES -->
-  <div class="accordion-block">
-    <div class="accordion-eyebrow">❤️ Mes dates favorites</div>
-    <div id="myFavoritesList">
-      <div class="favs-empty">
-        <div class="favs-empty-icon">💔</div>
-        <div class="favs-empty-text">Aucune date favorite pour l'instant</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- BOUTIQUE -->
-  <div class="accordion-block" style="margin-top: 28px;">
-    <div class="accordion-eyebrow">🛍️ Boutique</div>
-    <a href="boutique.html" class="app-link-row" style="display:flex;">
-      <div class="app-link-icon">🛒</div>
-      <div class="app-link-label">
-        <div style="color:var(--gold); font-weight:700; margin-bottom:2px;">MERCH OFFICIEL</div>
-        <div style="color:var(--smoke); font-size:11px;">T-shirts, vinyles, posters &amp; souvenirs</div>
-      </div>
-      <div class="app-link-arrow">→</div>
-    </a>
-  </div>
-
-  <!-- SECTION L'APP -->
-  <div class="app-links-block">
-    <div class="accordion-eyebrow">L'app</div>
-    <div class="app-link-row" onclick="alert('🔔 Notifications : disponibles dans l\\'app TWOQ mobile.\\n\\nTélécharge l\\'app sur app.theworldofqueen.com'); ">
-      <div class="app-link-icon">🔔</div>
-      <div class="app-link-label">Notifications</div>
-      <div class="app-link-arrow">→</div>
-    </div>
-    <a href="contact-prod.html" class="app-link-row">
-      <div class="app-link-icon">💬</div>
-      <div class="app-link-label">Mes messages</div>
-      <div class="app-link-arrow">→</div>
-    </a>
-    <div class="app-link-row" onclick="shareWebsite()">
-      <div class="app-link-icon">🔗</div>
-      <div class="app-link-label">Partager le site</div>
-      <div class="app-link-arrow">→</div>
-    </div>
-    <a href="contact-prod.html" class="app-link-row">
-      <div class="app-link-icon">✉️</div>
-      <div class="app-link-label">Contact</div>
-      <div class="app-link-arrow">→</div>
-    </a>
-    <a href="https://app.theworldofqueen.com" target="_blank" class="app-link-row">
-      <div class="app-link-icon">📱</div>
-      <div class="app-link-label">App mobile officielle</div>
-      <div class="app-link-arrow">↗</div>
-    </a>
-    <div class="app-link-row" onclick="alert('🤝 Nos partenaires :\\n\\n• MAG Events\\n• Coulisses Events\\n• Oh My Prod!');">
-      <div class="app-link-icon">👥</div>
-      <div class="app-link-label">Nos partenaires</div>
-      <div class="app-link-arrow">→</div>
-    </div>
-    <div class="app-link-row" onclick="alert('THE WORLD OF QUEEN — L\\'Éternelle Légende\\n\\nLe plus grand tribute show Queen en France.\\n\\nProduit par Oh My Prod!\\n© 2026');">
-      <div class="app-link-icon">ⓘ</div>
-      <div class="app-link-label">À propos</div>
-      <div class="app-link-arrow">→</div>
-    </div>
-  </div>
-
-  <button type="button" class="logout-btn" onclick="logout()">→] Se déconnecter</button>
-</section>
 
 <!-- ============ MODAL DÉTAIL NIVEAUX ============ -->
 <div class="levels-detail-overlay" id="levelsDetailOverlay" onclick="if(event.target===this)closeLevelsDetail()">
