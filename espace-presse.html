@@ -155,6 +155,8 @@
   }
   .stat-card:hover { transform: translateY(-4px); border-color: var(--gold); }
   .stat-number { font-family: var(--serif); color: var(--gold); font-size: clamp(28px, 4vw, 38px); font-weight: 700; line-height: 1; margin-bottom: 6px; }
+  /* Étoiles : plus petites pour rentrer dans la carte */
+  .stat-stars { font-size: clamp(16px, 2.2vw, 22px) !important; letter-spacing: 2px; line-height: 1.1; }
   .stat-label { color: var(--cream); font-size: 11px; letter-spacing: 1.5px; font-weight: 600; text-transform: uppercase; }
   .stat-sublabel { color: var(--smoke); font-size: 10px; margin-top: 4px; }
 
@@ -516,7 +518,7 @@
     <div class="stat-sublabel">Zéniths, Arenas, Théâtres</div>
   </div>
   <div class="stat-card">
-    <div class="stat-number">⭐⭐⭐⭐⭐</div>
+    <div class="stat-number stat-stars">⭐⭐⭐⭐⭐</div>
     <div class="stat-label">Note Google</div>
     <div class="stat-sublabel">Plébiscité par les spectateurs</div>
   </div>
