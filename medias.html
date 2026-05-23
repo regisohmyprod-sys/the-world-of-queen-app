@@ -958,27 +958,31 @@
   videoLightbox.addEventListener('click', e => { if (e.target === videoLightbox) closeVideoLightbox(); });
 
   // ============ GALERIE PHOTOS ============
-  // L'app TWOQ contient 49 photos dans twoq-pwa/assets/photos/show-01.jpg → show-49.jpg
-  // Le probe teste jusqu'à 60 au cas où il y en aurait plus à l'avenir.
-  const PHOTOS_BASE = 'https://regisohmyprod-sys.github.io/twoq-pwa/assets/photos/';
-  const PHOTOS_MAX_PROBE = 60; // teste les 60 premières
-  let _photos = []; // liste des photos qui ont chargé OK
+  // Photos chargées depuis Supabase (vue public_photos_show)
+  // → Cloudinary hébergé, partagé avec l'app TWOQ PWA
+  const SUPA_URL = 'https://nhxqcavianozskxgfcbt.supabase.co';
+  const SUPA_KEY = 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3';
+  let _photos = []; // [{photo_url, thumb_url, legende, ...}]
   let _photosShown = 16;
 
-  async function probePhotos() {
-    const candidates = [];
-    for (let i = 1; i <= PHOTOS_MAX_PROBE; i++) {
-      candidates.push(PHOTOS_BASE + 'show-' + String(i).padStart(2, '0') + '.jpg');
+  async function loadPhotosFromSupabase() {
+    try {
+      const res = await fetch(`${SUPA_URL}/rest/v1/public_photos_show?select=*&order=ordre_affichage.asc&limit=200`, {
+        headers: {
+          'apikey': SUPA_KEY,
+          'Authorization': 'Bearer ' + SUPA_KEY
+        }
+      });
+      if (!res.ok) { console.warn('[Photos] HTTP', res.status); _photos = []; renderPhotos(); return; }
+      const data = await res.json();
+      _photos = (data || []);
+      console.log('[Photos]', _photos.length, 'photos chargées depuis Supabase');
+      renderPhotos();
+    } catch (e) {
+      console.warn('[Photos] erreur fetch :', e);
+      _photos = [];
+      renderPhotos();
     }
-    const checks = candidates.map(url => new Promise(resolve => {
-      const img = new Image();
-      img.onload = () => resolve(url);
-      img.onerror = () => resolve(null);
-      img.src = url;
-    }));
-    const results = await Promise.all(checks);
-    _photos = results.filter(Boolean);
-    renderPhotos();
   }
 
   function renderPhotos() {
@@ -988,35 +992,42 @@
     if (_photos.length === 0) {
       grid.innerHTML = `
         <div style="grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: var(--smoke); font-style: italic;">
-          🖼️ Aucune photo trouvée. Upload tes photos dans <code style="color:var(--gold);">twoq-pwa/assets/photos/</code> nommées <code style="color:var(--gold);">show-01.jpg</code>, <code style="color:var(--gold);">show-02.jpg</code>, etc.
+          📸 Aucune photo trouvée. Vérifie la table <code style="color:var(--gold);">photos_show</code> dans Supabase.
         </div>
       `;
       btn.style.display = 'none';
       return;
     }
     const shown = _photos.slice(0, _photosShown);
-    grid.innerHTML = shown.map((url, i) => `
-      <div class="photo-cell" data-index="${i}"><img src="${url}" alt="Photo du show ${i+1}" loading="lazy" /></div>
+    grid.innerHTML = shown.map((p, i) => `
+      <div class="photo-cell" data-index="${i}"><img src="${p.thumb_url || p.photo_url}" alt="${escapeHtmlPh(p.legende || ('Photo TWOQ ' + (i+1)))}" loading="lazy" /></div>
     `).join('');
     grid.querySelectorAll('.photo-cell').forEach(cell => {
       cell.addEventListener('click', () => openPhotoLightbox(parseInt(cell.dataset.index, 10)));
     });
     if (_photosShown < _photos.length) {
-      btn.style.display = 'inline-block';
+      btn.style.display = 'inline-flex';
       btn.textContent = `Voir plus de photos (+${Math.min(16, _photos.length - _photosShown)} sur ${_photos.length - _photosShown} restantes)`;
     } else if (_photos.length > 16) {
-      btn.style.display = 'inline-block';
+      btn.style.display = 'inline-flex';
       btn.textContent = 'Réduire la galerie';
     } else {
       btn.style.display = 'none';
     }
   }
+
+  function escapeHtmlPh(s) {
+    return String(s || '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  }
+
   document.getElementById('btnMorePhotos').addEventListener('click', () => {
     _photosShown = _photosShown >= _photos.length ? 16 : _photosShown + 16;
     if (_photosShown > _photos.length) _photosShown = _photos.length;
-    if (_photosShown === 16 && _photos.length <= 16) _photosShown = 16;
     renderPhotos();
   });
+
+  // Démarre le chargement
+  loadPhotosFromSupabase();
 
   // ============ LIGHTBOX PHOTOS ============
   const photoLightbox = document.getElementById('photoLightbox');
@@ -1028,7 +1039,7 @@
 
   function openPhotoLightbox(idx) {
     _plIndex = (idx + _photos.length) % _photos.length;
-    plImage.src = _photos[_plIndex];
+    plImage.src = _photos[_plIndex].photo_url || _photos[_plIndex];
     plCounter.textContent = `${_plIndex + 1} / ${_photos.length}`;
     photoLightbox.classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -1040,7 +1051,7 @@
   }
   function plNavigate(d) {
     _plIndex = (_plIndex + d + _photos.length) % _photos.length;
-    plImage.src = _photos[_plIndex];
+    plImage.src = _photos[_plIndex].photo_url || _photos[_plIndex];
     plCounter.textContent = `${_plIndex + 1} / ${_photos.length}`;
   }
   function startAutoplay() {
@@ -1078,7 +1089,7 @@
   generateTwinkleStars();
   renderReels();
   renderVideos();
-  probePhotos();
+  // Les photos se chargent automatiquement via loadPhotosFromSupabase() défini plus haut
   // ============ NEWSLETTER ============
   async function subscribeNewsletter(form) {
     const input = form.querySelector('input');
