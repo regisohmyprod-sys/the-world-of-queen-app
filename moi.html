@@ -26,8 +26,9 @@
     margin: 0 auto;
     padding: 14px 24px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    gap: 30px;
     min-height: 60px;
   }
   .brand {
@@ -37,10 +38,7 @@
     letter-spacing: 3px;
     font-weight: 600;
     line-height: 1.1;
-    position: absolute;
-    left: 24px;
-    top: 50%;
-    transform: translateY(-50%);
+    flex-shrink: 0;
   }
   .brand small { display: block; font-family: var(--sans); color: var(--cream); font-size: 9px; letter-spacing: 4px; font-weight: 400; margin-top: 2px; opacity: 0.8; }
   .menu-toggle { display: none; background: transparent; color: var(--gold); border: 1px solid var(--gold); border-radius: 6px; padding: 6px 12px; font-size: 18px; cursor: pointer; }
@@ -1160,19 +1158,22 @@
 
 
 
+
+
   /* ============ 🎨 CHARTE TYPOGRAPHIQUE UNIFIÉE (toutes pages) ============ */
+  /* IMPORTANT: ne s'applique PAS au header (.site-header) */
+
   /* H1 — Titres principaux de page (tous variants) */
   .hero-title, .page-title,
-  .moi-hero h1, .ct-hero h1, .boutique-hero h1, .medias-hero h1, .presse-hero h1, .contact-hero h1,
+  main .moi-hero h1, .ct-hero h1, .boutique-hero h1, .medias-hero h1, .presse-hero h1, .contact-hero h1,
   .dates-hero-h1, .ct-hero-h1,
-  .hero h1, .hero-eyebrow + h1 {
+  section.hero h1, .hero-eyebrow + h1, .hero-content h1 {
     font-size: clamp(36px, 5.5vw, 52px) !important;
     line-height: 1.1 !important;
     letter-spacing: 2px !important;
   }
-  /* H2 — Titres de section */
-  .section-title, .newsletter-title, .boutique-title, .category-title,
-  h2:not(.signup-title):not(.login-title):not(.levels-detail-title):not(.profile-name) {
+  /* H2 — Titres de section (hors header) */
+  body .section-title, body .newsletter-title, body .boutique-title, body .category-title {
     font-size: clamp(26px, 4vw, 36px) !important;
     line-height: 1.15 !important;
     letter-spacing: 1px !important;
@@ -1193,10 +1194,10 @@
     line-height: 1.3 !important;
     letter-spacing: 0.5px !important;
   }
-  /* Eyebrows */
-  .section-eyebrow, .shop-eyebrow, .live-card-eyebrow,
+  /* Eyebrows (hors header/nav) */
+  main .section-eyebrow, .shop-eyebrow, .live-card-eyebrow,
   .reels-eyebrow, .accordion-eyebrow, .boutique-eyebrow,
-  .category-eyebrow, .perk-eyebrow, .hero-eyebrow,
+  .category-eyebrow, .perk-eyebrow, main .hero-eyebrow,
   .ct-hero-eyebrow, .moi-hero-sub, .presse-eyebrow {
     font-size: 11px !important;
     letter-spacing: 4px !important;
@@ -1208,6 +1209,22 @@
   .category-text, .perk-text, .request-text {
     font-size: 14px !important;
     line-height: 1.65 !important;
+  }
+
+  /* PROTECTION DU HEADER : tailles fixes pour le logo */
+  .site-header .brand {
+    font-size: 16px !important;
+    letter-spacing: 2.5px !important;
+    line-height: 1.2 !important;
+  }
+  .site-header .brand small {
+    font-size: 9px !important;
+    letter-spacing: 3px !important;
+    line-height: 1.2 !important;
+  }
+  .site-header .main-nav a {
+    font-size: 12px !important;
+    letter-spacing: 1.5px !important;
   }
   /* ============ FIN CHARTE TYPOGRAPHIQUE ============ */
 
@@ -1370,9 +1387,9 @@
     <!-- SUIVEZ-NOUS -->
     <div class="section-eyebrow">SUIVEZ-NOUS</div>
     <div class="social-grid">
-      <a href="https://www.facebook.com/theworldofqueenofficiel" target="_blank" class="social-btn"><span class="social-icon fb">f</span> Facebook</a>
+      <a href="https://www.facebook.com/theworldofqueen/" target="_blank" class="social-btn"><span class="social-icon fb">f</span> Facebook</a>
       <a href="https://www.instagram.com/theworldofqueenofficiel/" target="_blank" class="social-btn"><span class="social-icon ig">📷</span> Instagram</a>
-      <a href="https://www.youtube.com/@theworldofqueenofficiel" target="_blank" class="social-btn"><span class="social-icon yt">▶</span> YouTube</a>
+      <a href="https://www.youtube.com/@THEWORLDOFQUEENOFFICIEL-pn9xl" target="_blank" class="social-btn"><span class="social-icon yt">▶</span> YouTube</a>
       <a href="index.html" class="social-btn"><span class="social-icon site">♕</span> Site officiel</a>
     </div>
 

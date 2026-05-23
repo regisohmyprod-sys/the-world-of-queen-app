@@ -32,8 +32,9 @@
     margin: 0 auto;
     padding: 14px 24px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    gap: 30px;
     min-height: 60px;
   }
   .brand {
@@ -43,10 +44,7 @@
     letter-spacing: 3px;
     font-weight: 600;
     line-height: 1.1;
-    position: absolute;
-    left: 24px;
-    top: 50%;
-    transform: translateY(-50%);
+    flex-shrink: 0;
   }
   .brand small {
     display: block; font-family: var(--sans); color: var(--cream);
