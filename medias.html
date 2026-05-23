@@ -277,8 +277,8 @@
   /* ============ GALERIE PHOTOS ============ */
   .photos-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 7px;
     margin-bottom: 20px;
   }
   .photo-cell {
@@ -292,7 +292,7 @@
     transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
   }
   .photo-cell:hover {
-    transform: scale(1.03);
+    transform: scale(1.05);
     border-color: var(--gold);
     z-index: 2;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -310,7 +310,7 @@
     margin-top: 8px;
   }
   @media (max-width: 600px) {
-    .photos-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+    .photos-grid { grid-template-columns: repeat(3, 1fr); gap: 5px; }
   }
 
   /* ============ SÉPARATEUR DORÉ ============ */
@@ -963,7 +963,7 @@
   const SUPA_URL = 'https://nhxqcavianozskxgfcbt.supabase.co';
   const SUPA_KEY = 'sb_publishable_59Pg7368sxCT6y3j9nNw0g_i8ILGRZ3';
   let _photos = []; // [{photo_url, thumb_url, legende, ...}]
-  let _photosShown = 16;
+  let _photosShown = 20;
 
   async function loadPhotosFromSupabase() {
     try {
@@ -1007,8 +1007,8 @@
     });
     if (_photosShown < _photos.length) {
       btn.style.display = 'inline-flex';
-      btn.textContent = `Voir plus de photos (+${Math.min(16, _photos.length - _photosShown)} sur ${_photos.length - _photosShown} restantes)`;
-    } else if (_photos.length > 16) {
+      btn.textContent = `Voir plus de photos (+${Math.min(20, _photos.length - _photosShown)} sur ${_photos.length - _photosShown} restantes)`;
+    } else if (_photos.length > 20) {
       btn.style.display = 'inline-flex';
       btn.textContent = 'Réduire la galerie';
     } else {
@@ -1021,7 +1021,7 @@
   }
 
   document.getElementById('btnMorePhotos').addEventListener('click', () => {
-    _photosShown = _photosShown >= _photos.length ? 16 : _photosShown + 16;
+    _photosShown = _photosShown >= _photos.length ? 20 : _photosShown + 20;
     if (_photosShown > _photos.length) _photosShown = _photos.length;
     renderPhotos();
   });
